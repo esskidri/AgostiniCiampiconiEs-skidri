@@ -1,4 +1,4 @@
-package com.example.pcutente.travlendar.model;
+package com.example.travlendar.model;
 
 /**
  * Created by ago on 06/11/2017.
