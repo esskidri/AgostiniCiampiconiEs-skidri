@@ -1,12 +1,12 @@
 package com.example.travlendar.model;
 
 /**
- * Created by ago on 06/11/2017.
+ * Created by Lorenzo on 11/6/2017.
  */
 
-public class Event extends TimeOccupation {
-    private String startingAddress;
-    private String endingAddress;
+public class FreeTime extends TimeOccupation {
+    private Long duration;
+
 
     @Override
     public boolean isOverlapping(TimeOccupation timeOccupation) {
