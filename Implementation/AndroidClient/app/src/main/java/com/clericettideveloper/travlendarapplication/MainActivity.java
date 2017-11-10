@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
@@ -35,10 +36,11 @@ public class MainActivity extends AppCompatActivity {
         Container.defaultContainer(this).configure(config);
 
         /*Button configuration*/
+        final TextView textView=findViewById(R.id.text1);
         final Button button = findViewById(R.id.button2);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                serverCall();
+                serverCall(textView);
             }
         });
 
@@ -83,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void serverCall(){
+    private void serverCall(final TextView textView){
         /*SkyGear retrieving data from my server lambdaExpression*/
 
         String lambdaName = "hello_from_server";
@@ -93,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
             public void onLambdaSuccess(JSONObject result) {
                 System.out.println("hello from server ok");
                 System.out.println(result.toString());
+                textView.setText(result.toString());
+
             }
 
             @Override
