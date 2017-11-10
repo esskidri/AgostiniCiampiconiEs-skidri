@@ -1,7 +1,5 @@
-# Travlendar+
+# Skygear Cloud Code Example
 
+This repo demonstrates the 4 types of cloud code functions using a very simple code snippet [cloud_code.py](cloud_code.py)
 
-#### Team
-* Rachid Es-Skidri ([@esskidri](https://github.com/esskidri))
-* Lorenzo Ciampiconi ([@LorenzoCiampiconi](https://github.com/LorenzoCiampiconi))
-* Andrea Agostini ([@agostini95](https://github.com/agostini95))
+For instructions on how to use cloud clodes on Skygear, please visit https://docs.skygear.io/cloud-code/guide.
