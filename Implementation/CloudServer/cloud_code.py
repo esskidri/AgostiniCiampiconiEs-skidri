@@ -39,7 +39,7 @@ def feed(request):
 
 
 # Hello from server LambdaFunction
-@skygear.op('hello_from_server', user_required=False)
+@skygear.op('hello_from_server', user_required=False,key_required=False)
 def hello_from_server():
     return {
         'result': 'ok'
