@@ -17,7 +17,7 @@ def validate_cat_name(record, original_record, db):
 @skygear.every('@every 2m')
 def meow_for_food():
     # Skygear Portal Console Log will show 'Meow Meow!' every 2 minutes
-    log.info('Meow Meow!')
+    log.info('prova da Dell XPS 15!')
 
 
 # custom logic to be invoked from SDK, e.g.
@@ -36,4 +36,4 @@ def buy_food(food):
 @skygear.handler('cat:feed', method=['GET'])
 def feed(request):
     # TODO: handle the request such as logging the request to database
-    return 'Meow! Thanks!\n'
+    return 'Meow! Thanks! DELLXPS15\n'
