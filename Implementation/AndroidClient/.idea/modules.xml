@@ -3,12 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AndroidClient.iml" filepath="$PROJECT_DIR$/AndroidClient.iml" />
-<<<<<<< HEAD
-=======
-      <module fileurl="file://C:\Users\ago\Documents\GitHub\AgostiniCiampiconiEs-skidri\Implementation\AndroidClient\TravlendarApplication.iml" filepath="C:\Users\ago\Documents\GitHub\AgostiniCiampiconiEs-skidri\Implementation\AndroidClient\TravlendarApplication.iml" />
->>>>>>> 57fceea5c484a5f97621d6088c54831238ca8c4b
+      <module fileurl="file://$PROJECT_DIR$/GreenDao/GreenDao.iml" filepath="$PROJECT_DIR$/GreenDao/GreenDao.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\ago\Documents\GitHub\AgostiniCiampiconiEs-skidri\Implementation\AndroidClient\app\app.iml" filepath="C:\Users\ago\Documents\GitHub\AgostiniCiampiconiEs-skidri\Implementation\AndroidClient\app\app.iml" />
     </modules>
   </component>
 </project>
