@@ -1,7 +1,6 @@
 import skygear
 import logging
 
-
 log = logging.getLogger(__name__)
 
 
@@ -14,7 +13,7 @@ def validate_cat_name(record, original_record, db):
 
 
 # cron job that runs every 2 minutes
-@skygear.every('@every 2m')
+# @skygear.every('@every 2m')
 def meow_for_food():
     # Skygear Portal Console Log will show 'Meow Meow!' every 2 minutes
     log.info('prova da Dell XPS 15!')
@@ -37,3 +36,11 @@ def buy_food(food):
 def feed(request):
     # TODO: handle the request such as logging the request to database
     return 'Meow! Thanks! DELLXPS15\n'
+
+
+# Hello from server LambdaFunction
+@skygear.op('hello_from_server', user_required=False)
+def hello_from_server():
+    return {
+        'result': 'ok'
+    }
