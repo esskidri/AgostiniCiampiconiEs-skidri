@@ -7,11 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONObject;
-
 import java.util.Map;
-
 import io.skygear.skygear.AuthResponseHandler;
 import io.skygear.skygear.Configuration;
 import io.skygear.skygear.Container;
@@ -19,7 +16,6 @@ import io.skygear.skygear.Error;
 import io.skygear.skygear.LambdaResponseHandler;
 import io.skygear.skygear.Record;
 import io.skygear.skygear.RecordSaveResponseHandler;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -106,5 +102,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 }
