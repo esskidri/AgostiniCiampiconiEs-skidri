@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 serverCall(textView);
             }
         });
-
+    /******prova es/
         /****************************************************************************************/
         /*Sky-gear insert a test row in the DB*//*
         final Container skygear = Container.defaultContainer(this);
