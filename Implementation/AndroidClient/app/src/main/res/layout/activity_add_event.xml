@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.clericettideveloper.travlendarapplication.AddEventActivity">
+
+    <EditText
+        android:id="@+id/editStartDate"
+        android:layout_width="198dp"
+        android:layout_height="41dp"
+        android:ems="10"
+        android:inputType="date"
+        android:text="Insert Date"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="122dp" />
+
+    <EditText
+        android:id="@+id/editStartTime"
+        android:layout_width="162dp"
+        android:layout_height="41dp"
+        android:ems="10"
+        android:inputType="time"
+        android:text="Insert Time"
+        tools:layout_editor_absoluteX="214dp"
+        tools:layout_editor_absoluteY="122dp" />
+
+    <EditText
+        android:id="@+id/editEndDate"
+        android:layout_width="198dp"
+        android:layout_height="41dp"
+        android:ems="10"
+        android:inputType="date"
+        android:text="Insert Date"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="197dp" />
+
+    <EditText
+        android:id="@+id/editEndTime"
+        android:layout_width="162dp"
+        android:layout_height="41dp"
+        android:ems="10"
+        android:inputType="time"
+        android:text="Insert Time"
+        tools:layout_editor_absoluteX="214dp"
+        tools:layout_editor_absoluteY="197dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="66dp"
+        android:layout_height="23dp"
+        android:text="Begins"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="102dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="66dp"
+        android:layout_height="23dp"
+        android:text="Ends"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="177dp" />
+
+    <Switch
+        android:id="@+id/switchEndEvent"
+        android:layout_width="119dp"
+        android:layout_height="38dp"
+        android:text="EndEvent"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="372dp" />
+
+    <EditText
+        android:id="@+id/editLocation"
+        android:layout_width="174dp"
+        android:layout_height="41dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Insert Location"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="285dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="66dp"
+        android:layout_height="23dp"
+        android:text="Where"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="262dp" />
+
+    <Button
+        android:id="@+id/buttonCreate"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:text="Create Event"
+        tools:layout_editor_absoluteX="52dp"
+        tools:layout_editor_absoluteY="437dp" />
+
+</android.support.constraint.ConstraintLayout>
