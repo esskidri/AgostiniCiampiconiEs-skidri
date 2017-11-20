@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         });
     /******prova e  /
         /****************************************************************************************/
-        /*Sky-gear insert a test row in the DB*//*
+        /*Sky-gear insert a test row inD the DB*//*
         final Container skygear = Container.defaultContainer(this);
         skygear.getAuth().signupAnonymously(new AuthResponseHandler() {
         @Override
