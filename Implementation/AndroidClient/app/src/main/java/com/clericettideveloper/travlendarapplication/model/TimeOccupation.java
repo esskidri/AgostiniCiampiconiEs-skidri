@@ -1,14 +1,19 @@
 package com.clericettideveloper.travlendarapplication.model;
 
+import org.greenrobot.greendao.annotation.Entity;
+
 import java.util.Date;
 
 /**
  * Created by Lorenzo on 11/6/2017.
  */
+
+
+@Entity
 public abstract class TimeOccupation {
     private String name;
-    private Date startTime;
-    private Date endTime;
+    private java.util.Calendar startTime;
+    private java.util.Calendar endTime;
 
     public boolean before(TimeOccupation timeOccupation){
         if(this.startTime.before(timeOccupation.startTime))
