@@ -11,9 +11,4 @@ public class TravlendarServerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TravlendarServerApplication.class, args);
 	}
-
-
-
-
-
 }

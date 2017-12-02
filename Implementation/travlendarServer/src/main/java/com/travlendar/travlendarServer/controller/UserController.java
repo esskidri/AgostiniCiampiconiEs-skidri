@@ -6,7 +6,10 @@ import com.travlendar.travlendarServer.model.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -15,11 +18,11 @@ public class UserController {
      * GET /create  --> Create a new user and save it in the database.
      */
     @RequestMapping("/create")
-   // @ResponseBody
-    public String create(String email, String name) {
+    @ResponseBody
+    public String create(@RequestParam ("email") String email2, String name) {
         String userId = "";
         try {
-            User user = new User(email, name);
+            User user = new User(email2, name);
             userDao.save(user);
             userId = String.valueOf(user.getId());
         }
@@ -28,6 +31,7 @@ public class UserController {
         }
         return "User succesfully created with id = " + userId;
     }
+
 
     /**
      * GET /delete  --> Delete the user having the passed id.
@@ -51,16 +55,18 @@ public class UserController {
      */
     @RequestMapping("/get-by-email")
     @ResponseBody
-    public String getByEmail(String email) {
+    public String getByEmail(@RequestParam("email") String email) {
         String userId = "";
+        String name="";
         try {
-            User user = userDao.findByEmail(email);
-            userId = String.valueOf(user.getId());
+           // List<User> users = userDao.findByEmail(email);
+            name = userDao.findByEmail(email);
+           // userId = String.valueOf(users.get(0).getId());
         }
         catch (Exception ex) {
-            return "User not found";
+            return "User not found"+ex.toString();
         }
-        return "The user id is: " + userId;
+        return "The user id is: " + name;
     }
 
     /**
