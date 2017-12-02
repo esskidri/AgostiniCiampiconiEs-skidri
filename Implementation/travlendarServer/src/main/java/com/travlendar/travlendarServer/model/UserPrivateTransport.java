@@ -1,6 +1,6 @@
 package com.travlendar.travlendarServer.model;
 
-import org.springframework.context.annotation.Primary;
+
 
 import javax.persistence.*;
 
