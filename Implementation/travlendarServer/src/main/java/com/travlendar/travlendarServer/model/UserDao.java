@@ -10,7 +10,6 @@ import java.util.List;
 
 @Transactional
 public interface UserDao extends JpaRepository<User, Long> {
-
     @Query(value="SELECT users.name FROM users  WHERE users.email = :emailParam",nativeQuery = true)
     String findByEmail(@Param("emailParam") String emailParam);
 }
