@@ -23,19 +23,22 @@ public class TransportSegment {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "public_transport")
     private long publicTransportId;
-    @Column(unique=true)
-    private float positionA;
-    @Column(unique=true)
-    private float positionB;
+    private float positionAx;
+    private float positionBx;
+    private float positionAy;
+    private float positionBy;
 
-    public TransportSegment(long transportSolutionEventId1, long transportSolutionEventId2, long numOrder, long privateTransportId, long publicTransportId, float positionA, float positionB) {
+
+    public TransportSegment(long transportSolutionEventId1, long transportSolutionEventId2, long numOrder, long privateTransportId, long publicTransportId, float positionAx, float positionBx, float positionAy, float positionBy) {
         this.transportSolutionEventId1 = transportSolutionEventId1;
         this.transportSolutionEventId2 = transportSolutionEventId2;
         this.numOrder = numOrder;
         this.privateTransportId = privateTransportId;
         this.publicTransportId = publicTransportId;
-        this.positionA = positionA;
-        this.positionB = positionB;
+        this.positionAx = positionAx;
+        this.positionBx = positionBx;
+        this.positionAy = positionAy;
+        this.positionBy = positionBy;
     }
 
     public long getTransportSolutionEventId1() {
@@ -78,19 +81,35 @@ public class TransportSegment {
         this.publicTransportId = publicTransportId;
     }
 
-    public float getPositionA() {
-        return positionA;
+    public float getPositionAx() {
+        return positionAx;
     }
 
-    public void setPositionA(float positionA) {
-        this.positionA = positionA;
+    public void setPositionAx(float positionAx) {
+        this.positionAx = positionAx;
     }
 
-    public float getPositionB() {
-        return positionB;
+    public float getPositionBx() {
+        return positionBx;
     }
 
-    public void setPositionB(float positionB) {
-        this.positionB = positionB;
+    public void setPositionBx(float positionBx) {
+        this.positionBx = positionBx;
+    }
+
+    public float getPositionAy() {
+        return positionAy;
+    }
+
+    public void setPositionAy(float positionAy) {
+        this.positionAy = positionAy;
+    }
+
+    public float getPositionBy() {
+        return positionBy;
+    }
+
+    public void setPositionBy(float positionBy) {
+        this.positionBy = positionBy;
     }
 }
