@@ -2,26 +2,26 @@ package com.travlendar.travlendarServer.model;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "transport_segment")
+//@Entity
+//@Table(name = "transport_segment")
 public class TransportSegment {
 
-
-    @PrimaryKeyJoinColumn
+/*
+    @Id
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "transport_solution")
+    @JoinColumn(name = "transport_solutionevent_id_1")
     private long transportSolutionEventId1;
-    @PrimaryKeyJoinColumn
+    @Id
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "transport_solution")
+    @JoinColumn(name = "transport_solutionevent_id_2")
     private long transportSolutionEventId2;
     @Id
     private long numOrder;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "private_transport")
+    @JoinColumn(name = "private_transport_id")
     private long privateTransportId;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "public_transport")
+    @JoinColumn(name = "public_transport_id")
     private long publicTransportId;
     private float positionAx;
     private float positionBx;
@@ -111,5 +111,5 @@ public class TransportSegment {
 
     public void setPositionBy(float positionBy) {
         this.positionBy = positionBy;
-    }
+    }*/
 }
