@@ -2,11 +2,14 @@ package com.travlendar.travlendarServer.controller;
 
 import com.travlendar.travlendarServer.model.PrivateTransport;
 import com.travlendar.travlendarServer.model.PrivateTransportDao;
+import com.travlendar.travlendarServer.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 public class PrivateTransportController {
@@ -31,4 +34,25 @@ public class PrivateTransportController {
         }
         return "Private Mean succesfully created with id = " + pId;
     }
+
+    @RequestMapping("/userOwner")
+    @ResponseBody
+    public String userOwner(@RequestParam("id") Long id){
+        PrivateTransport privateTransport=new PrivateTransport();
+        try {
+            privateTransport=ptDao.findOne(id);
+        }
+        catch (Exception ex) {
+            return "Error Fetching " + ex.toString();
+        }
+        List<User> users=privateTransport.getUserOwner();
+        for(User u:users){
+            System.out.println(u.getFirst_name());
+            System.out.println(u.getLast_name());
+        }
+        return "ok";
+
+    }
+
+
 }

@@ -41,15 +41,15 @@ public class UserController {
         String desc="";
         try {
             User user = userDao.findById(id);
-            desc+="LName: "+user.getLast_name();
-            desc+="FName: "+user.getFirst_name();
-            desc+="mail:  "+user.getEmail();
-            desc+="fcode: "+user.getFiscal_code();
-            desc+="sex:   "+user.getSex();
-            desc+="age:   "+user.getAge();
-            desc+="policy:"+user.getPolicy();
-            desc+="numbPMeans:"+user.getPrivateTransportList().size()+"  name of first:   "+user.getPrivateTransportList().get(0).getName();
-
+            desc+="LName: "+user.getLast_name()+"\n";
+            desc+="FName: "+user.getFirst_name()+"\n";
+            desc+="mail:  "+user.getEmail()+"\n";
+            desc+="fcode: "+user.getFiscal_code()+"\n";
+            desc+="sex:   "+user.getSex()+"\n";
+            desc+="age:   "+user.getAge()+"\n";
+            desc+="policy:"+user.getPolicy()+"\n";
+            desc+="numbPMeans:"+user.getPrivateTransportList().size()+"  name of first:   "+user.getPrivateTransportList().get(0).getName()+"\n";
+            System.out.println(desc);
             PrivateTransport p1=user.getPrivateTransportList().get(0);
             p1.setName("TESLAROADSTER");
             userDao.save(user);

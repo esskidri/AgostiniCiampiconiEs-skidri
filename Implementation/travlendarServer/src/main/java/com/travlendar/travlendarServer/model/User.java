@@ -43,7 +43,6 @@ public class User {
             joinColumns={@JoinColumn(name="user_id")},
             inverseJoinColumns={@JoinColumn(name="private_transport")})
     private List<PrivateTransport> privateTransportList;
-
     public List<PrivateTransport> getPrivateTransportList() {
         return privateTransportList;
     }

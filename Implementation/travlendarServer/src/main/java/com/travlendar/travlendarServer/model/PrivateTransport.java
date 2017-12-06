@@ -27,9 +27,8 @@ public class PrivateTransport {
     @Column(name="license_plate")
     private String license_plate;
 
-    //user owners
-
-
+    @ManyToMany(mappedBy = "privateTransportList")
+    private List<User> userOwner;
 
 
 
@@ -92,5 +91,13 @@ public class PrivateTransport {
 
     public void setLicense_plate(String license_plate) {
         this.license_plate = license_plate;
+    }
+
+    public List<User> getUserOwner() {
+        return userOwner;
+    }
+
+    public void setUserOwner(List<User> userOwner) {
+        this.userOwner = userOwner;
     }
 }
