@@ -15,19 +15,29 @@
       <file leaf-file-name="TransportSolutionCalculator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/TransportSolutionCalculator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="3" column="17" lean-forward="false" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
-              <folding />
+            <state relative-caret-position="457">
+              <caret line="48" column="134" lean-forward="false" selection-start-line="48" selection-start-column="134" selection-end-line="48" selection-end-column="134" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="docComment;method#calculateSegment#0;class#TransportSolutionCalculator#0" expanded="false" />
+                <element signature="method#getLocationByExternalAPI#0;class#TransportSolutionCalculator#0" expanded="false" />
+                <element signature="docComment;method#callGoogleAPI#0;class#TransportSolutionCalculator#0" expanded="false" />
+                <element signature="method#callGoogleAPI#0;class#TransportSolutionCalculator#0" expanded="false" />
+                <element signature="docComment;method#isMeanAvailablePrivately#0;class#TransportSolutionCalculator#0" expanded="false" />
+                <element signature="method#isMeanAvailablePrivately#0;class#TransportSolutionCalculator#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ObjectMapper.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.8.8/jackson-databind-2.8.8.jar!/com/fasterxml/jackson/databind/ObjectMapper.class">
+      <file leaf-file-name="TransportSegment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/TransportSegment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="113" column="13" lean-forward="false" selection-start-line="113" selection-start-column="13" selection-end-line="113" selection-end-column="13" />
-              <folding />
+            <state relative-caret-position="126">
+              <caret line="7" column="49" lean-forward="false" selection-start-line="7" selection-start-column="49" selection-end-line="7" selection-end-column="49" />
+              <folding>
+                <element signature="e#270#271#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -35,42 +45,52 @@
       <file leaf-file-name="GoogleResponseMappedObject.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/GoogleResponseMappedObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="URL.java" pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk-9.0.1/lib/src.zip!/java.base/java/net/URL.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1944">
-              <caret line="150" column="19" lean-forward="false" selection-start-line="150" selection-start-column="19" selection-end-line="150" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Base64.java" pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk-9.0.1/lib/src.zip!/java.base/java/util/Base64.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2808">
-              <caret line="196" column="16" lean-forward="false" selection-start-line="196" selection-start-column="16" selection-end-line="196" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EventGraph.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/EventGraph.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1584">
-              <caret line="103" column="20" lean-forward="false" selection-start-line="103" selection-start-column="20" selection-end-line="103" selection-end-column="20" />
+            <state relative-caret-position="324">
+              <caret line="18" column="50" lean-forward="false" selection-start-line="18" selection-start-column="50" selection-end-line="18" selection-end-column="50" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#hashCode#0;class#Edge#0;class#EventGraph#0" expanded="false" />
+                <element signature="method#setGeocoded_waypoints#0;class#GoogleResponseMappedObject#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ObjectMapper.class" pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.8.8/jackson-databind-2.8.8.jar!/com/fasterxml/jackson/databind/ObjectMapper.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="36">
+              <caret line="5" column="22" lean-forward="false" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GeocodedWaypoint.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/googleJsonSubClass/GeocodedWaypoint.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="72">
+              <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Polyline.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/googleJsonSubClass/Polyline.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="108">
+              <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Route.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/googleJsonSubClass/Route.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="198">
+              <caret line="11" column="5" lean-forward="false" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -102,7 +122,6 @@
       <list>
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/TravlendarServerApplication.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/Logic/EventConnector.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/MeanOfTransport.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/TransportSegment.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/util/GraphEvent.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/util/Graph.java" />
@@ -111,13 +130,29 @@
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/util/EventGraph.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/Event.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/EventConnector.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/TransportSolutionCalculator.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/CalculatorCore.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/CheapestCore.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/FastestCore.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/GoogleResponseMappedObject.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/EcologistCore.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/UserPreferences.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/GeocodedWaypoint.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/Route.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/Bounds.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/Leg.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/Step.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/Coordinates.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/InfoPair.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/Polyline.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/googleJsonSubClass/GeocodedWaypoint.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/googleJsonSubClass/Step.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/GoogleResponseMappedObject.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/googleJsonSubClass/Polyline.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/googleJsonSubClass/Route.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/googleJsonSubClass/Coordinates.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/MeanOfTransport.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/MeanNotAvailableException.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/exceptions/MeanNotAvailableException.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/TransportSolutionCalculator.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/GoogleAPIHandler.java" />
       </list>
     </option>
@@ -127,6 +162,12 @@
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand />
+      <select />
+    </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="113" />
@@ -211,6 +252,17 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="travlendarServer" type="462c0819:PsiDirectoryNode" />
+              <item name="logic" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
+              <item name="googleJsonSubClass" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="travlendarServer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="travlendarServer" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="travlendarServer" type="462c0819:PsiDirectoryNode" />
               <item name="model" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -233,6 +285,8 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.travlendar.travlendarServer.logic.exceptions" />
+      <recent name="com.travlendar.travlendarServer.logic.util.googleJsonSubClass" />
       <recent name="com.travlendar.travlendarServer.logic" />
       <recent name="com.travlendar.travlendarServer.model" />
       <recent name="com.travlendar.travlendarServer" />
@@ -258,7 +312,7 @@
     <configuration name="GoogleAPIHandler" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
-          <option name="PATTERN" value="com.travlendar.travlendarServer.logic.*" />
+          <option name="PATTERN" value="com.travlendar.travlendarServer.logic.exceptions.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -385,12 +439,12 @@
       <workItem from="1512560443758" duration="9374000" />
       <workItem from="1512573671340" duration="4613000" />
       <workItem from="1512594159370" duration="11057000" />
-      <workItem from="1512650525970" duration="363000" />
+      <workItem from="1512650525970" duration="16318000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28142000" />
+    <option name="totallyTimeSpent" value="44097000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1696" height="1023" extended-state="6" />
@@ -398,12 +452,13 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20654628" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="-1360" y="184" width="1360" height="700" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3294621" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.8160271" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="-1360" y="184" width="1360" height="700" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -412,19 +467,18 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38202935" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7776524" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295711" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -466,59 +520,32 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/GoogleAPIHandler.java</url>
+          <line>45</line>
+          <properties />
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="7" />
     </breakpoint-manager>
-    <watches-manager />
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="googleResponseMappedObject.routes.get(0).legs.get(0).steps.get(13)" />
+        <watch expression="googleResponseMappedObject.routes.get(0).legs.get(0).steps.get(13)" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/TransportSolutionCalculator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="17" lean-forward="false" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.8.8/jackson-databind-2.8.8.jar!/com/fasterxml/jackson/databind/ObjectMapper.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2034">
-          <caret line="113" column="13" lean-forward="false" selection-start-line="113" selection-start-column="13" selection-end-line="113" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-9.0.1/lib/src.zip!/java.base/java/net/URL.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2700">
-          <caret line="150" column="19" lean-forward="false" selection-start-line="150" selection-start-column="19" selection-end-line="150" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-9.0.1/lib/src.zip!/java.base/java/util/Base64.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3528">
-          <caret line="196" column="16" lean-forward="false" selection-start-line="196" selection-start-column="16" selection-end-line="196" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/EventGraph.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1854">
-          <caret line="103" column="20" lean-forward="false" selection-start-line="103" selection-start-column="20" selection-end-line="103" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#hashCode#0;class#Edge#0;class#EventGraph#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/GoogleResponseMappedObject.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
           <caret line="6" column="31" lean-forward="true" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#setGeocoded_waypoints#0;class#GoogleResponseMappedObject#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -526,7 +553,15 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="docComment;method#calculateSegment#0;class#TransportSolutionCalculator#0" expanded="false" />
+            <element signature="method#getLocationByExternalAPI#0;class#TransportSolutionCalculator#0" expanded="false" />
+            <element signature="docComment;method#callGoogleAPI#0;class#TransportSolutionCalculator#0" expanded="false" />
+            <element signature="method#callGoogleAPI#0;class#TransportSolutionCalculator#0" expanded="false" />
+            <element signature="docComment;method#isMeanAvailablePrivately#0;class#TransportSolutionCalculator#0" expanded="false" />
+            <element signature="method#isMeanAvailablePrivately#0;class#TransportSolutionCalculator#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -534,6 +569,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -541,6 +579,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
           <caret line="40" column="0" lean-forward="true" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -556,7 +595,7 @@
         <state relative-caret-position="252">
           <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
             <element signature="method#hashCode#0;class#Edge#0;class#EventGraph#0" expanded="false" />
           </folding>
         </state>
@@ -571,25 +610,11 @@
     <entry file="file://$PROJECT_DIR$/pom.xml" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/TravlendarServerApplication.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/controller/HelloGreeting.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/MeanOfTransport.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="16" lean-forward="false" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/util.java" />
     <entry file="jar://C:/Program Files/Java/jdk-9.0.1/lib/src.zip!/jdk.jdeps/com/sun/tools/jdeps/Graph.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="291">
           <caret line="67" column="4" lean-forward="false" selection-start-line="67" selection-start-column="4" selection-end-line="71" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/TransportSolution.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -600,34 +625,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/Event.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="34" column="21" lean-forward="false" selection-start-line="34" selection-start-column="21" selection-end-line="34" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/TransportSegment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="7" column="49" lean-forward="false" selection-start-line="7" selection-start-column="49" selection-end-line="7" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/EventConnector.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="504">
           <caret line="30" column="14" lean-forward="false" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/EventGraph.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1584">
-          <caret line="103" column="20" lean-forward="false" selection-start-line="103" selection-start-column="20" selection-end-line="103" selection-end-column="20" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#hashCode#0;class#Edge#0;class#EventGraph#0" expanded="false" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -646,14 +649,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-9.0.1/lib/src.zip!/java.base/java/util/Base64.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2808">
-          <caret line="196" column="16" lean-forward="false" selection-start-line="196" selection-start-column="16" selection-end-line="196" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/single.java" />
     <entry file="jar://C:/Program Files/Java/jdk-9.0.1/lib/src.zip!/java.base/java/net/URL.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -664,21 +659,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/GoogleResponseMappedObject.kt" />
-    <entry file="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.8.8/jackson-databind-2.8.8.jar!/com/fasterxml/jackson/databind/ObjectMapper.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="113" column="13" lean-forward="false" selection-start-line="113" selection-start-column="13" selection-end-line="113" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/GoogleAPIHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-461">
-          <caret line="28" column="46" lean-forward="false" selection-start-line="28" selection-start-column="46" selection-end-line="28" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/UserPreferences.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
@@ -700,19 +680,229 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/TransportSolutionCalculator.java">
+    <entry file="jar://C:/Program Files/Java/jdk-9.0.1/lib/src.zip!/java.base/java/util/Base64.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="196" column="16" lean-forward="false" selection-start-line="196" selection-start-column="16" selection-end-line="196" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.8.8/jackson-databind-2.8.8.jar!/com/fasterxml/jackson/databind/exc/UnrecognizedPropertyException.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="558">
+          <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/GeocodedWaypoint.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/Event.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="27" lean-forward="true" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/EventGraph.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="579">
+          <caret line="103" column="20" lean-forward="false" selection-start-line="103" selection-start-column="20" selection-end-line="103" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="method#hashCode#0;class#Edge#0;class#EventGraph#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/googleJsonSubClass/Bounds.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/googleJsonSubClass/Leg.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/googleJsonSubClass/InfoPair.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/googleJsonSubClass/Step.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" column="50" lean-forward="true" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.8.8/jackson-databind-2.8.8.jar!/com/fasterxml/jackson/databind/ObjectMapper.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="5" column="22" lean-forward="false" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/TransportSolution.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-9.0.1/lib/src.zip!/java.base/java/lang/Float.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="295">
+          <caret line="204" column="42" lean-forward="true" selection-start-line="204" selection-start-column="42" selection-end-line="204" selection-end-column="42" />
+          <folding>
+            <element signature="e#7473#7474#0" expanded="false" />
+            <element signature="e#7533#7534#0" expanded="false" />
+            <element signature="e#22563#22564#0" expanded="false" />
+            <element signature="e#22607#22608#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-9.0.1/lib/src.zip!/java.base/jdk/internal/math/FloatingDecimal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="78" column="25" lean-forward="false" selection-start-line="78" selection-start-column="25" selection-end-line="78" selection-end-column="25" />
+          <folding>
+            <element signature="e#2423#2424#0" expanded="false" />
+            <element signature="e#2495#2496#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/MeanOfTransport.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
-          <caret line="3" column="17" lean-forward="false" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
+          <caret line="3" column="42" lean-forward="true" selection-start-line="3" selection-start-column="42" selection-end-line="3" selection-end-column="42" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/googleJsonSubClass/Route.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="11" column="5" lean-forward="false" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/exceptions/MeanNotAvailableException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" column="40" lean-forward="false" selection-start-line="3" selection-start-column="40" selection-end-line="3" selection-end-column="40" />
+          <folding>
+            <element signature="e#219#220#0" expanded="true" />
+            <element signature="e#249#250#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-9.0.1/lib/src.zip!/java.base/java/util/ArrayList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="438" column="13" lean-forward="false" selection-start-line="438" selection-start-column="13" selection-end-line="438" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/TransportSolutionCalculator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="457">
+          <caret line="48" column="134" lean-forward="false" selection-start-line="48" selection-start-column="134" selection-end-line="48" selection-end-column="134" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="docComment;method#calculateSegment#0;class#TransportSolutionCalculator#0" expanded="false" />
+            <element signature="method#getLocationByExternalAPI#0;class#TransportSolutionCalculator#0" expanded="false" />
+            <element signature="docComment;method#callGoogleAPI#0;class#TransportSolutionCalculator#0" expanded="false" />
+            <element signature="method#callGoogleAPI#0;class#TransportSolutionCalculator#0" expanded="false" />
+            <element signature="docComment;method#isMeanAvailablePrivately#0;class#TransportSolutionCalculator#0" expanded="false" />
+            <element signature="method#isMeanAvailablePrivately#0;class#TransportSolutionCalculator#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/TransportSegment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="49" lean-forward="false" selection-start-line="7" selection-start-column="49" selection-end-line="7" selection-end-column="49" />
+          <folding>
+            <element signature="e#270#271#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/googleJsonSubClass/GeocodedWaypoint.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/googleJsonSubClass/Polyline.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/googleJsonSubClass/Coordinates.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="23" column="41" lean-forward="false" selection-start-line="23" selection-start-column="41" selection-end-line="23" selection-end-column="41" />
+          <folding>
+            <element signature="e#408#409#0" expanded="true" />
+            <element signature="e#467#468#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/GoogleAPIHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#GoogleAPIHandler#0;class#GoogleAPIHandler#0" expanded="false" />
+            <element signature="docComment;method#constructHttpsUrl#0;class#GoogleAPIHandler#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/GoogleResponseMappedObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="324">
+          <caret line="18" column="50" lean-forward="false" selection-start-line="18" selection-start-column="50" selection-end-line="18" selection-end-column="50" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#setGeocoded_waypoints#0;class#GoogleResponseMappedObject#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

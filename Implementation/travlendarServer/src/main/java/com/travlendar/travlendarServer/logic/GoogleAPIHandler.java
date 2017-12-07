@@ -1,6 +1,7 @@
 package com.travlendar.travlendarServer.logic;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.travlendar.travlendarServer.logic.util.GoogleResponseMappedObject;
@@ -11,6 +12,8 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+
+import static java.lang.Thread.sleep;
 
 public class GoogleAPIHandler {
 
@@ -36,14 +39,23 @@ public class GoogleAPIHandler {
     private static final String API_KEY = "AIzaSyClU3xiXoQgD3E_VrESZB8s3nxxm0gecVc";
 
     public static void main(String[] args) {
-        //Testing https request
-        System.out.println(httpsRequest(constructHttpsUrl("75+9th+Ave+New+York,+NY","MetLife+Stadium+1+MetLife+Stadium+Dr+East+Rutherford,+NJ+07073", "driving", "1391374800")));
+        //Testing https request and Google JSON to POJO mapping
+        GoogleResponseMappedObject googleResponseMappedObject;
+        googleResponseMappedObject = fromJsonToObject(httpsRequest(constructHttpsUrl("75+9th+Ave+New+York,+NY","MetLife+Stadium+1+MetLife+Stadium+Dr+East+Rutherford,+NJ+07073", "walking", "1391374800")));
+
+        int i = 0;
     }
 
 
-    private GoogleResponseMappedObject fromJsonToObject(String jsonString){
+    private static GoogleResponseMappedObject fromJsonToObject(String jsonString){
         GoogleResponseMappedObject googleResponseMappedObject = new GoogleResponseMappedObject();
         ObjectMapper mapper = new ObjectMapper();
+
+        mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
+        mapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+        mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+        mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         try{
             googleResponseMappedObject = mapper.readValue(jsonString, GoogleResponseMappedObject.class);
