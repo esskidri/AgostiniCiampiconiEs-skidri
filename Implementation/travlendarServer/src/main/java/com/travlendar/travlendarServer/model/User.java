@@ -14,7 +14,6 @@ public class User {
     @Column(name = "id")
     private long id;
 
-    @NotNull
     @Column(name="first_name")
     private String first_name;
 
@@ -36,12 +35,8 @@ public class User {
     @Column(name="policy")
     private String policy;
 
-
     @ManyToMany(mappedBy = "users")
     private List<PrivateTransport> privateTransportList;
-    public List<PrivateTransport> getPrivateTransportList() {
-        return privateTransportList;
-    }
 
     @OneToMany(mappedBy = "user")
     private List<FreeTime> freeTimes;
@@ -52,23 +47,11 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<UserOrder> userOrders;
 
+    @OneToMany(mappedBy = "user")
+    private List<Event> events;
 
 
-    public User() { }
-
-    public User(long id) {
-        this.id = id;
-    }
-
-    public User(String first_name, String last_name, String email, Integer age, String sex, String fiscal_code, String policy) {
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.email = email;
-        this.age = age;
-        this.sex = sex;
-        this.fiscal_code = fiscal_code;
-        this.policy = policy;
-    }
+     public User() { }
 
     public long getId() {
         return id;
@@ -132,5 +115,45 @@ public class User {
 
     public void setPolicy(String policy) {
         this.policy = policy;
+    }
+
+    public List<PrivateTransport> getPrivateTransportList() {
+        return privateTransportList;
+    }
+
+    public void setPrivateTransportList(List<PrivateTransport> privateTransportList) {
+        this.privateTransportList = privateTransportList;
+    }
+
+    public List<FreeTime> getFreeTimes() {
+        return freeTimes;
+    }
+
+    public void setFreeTimes(List<FreeTime> freeTimes) {
+        this.freeTimes = freeTimes;
+    }
+
+    public List<UserPublicTransport> getUserpublicTransports() {
+        return UserpublicTransports;
+    }
+
+    public void setUserpublicTransports(List<UserPublicTransport> userpublicTransports) {
+        UserpublicTransports = userpublicTransports;
+    }
+
+    public List<UserOrder> getUserOrders() {
+        return userOrders;
+    }
+
+    public void setUserOrders(List<UserOrder> userOrders) {
+        this.userOrders = userOrders;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 }

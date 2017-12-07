@@ -28,4 +28,43 @@ public class Green {
 
     public Green(){}
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<PublicTransport> getPublicTransports() {
+        return publicTransports;
+    }
+
+    public void setPublicTransports(List<PublicTransport> publicTransports) {
+        this.publicTransports = publicTransports;
+    }
+
+    public List<PrivateTransport> getPrivateTransports() {
+        return privateTransports;
+    }
+
+    public void setPrivateTransports(List<PrivateTransport> privateTransports) {
+        this.privateTransports = privateTransports;
+    }
 }
