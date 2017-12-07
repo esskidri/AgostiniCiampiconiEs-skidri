@@ -27,9 +27,9 @@ public class UserController {
         String mpolicy = "green";
         String userId="";
         try {
-            User user = new User(f_name,l_name,email,age,sex,null,mpolicy);
-            userDao.save(user);
-            userId = String.valueOf(user.getId());
+           // User user = new User(f_name,l_name,email,age,sex,null,mpolicy);
+            //userDao.save(user);
+            //userId = String.valueOf(user.getId());
         }
         catch (Exception ex) {
             return "Error creating the user: " + ex.toString();
@@ -50,10 +50,10 @@ public class UserController {
             desc+="sex:   "+user.getSex()+"\n";
             desc+="age:   "+user.getAge()+"\n";
             desc+="policy:"+user.getPolicy()+"\n";
-            desc+="numbPMeans:"+user.getPrivateTransportList().size()+"  name of first:   "+user.getPrivateTransportList().get(0).getName()+"\n";
+            //desc+="numbPMeans:"+user.getPrivateTransportList().size()+"  name of first:   "+user.getPrivateTransportList().get(0).getName()+"\n";
             System.out.println(desc);
             PrivateTransport p1=user.getPrivateTransportList().get(0);
-            p1.setName("TESLAROADSTER");
+            //p1.setName("TESLAROADSTER");
             userDao.save(user);
 
         }
@@ -72,8 +72,8 @@ public class UserController {
     @ResponseBody
     public String delete(long id) {
         try {
-            User user = new User(id);
-            userDao.delete(user);
+            //User user = new User(id);
+            //userDao.delete(user);
         }
         catch (Exception ex) {
             return "Error deleting the user:" + ex.toString();

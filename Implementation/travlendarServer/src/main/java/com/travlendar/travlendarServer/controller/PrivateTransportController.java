@@ -24,9 +24,9 @@ public class PrivateTransportController {
     public String create(@RequestParam("name") String name, @RequestParam("type") String type, @RequestParam("disp") int displacement, @RequestParam("gId") int greenId, @RequestParam("lp") String license) {
         String pId="";
         try {
-            PrivateTransport privateTransport=new PrivateTransport(name,type,displacement,greenId,license);
-            ptDao.save(privateTransport);
-            pId = String.valueOf(privateTransport.getId());
+          //  PrivateTransport privateTransport=new PrivateTransport(name,type,displacement,greenId,license);
+          //  ptDao.save(privateTransport);
+          //  pId = String.valueOf(privateTransport.getId());
         }
         catch (Exception ex) {
             return "Error creating the private Mean: " + ex.toString();
