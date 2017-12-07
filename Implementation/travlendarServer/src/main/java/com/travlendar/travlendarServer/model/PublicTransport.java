@@ -21,9 +21,6 @@ public class PublicTransport {
     @OneToMany(mappedBy = "publicTransport")
     private List<UserPublicTransport> UserpublicTransports;
 
-
-
-
 }
 
 
