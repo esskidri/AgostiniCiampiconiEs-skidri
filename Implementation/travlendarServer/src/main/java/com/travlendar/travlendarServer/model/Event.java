@@ -44,4 +44,91 @@ public class Event implements Serializable{
     @OneToMany(cascade = CascadeType.ALL, mappedBy="event2")
     private List<TransportSolution> transportSolutions2;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Timestamp getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Timestamp startDate) {
+        this.startDate = startDate;
+    }
+
+    public Timestamp getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Timestamp endDate) {
+        this.endDate = endDate;
+    }
+
+    public float getPosX() {
+        return posX;
+    }
+
+    public void setPosX(float posX) {
+        this.posX = posX;
+    }
+
+    public float getPosY() {
+        return posY;
+    }
+
+    public void setPosY(float posY) {
+        this.posY = posY;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isEndEvent() {
+        return endEvent;
+    }
+
+    public void setEndEvent(boolean endEvent) {
+        this.endEvent = endEvent;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<TransportSolution> getTransportSolutions() {
+        return transportSolutions;
+    }
+
+    public void setTransportSolutions(List<TransportSolution> transportSolutions) {
+        this.transportSolutions = transportSolutions;
+    }
+
+    public List<TransportSolution> getTransportSolutions2() {
+        return transportSolutions2;
+    }
+
+    public void setTransportSolutions2(List<TransportSolution> transportSolutions2) {
+        this.transportSolutions2 = transportSolutions2;
+    }
 }

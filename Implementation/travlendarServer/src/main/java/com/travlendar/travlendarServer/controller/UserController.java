@@ -4,15 +4,19 @@ package com.travlendar.travlendarServer.controller;
 
 // Imports ...
 
+import com.travlendar.travlendarServer.model.*;
+import com.travlendar.travlendarServer.model.dao.EventDao;
 import com.travlendar.travlendarServer.model.dao.FreetTimeDao;
-import com.travlendar.travlendarServer.model.PrivateTransport;
-import com.travlendar.travlendarServer.model.User;
+import com.travlendar.travlendarServer.model.dao.TransportSolutionDao;
 import com.travlendar.travlendarServer.model.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.transaction.Transactional;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -115,6 +119,45 @@ public class UserController {
         return " succesfully ";
     }
 
+
+    @Autowired
+    private EventDao eventDao;
+
+    @Autowired
+    private TransportSolutionDao transportSolutionDao;
+
+    @RequestMapping("/event")
+    @ResponseBody
+    public String delete() {
+        try {
+            eventDao.delete((long) 8);
+        }
+        catch (Exception ex) {
+            return "Error : " + ex.toString();
+        }
+        return " Succes";
+    }
+
+    @RequestMapping("/fetch")
+    @ResponseBody
+    @Transactional
+    public String fecth() {
+        String des="";
+        try {
+           Event e=eventDao.findOne((long)9);
+           des+=" "+ e.getName();
+           des+="ts1size: "+e.getTransportSolutions().size();
+           des+="ts2size "+e.getTransportSolutions2().size();
+
+
+
+
+        }
+        catch (Exception ex) {
+            return "Error : " + ex.toString();
+        }
+        return des;
+    }
 
 
 }
