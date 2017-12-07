@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @SpringBootApplication
 public class TravlendarServerApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(TravlendarServerApplication.class, args);
 	}
