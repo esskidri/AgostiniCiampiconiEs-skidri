@@ -49,6 +49,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<UserPublicTransport> UserpublicTransports;
 
+    @OneToMany(mappedBy = "user")
+    private List<UserOrder> userOrders;
+
 
 
     public User() { }

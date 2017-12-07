@@ -11,7 +11,7 @@ public class PublicTransport {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
-    
+
     @Column(name="name")
     private String name;
 
@@ -20,6 +20,19 @@ public class PublicTransport {
 
     @OneToMany(mappedBy = "publicTransport")
     private List<UserPublicTransport> UserpublicTransports;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "gree_id")
+    private Green green;
+    public Green getGreen() {
+        return this.green;
+    }
+
+    @OneToMany(mappedBy = "publicTransport")
+    private List<PublicTransport> publicTransport;
+
+    @OneToMany(mappedBy = "privateTransport")
+    private List<PrivateTransport> privateTransport;
 
 
 
