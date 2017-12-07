@@ -44,5 +44,4 @@ public class Event implements Serializable{
     @OneToMany(cascade = CascadeType.ALL, mappedBy="event2")
     private List<TransportSolution> transportSolutions2;
 
-
 }
