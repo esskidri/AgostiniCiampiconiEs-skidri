@@ -27,13 +27,14 @@ public class PrivateTransport {
     @Column(name="license_plate")
     private String license_plate;
 
-    @ManyToMany(mappedBy = "privateTransportList")
-    private List<User> userOwner;
-
-
-
-
-
+    @ManyToMany
+    @JoinTable(name="user_private_transport",
+            joinColumns={@JoinColumn(name="private_transport")},
+            inverseJoinColumns={@JoinColumn(name="user_id")})
+    private List<User> users;
+    public List<User> getUsers(){
+        return users;
+    }
 
     public PrivateTransport(){}
 
@@ -93,11 +94,5 @@ public class PrivateTransport {
         this.license_plate = license_plate;
     }
 
-    public List<User> getUserOwner() {
-        return userOwner;
-    }
 
-    public void setUserOwner(List<User> userOwner) {
-        this.userOwner = userOwner;
-    }
 }

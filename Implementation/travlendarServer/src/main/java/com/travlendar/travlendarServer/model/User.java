@@ -37,18 +37,19 @@ public class User {
     private String policy;
 
 
-    //associated Private Means
-    @ManyToMany
-    @JoinTable(name="user_private_transport",
-            joinColumns={@JoinColumn(name="user_id")},
-            inverseJoinColumns={@JoinColumn(name="private_transport")})
+    @ManyToMany(mappedBy = "users")
     private List<PrivateTransport> privateTransportList;
     public List<PrivateTransport> getPrivateTransportList() {
         return privateTransportList;
     }
 
+    @OneToMany(mappedBy = "user")
+    private List<FreeTime> freeTimes;
 
-    // Public methods
+    @OneToMany(mappedBy = "user")
+    private List<UserPublicTransport> UserpublicTransports;
+
+
 
     public User() { }
 

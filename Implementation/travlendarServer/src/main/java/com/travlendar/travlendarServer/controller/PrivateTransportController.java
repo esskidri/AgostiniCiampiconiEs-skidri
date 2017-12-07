@@ -1,7 +1,7 @@
 package com.travlendar.travlendarServer.controller;
 
 import com.travlendar.travlendarServer.model.PrivateTransport;
-import com.travlendar.travlendarServer.model.PrivateTransportDao;
+import com.travlendar.travlendarServer.model.dao.PrivateTransportDao;
 import com.travlendar.travlendarServer.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,6 @@ public class PrivateTransportController {
 
     @Autowired
     private PrivateTransportDao ptDao;
-
     /**
      * GET /create  --> Create a new user and save it in the database.
      */
@@ -45,7 +44,7 @@ public class PrivateTransportController {
         catch (Exception ex) {
             return "Error Fetching " + ex.toString();
         }
-        List<User> users=privateTransport.getUserOwner();
+        List<User> users=privateTransport.getUsers();
         for(User u:users){
             System.out.println(u.getFirst_name());
             System.out.println(u.getLast_name());

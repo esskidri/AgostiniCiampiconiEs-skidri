@@ -1,5 +1,6 @@
-package com.travlendar.travlendarServer.model;
+package com.travlendar.travlendarServer.model.dao;
 
+import com.travlendar.travlendarServer.model.PrivateTransport;
 import org.springframework.data.repository.CrudRepository;
 import javax.transaction.Transactional;
 

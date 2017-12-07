@@ -4,9 +4,10 @@ package com.travlendar.travlendarServer.controller;
 
 // Imports ...
 
+import com.travlendar.travlendarServer.model.dao.FreetTimeDao;
 import com.travlendar.travlendarServer.model.PrivateTransport;
 import com.travlendar.travlendarServer.model.User;
-import com.travlendar.travlendarServer.model.UserDao;
+import com.travlendar.travlendarServer.model.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class UserController {
-
+    @Autowired
+    private UserDao userDao;
     /**
      * GET /create  --> Create a new user and save it in the database.
      */
@@ -97,30 +99,23 @@ public class UserController {
         return "The user id is: " + userId;
     }
 
-
-    /**
-     * GET /update  --> Update the email and the name for the user in the
-     * database having the passed id.
-     */
-    /*
-    @RequestMapping("/update")
+    @Autowired
+    private FreetTimeDao freetTimeDao;
+    @RequestMapping("/free")
     @ResponseBody
-    public String updateUser(long id, String email, String name) {
+    public String free() {
         try {
-            User user = userDao.findOne(id);
-            user.setEmail(email);
-            user.setName(name);
-            userDao.save(user);
+           User user =  userDao.findOne((long) 5);
+            System.out.printf("okok");
+           userDao.delete(user.getId());
         }
         catch (Exception ex) {
-            return "Error updating the user: " + ex.toString();
+            return "Error creating the user: " + ex.toString();
         }
-        return "User succesfully updated!";
-    }*/
+        return " succesfully ";
+    }
 
-    // Private fields
 
-    @Autowired
-    private UserDao userDao;
+
 
 }
