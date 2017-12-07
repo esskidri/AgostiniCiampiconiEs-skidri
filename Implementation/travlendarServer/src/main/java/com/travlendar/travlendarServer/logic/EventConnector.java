@@ -5,7 +5,7 @@ package com.travlendar.travlendarServer.logic;
 
 import com.travlendar.travlendarServer.model.Event;
 import com.travlendar.travlendarServer.model.TransportSolution;
-import com.travlendar.travlendarServer.util.EventGraph;
+import com.travlendar.travlendarServer.logic.util.EventGraph;
 
 
 import java.util.HashMap;

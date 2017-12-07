@@ -1,4 +1,4 @@
-package com.travlendar.travlendarServer.util;
+package com.travlendar.travlendarServer.logic.util;
 
 import com.travlendar.travlendarServer.model.Event;
 
