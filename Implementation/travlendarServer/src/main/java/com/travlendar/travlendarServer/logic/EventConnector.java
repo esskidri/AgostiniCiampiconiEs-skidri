@@ -13,7 +13,6 @@ import java.util.List;
 
 public class EventConnector {
     private EventGraph eventGraph;
-    private List<TransportSolution> transportSolutions;
 
     public EventConnector(List<Event> events) {
         eventGraph = new EventGraph(events, new HashMap<>());
