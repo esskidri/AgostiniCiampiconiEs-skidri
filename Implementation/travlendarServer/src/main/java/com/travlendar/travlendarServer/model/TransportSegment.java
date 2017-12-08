@@ -1,19 +1,17 @@
 package com.travlendar.travlendarServer.model;
 
 public class TransportSegment {
-    private MeanOfTransport meanOfTransport;
-    private Float positionA;
-    private Float positionB;
+    private Float positionAX;
+    private Float positionAY;
+    private Float positionBX;
+    private Float positionBY;
 
-    public MeanOfTransport getMeanOfTransport() {
-        return meanOfTransport;
-    }
 
-    public Float getPositionA() {
-        return positionA;
+    public Float getPositionAX() {
+        return positionAX;
     }
 
     public Float getPositionB() {
-        return positionB;
+        return positionBX;
     }
 }

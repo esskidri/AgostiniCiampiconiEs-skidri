@@ -51,7 +51,7 @@ public class EventConnector {
         //TODO
         /*@Override
         public int compareTo(Event e) {
-            if(this.getStartTime().compareTo(e.getStartTime())!= 0)
+            if(this.getStartDate().compareTo(e.getStartDate())!= 0)
                 return this.startTime.compareTo(e.startTime);
             else
                 return this.endTime.compareTo(endTime);

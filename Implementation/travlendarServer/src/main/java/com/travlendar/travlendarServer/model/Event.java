@@ -1,28 +1,27 @@
 package com.travlendar.travlendarServer.model;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Event implements Comparable<Event> {
-    private int id;
-    private Date startTime;
-    private Date endTime;
-    private float position;
+    private long id;
+    private Timestamp startDate;
+    private Timestamp endDate;
+    private float posX;
+    private float posY;
     private boolean endEvent;
 
-    public int getId() {
+
+
+    public long getId() {
         return id;
     }
 
-    public Date getStartTime() {
-        return startTime;
+    public Timestamp getStartDate() {
+        return startDate;
     }
 
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public float getPosition() {
-        return position;
+    public Timestamp getEndDate() {
+        return endDate;
     }
 
     public boolean getEndEvent() {
@@ -30,16 +29,16 @@ public class Event implements Comparable<Event> {
     }
 
     public boolean overlapping(Event e){
-        if(this.compareTo(e) < 0 && e.startTime.compareTo(this.endTime) < 0)
+        if(this.compareTo(e) < 0 && e.startDate.compareTo(this.endDate) < 0)
             return true;
         return false;
     }
 
     @Override
     public int compareTo(Event e) {
-        if(this.startTime.compareTo(e.startTime)!= 0)
-            return this.startTime.compareTo(e.startTime);
+        if(this.startDate.compareTo(e.startDate)!= 0)
+            return this.startDate.compareTo(e.startDate);
         else
-            return this.endTime.compareTo(endTime);
+            return this.endDate.compareTo(endDate);
     }
 }

@@ -1,5 +1,5 @@
 package com.travlendar.travlendarServer.model;
 
-public abstract class MeanOfTransport {
+public interface MeanOfTransport {
     public abstract String toHttpsFormat();
 }

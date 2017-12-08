@@ -17,12 +17,6 @@ import static java.lang.Thread.sleep;
 
 public class GoogleAPIHandler {
 
-    private static GoogleAPIHandler ourInstance = new GoogleAPIHandler();
-
-    public static GoogleAPIHandler getInstance() {
-        return ourInstance;
-    }
-
     private GoogleAPIHandler() {
     }
 
@@ -39,13 +33,18 @@ public class GoogleAPIHandler {
     private static final String API_KEY = "AIzaSyClU3xiXoQgD3E_VrESZB8s3nxxm0gecVc";
 
     public static void main(String[] args) {
+
+        System.out.println(httpsRequest(constructHttpsUrl("Rome","Milan", "walking", "1391374800")));
+
         //Testing https request and Google JSON to POJO mapping
         GoogleResponseMappedObject googleResponseMappedObject;
-        googleResponseMappedObject = fromJsonToObject(httpsRequest(constructHttpsUrl("75+9th+Ave+New+York,+NY","MetLife+Stadium+1+MetLife+Stadium+Dr+East+Rutherford,+NJ+07073", "walking", "1391374800")));
+        googleResponseMappedObject = fromJsonToObject(httpsRequest(constructHttpsUrl("Roma","Milano", "transit", "1391374800")));
 
-        int i = 0;
     }
 
+    public static GoogleResponseMappedObject askGoogle(String origin, String destination, String meanOfTransport, String arrivalTime){
+        return fromJsonToObject(httpsRequest(constructHttpsUrl(origin, destination, meanOfTransport, arrivalTime)));
+    }
 
     private static GoogleResponseMappedObject fromJsonToObject(String jsonString){
         GoogleResponseMappedObject googleResponseMappedObject = new GoogleResponseMappedObject();
