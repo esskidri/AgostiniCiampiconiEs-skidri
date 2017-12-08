@@ -8,8 +8,8 @@ import java.io.Serializable;
 @Entity
 @Table(name = "transport_segment")
 public class TransportSegment implements Serializable{
-    //@Column(name = "num_order",insertable = false, updatable = false)
-    //private long numOrder;
+    @Column(name = "num_order",insertable = false, updatable = false)
+    private long numOrder;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumns({
