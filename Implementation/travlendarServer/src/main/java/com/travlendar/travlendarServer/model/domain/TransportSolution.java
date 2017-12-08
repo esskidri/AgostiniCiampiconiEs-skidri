@@ -55,6 +55,8 @@ public class TransportSolution implements Serializable {
         this.transportSegments = transportSegments;
     }
 
+    public TransportSolution(){}
+
     public TransportSolution(Event event1, Event event2, TransportSolutionId transportSolutionId, List<TransportSegment> transportSegments) {
         this.event1 = event1;
         this.event2 = event2;

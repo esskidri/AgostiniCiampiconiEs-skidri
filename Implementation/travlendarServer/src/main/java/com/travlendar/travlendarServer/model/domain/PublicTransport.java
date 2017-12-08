@@ -31,6 +31,8 @@ public class PublicTransport {
     @OneToMany(mappedBy = "publicTransport")
     private List<TransportSegment> transportSegments;
 
+    private PublicTransport(){}
+
 
 }
 
