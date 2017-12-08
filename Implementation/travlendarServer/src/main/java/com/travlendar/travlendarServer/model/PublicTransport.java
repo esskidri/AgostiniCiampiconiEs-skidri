@@ -22,7 +22,7 @@ public class PublicTransport {
 
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "gree_id")
+    @JoinColumn(name = "green_id")
     private Green green;
 
 

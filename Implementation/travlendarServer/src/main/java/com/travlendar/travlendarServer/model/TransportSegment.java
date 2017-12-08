@@ -2,27 +2,28 @@ package com.travlendar.travlendarServer.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
+
+
 
 @Entity
 @Table(name = "transport_segment")
 public class TransportSegment implements Serializable{
-
-
-    @Column(name = "num_order",insertable = false, updatable = false)
-    private long numOrder;
-
+    //@Column(name = "num_order",insertable = false, updatable = false)
+    //private long numOrder;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumns({
-            @JoinColumn(name = "transport_solution_event_1", referencedColumnName = "event_id_1",insertable = false, updatable = false),
-            @JoinColumn(name = "transport_solution_event_2",  referencedColumnName = "event_id_2",insertable = false, updatable = false)
+            @JoinColumn(name = "transport_solution_event_id_1", referencedColumnName = "event_id_1",insertable = false, updatable = false),
+            @JoinColumn(name = "transport_solution_event_id_2",  referencedColumnName = "event_id_2",insertable = false, updatable = false)
     })
     private TransportSolution transportSolution;
 
     @EmbeddedId
     private TransportSegmentId transportSegmentId;
 
+    public TransportSegmentId getTransportSegmentId() {
+        return transportSegmentId;
+    }
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="private_transport_id")
@@ -60,7 +61,7 @@ public class TransportSegment implements Serializable{
         this.positionBY = positionBY;
     }
 
-    public long getNumOrder() {
+    /*public long getNumOrder() {
         return numOrder;
     }
 
@@ -122,5 +123,9 @@ public class TransportSegment implements Serializable{
 
     public void setPositionBY(Float positionBY) {
         this.positionBY = positionBY;
-    }
+    }*/
+
+
+
+
 }

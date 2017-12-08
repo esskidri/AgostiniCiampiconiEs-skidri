@@ -1,14 +1,9 @@
 package com.travlendar.travlendarServer.controller;
 
-
-
 // Imports ...
 
 import com.travlendar.travlendarServer.model.*;
-import com.travlendar.travlendarServer.model.dao.EventDao;
-import com.travlendar.travlendarServer.model.dao.FreetTimeDao;
-import com.travlendar.travlendarServer.model.dao.TransportSolutionDao;
-import com.travlendar.travlendarServer.model.dao.UserDao;
+import com.travlendar.travlendarServer.model.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -105,13 +101,28 @@ public class UserController {
 
     @Autowired
     private FreetTimeDao freetTimeDao;
+
+    @Autowired
+    private TransportSolutionDao transportSolutionDao;
+
+    @Autowired
+    private TransportSegmentDao transportSegmentDao;
+
+
+    @Autowired
+    private EventDao eventDao;
+
+
     @RequestMapping("/free")
     @ResponseBody
     public String free() {
         try {
            User user =  userDao.findOne((long) 5);
-            System.out.printf("okok");
-           userDao.delete(user.getId());
+           List<FreeTime> freeTimes= (List<FreeTime>) freetTimeDao.findAll();
+           List<TransportSolution> transportSolutions= (List<TransportSolution>) transportSolutionDao.findAll();
+           List<TransportSegment> transportSegments=(List<TransportSegment>) transportSegmentDao.findAll();
+           System.out.printf("okok");
+
         }
         catch (Exception ex) {
             return "Error creating the user: " + ex.toString();
@@ -120,11 +131,6 @@ public class UserController {
     }
 
 
-    @Autowired
-    private EventDao eventDao;
-
-    @Autowired
-    private TransportSolutionDao transportSolutionDao;
 
     @RequestMapping("/event")
     @ResponseBody
@@ -140,23 +146,8 @@ public class UserController {
 
     @RequestMapping("/fetch")
     @ResponseBody
-    @Transactional
-    public String fecth() {
-        String des="";
-        try {
-           Event e=eventDao.findOne((long)9);
-           des+=" "+ e.getName();
-           des+="ts1size: "+e.getTransportSolutions().size();
-           des+="ts2size "+e.getTransportSolutions2().size();
-
-
-
-
-        }
-        catch (Exception ex) {
-            return "Error : " + ex.toString();
-        }
-        return des;
+    public String fetch() {
+       return "";
     }
 
 
