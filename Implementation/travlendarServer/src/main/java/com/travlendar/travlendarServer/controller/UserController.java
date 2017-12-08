@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Controller
@@ -169,12 +170,35 @@ public class UserController {
     @RequestMapping("/transportSolution")
     @ResponseBody
     public String transportSolutionRequest(){
-        long userId=1;
-        User u=userDao.findById(userId);
+        List<User> us= (List<User>) userDao.findAll();
+        User u=us.get(0);
+
+       Timestamp t1=new Timestamp(2018,13,14,8,39,19,00);
+        Timestamp t2=new Timestamp(2018,13,14,9,39,19,00);
+        Timestamp t3=new Timestamp(2018,13,14,11,39,19,00);
+        Timestamp t4=new Timestamp(2018,13,14,12,39,19,00);
 
 
 
-        return"";
+        Event e1= new Event(t1,t2,(float)45,(float)46.0,"partita inter","vinciamonoi",false);
+        Event e2= new Event(t3,t4,(float)45,(float)46.0,"post partita","vinciamopoi",false);
+        e1.setUser(u);
+        e2.setUser(u);
+        //validator-->
+
+        //save-->
+        eventDao.save(e1);
+        eventDao.save(e2);
+
+        //TS-->
+        TransportSolutionId tsId=new TransportSolutionId(e1.getId(),e2.getId());
+        TransportSolution transportSolution=new TransportSolution(e1,e2,tsId,null);
+
+
+        transportSolutionDao.save(transportSolution);
+
+        String s=" "+e1.getId();
+        return  s;
     }
 
 

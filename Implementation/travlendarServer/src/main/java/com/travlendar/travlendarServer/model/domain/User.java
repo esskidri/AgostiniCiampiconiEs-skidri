@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -155,4 +155,7 @@ public class User {
     public void setEvents(List<Event> events) {
         this.events = events;
     }
+
+
+
 }
