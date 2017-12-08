@@ -130,5 +130,21 @@ public class Event implements Serializable{
 
     public void setTransportSolutions2(List<TransportSolution> transportSolutions2) {
         this.transportSolutions2 = transportSolutions2;
+    public boolean getEndEvent() {
+        return endEvent;
+    }
+
+    public boolean overlapping(Event e){
+        if(this.compareTo(e) < 0 && e.startDate.compareTo(this.endDate) < 0)
+            return true;
+        return false;
+    }
+
+    @Override
+    public int compareTo(Event e) {
+        if(this.startDate.compareTo(e.startDate)!= 0)
+            return this.startDate.compareTo(e.startDate);
+        else
+            return this.endDate.compareTo(endDate);
     }
 }
