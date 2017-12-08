@@ -1,4 +1,4 @@
-package com.travlendar.travlendarServer.model;
+package com.travlendar.travlendarServer.model.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -61,7 +61,7 @@ public class TransportSegment implements Serializable{
         this.positionBY = positionBY;
     }
 
-    /*public long getNumOrder() {
+    public long getNumOrder() {
         return numOrder;
     }
 
@@ -123,7 +123,7 @@ public class TransportSegment implements Serializable{
 
     public void setPositionBY(Float positionBY) {
         this.positionBY = positionBY;
-    }*/
+    }
 
 
 

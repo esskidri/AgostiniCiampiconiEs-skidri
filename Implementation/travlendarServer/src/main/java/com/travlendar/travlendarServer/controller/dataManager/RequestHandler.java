@@ -1,8 +1,8 @@
 package com.travlendar.travlendarServer.controller.dataManager;
 
 
-import com.travlendar.travlendarServer.model.PrivateTransport;
-import com.travlendar.travlendarServer.model.User;
+import com.travlendar.travlendarServer.model.domain.PrivateTransport;
+import com.travlendar.travlendarServer.model.domain.User;
 import com.travlendar.travlendarServer.model.dao.FreetTimeDao;
 import com.travlendar.travlendarServer.model.dao.PrivateTransportDao;
 import com.travlendar.travlendarServer.model.dao.UserDao;

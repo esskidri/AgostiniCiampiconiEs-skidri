@@ -2,8 +2,8 @@ package com.travlendar.travlendarServer.controller;
 
 // Imports ...
 
-import com.travlendar.travlendarServer.model.*;
 import com.travlendar.travlendarServer.model.dao.*;
+import com.travlendar.travlendarServer.model.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -109,7 +108,6 @@ public class UserController {
     @Autowired
     private TransportSegmentDao transportSegmentDao;
 
-
     @Autowired
     private EventDao eventDao;
 
@@ -143,16 +141,11 @@ public class UserController {
             List<User> users = (List<User>) userDao.findAll();
             List<Event> events= (List<Event>) eventDao.findAll();
             System.out.println("AVARAAAAAAAAAAAAA");
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             return "Error creating the user: " + ex.toString();
         }
         return " succesfully ";
     }
-
-
-
-
 
     @RequestMapping("/event")
     @ResponseBody
@@ -170,6 +163,18 @@ public class UserController {
     @ResponseBody
     public String fetch() {
        return "";
+    }
+
+
+    @RequestMapping("/transportSolution")
+    @ResponseBody
+    public String transportSolutionRequest(){
+        long userId=1;
+        User u=userDao.findById(userId);
+
+
+
+        return"";
     }
 
 

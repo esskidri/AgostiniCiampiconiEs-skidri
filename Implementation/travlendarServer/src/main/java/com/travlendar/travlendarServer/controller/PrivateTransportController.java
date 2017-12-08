@@ -1,8 +1,8 @@
 package com.travlendar.travlendarServer.controller;
 
-import com.travlendar.travlendarServer.model.PrivateTransport;
+import com.travlendar.travlendarServer.model.domain.PrivateTransport;
 import com.travlendar.travlendarServer.model.dao.PrivateTransportDao;
-import com.travlendar.travlendarServer.model.User;
+import com.travlendar.travlendarServer.model.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -7,7 +7,7 @@ import com.travlendar.travlendarServer.logic.exceptions.NoMeanAvailableExpection
 import com.travlendar.travlendarServer.logic.util.GoogleResponseMappedObject;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
 import com.travlendar.travlendarServer.model.MeanOfTransport;
-import com.travlendar.travlendarServer.model.TransportSegment;
+import com.travlendar.travlendarServer.model.domain.TransportSegment;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 

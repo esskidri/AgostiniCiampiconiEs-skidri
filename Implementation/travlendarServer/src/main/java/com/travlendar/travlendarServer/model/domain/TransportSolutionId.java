@@ -1,4 +1,4 @@
-package com.travlendar.travlendarServer.model;
+package com.travlendar.travlendarServer.model.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

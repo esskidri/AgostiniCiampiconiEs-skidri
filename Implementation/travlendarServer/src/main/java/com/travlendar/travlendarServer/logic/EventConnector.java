@@ -3,8 +3,8 @@ package com.travlendar.travlendarServer.logic;
 
 
 
-import com.travlendar.travlendarServer.model.Event;
-import com.travlendar.travlendarServer.model.TransportSolution;
+import com.travlendar.travlendarServer.model.domain.Event;
+import com.travlendar.travlendarServer.model.domain.TransportSolution;
 import com.travlendar.travlendarServer.logic.util.EventGraph;
 
 

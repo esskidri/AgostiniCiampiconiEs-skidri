@@ -1,8 +1,7 @@
-package com.travlendar.travlendarServer.model;
+package com.travlendar.travlendarServer.model.domain;
 
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity

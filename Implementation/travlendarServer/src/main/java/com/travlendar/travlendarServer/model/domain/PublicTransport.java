@@ -1,7 +1,6 @@
-package com.travlendar.travlendarServer.model;
+package com.travlendar.travlendarServer.model.domain;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
 @Entity

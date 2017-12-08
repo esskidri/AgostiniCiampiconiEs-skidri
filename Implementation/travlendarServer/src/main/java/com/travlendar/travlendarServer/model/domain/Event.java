@@ -1,4 +1,4 @@
-package com.travlendar.travlendarServer.model;
+package com.travlendar.travlendarServer.model.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "event")
-public class Event implements Serializable{
+public class Event implements Serializable,Comparable<Event>{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -130,6 +130,7 @@ public class Event implements Serializable{
 
     public void setTransportSolutions2(List<TransportSolution> transportSolutions2) {
         this.transportSolutions2 = transportSolutions2;
+    }
     public boolean getEndEvent() {
         return endEvent;
     }
