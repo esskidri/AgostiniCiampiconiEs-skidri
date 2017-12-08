@@ -6,14 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @SpringBootApplication
-@RestController
 public class TravlendarServerApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(TravlendarServerApplication.class, args);
 	}
-    @RequestMapping("/greet")
-    public String helloGreeting() {
-        return "Hello REST";
-    }
 }
