@@ -30,6 +30,8 @@ public class UserOrder {
     @JoinColumn(name = "private_transport_id")
     private PrivateTransport privateTransport;
 
+    public UserOrder(){}
+
     public UserOrder(int order, User user, PublicTransport publicTransport, PrivateTransport privateTransport) {
         this.order = order;
         this.user = user;
@@ -76,4 +78,6 @@ public class UserOrder {
     public void setPrivateTransport(PrivateTransport privateTransport) {
         this.privateTransport = privateTransport;
     }
+
+
 }

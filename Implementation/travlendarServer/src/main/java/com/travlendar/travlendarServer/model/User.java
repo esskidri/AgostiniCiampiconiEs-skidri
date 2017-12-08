@@ -51,7 +51,7 @@ public class User {
     private List<Event> events;
 
 
-     public User() { }
+    public User() { }
 
     public long getId() {
         return id;

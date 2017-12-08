@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@Transactional
 public class UserController {
     @Autowired
     private UserDao userDao;
@@ -112,6 +113,9 @@ public class UserController {
     @Autowired
     private EventDao eventDao;
 
+    @Autowired
+    private UserOrderDao userOrderDao;
+
 
     @RequestMapping("/free")
     @ResponseBody
@@ -121,14 +125,32 @@ public class UserController {
            List<FreeTime> freeTimes= (List<FreeTime>) freetTimeDao.findAll();
            List<TransportSolution> transportSolutions= (List<TransportSolution>) transportSolutionDao.findAll();
            List<TransportSegment> transportSegments=(List<TransportSegment>) transportSegmentDao.findAll();
-           System.out.printf("okok");
-
+           TransportSegmentId transportSegmentId= new TransportSegmentId((long)0,(long)9,(long)13);
+           TransportSegment transportSegment=transportSegmentDao.findOne(transportSegmentId);
+           List<Event>event= (List<Event>) eventDao.findAll();
+           System.out.println("AVARAAAAAAAAAAAAA");
         }
         catch (Exception ex) {
             return "Error creating the user: " + ex.toString();
         }
         return " succesfully ";
     }
+
+    @RequestMapping("/preferences")
+    @ResponseBody
+    public String preferences() {
+        try {
+            List<User> users = (List<User>) userDao.findAll();
+            List<Event> events= (List<Event>) eventDao.findAll();
+            System.out.println("AVARAAAAAAAAAAAAA");
+        }
+        catch (Exception ex) {
+            return "Error creating the user: " + ex.toString();
+        }
+        return " succesfully ";
+    }
+
+
 
 
 
