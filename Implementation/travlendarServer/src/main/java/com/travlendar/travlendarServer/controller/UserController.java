@@ -29,7 +29,9 @@ public class UserController {
      */
     @RequestMapping("/create")
     @ResponseBody
-    public String create(@RequestParam("email") String email, @RequestParam("fn") String f_name, @RequestParam("ln") String l_name, @RequestParam("age") int age, @RequestParam("sex") String sex) {
+    public String create(@RequestParam("email") String email, @RequestParam("fn") String f_name,
+                         @RequestParam("ln") String l_name, @RequestParam("age") int age,
+                         @RequestParam("sex") String sex) {
         String mpolicy = "green";
         String userId = "";
         try {
