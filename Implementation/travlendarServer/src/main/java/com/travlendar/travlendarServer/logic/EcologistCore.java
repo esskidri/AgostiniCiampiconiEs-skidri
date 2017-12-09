@@ -1,6 +1,6 @@
 package com.travlendar.travlendarServer.logic;
 
-import com.travlendar.travlendarServer.model.MeanOfTransport;
+import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
 import com.travlendar.travlendarServer.model.domain.UserPreferences;
 
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 public class EcologistCore implements CalculatorCore {
 
     @Override
-    public List<MeanOfTransport> getMeanOfTransports(UserPreferences userPreferences) {
+    public List<MeanOfTransportLogic> getMeanOfTransports(UserPreferences userPreferences) {
         return null;
     }
 }

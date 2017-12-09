@@ -1,39 +1,40 @@
 package com.travlendar.travlendarServer.logic.util;
 
+import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
 import com.travlendar.travlendarServer.model.domain.Event;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class EventGraph {
-    private List<Event> nodes;
-    private Map<Event, List<Event>> edges;
+    private List<EventLogic> nodes;
+    private Map<EventLogic, List<EventLogic>> edges;
 
-    public List<Event> nodes() {
+    public List<EventLogic> nodes() {
         return nodes;
     }
 
-    public EventGraph(List<Event> nodes, Map<Event, List<Event>> edges) {
+    public EventGraph(List<EventLogic> nodes, Map<EventLogic, List<EventLogic>> edges) {
         this.nodes = nodes;
         this.edges = edges;
     }
 
-    public Map<Event, List<Event>> edges() {
+    public Map<EventLogic, List<EventLogic>> edges() {
         return edges;
     }
 
-    public List<Event> adjacentNodes(Event u) {
+    public List<EventLogic> adjacentNodes(EventLogic u) {
         return edges.get(u);
     }
 
-    public boolean contains(Event u) {
+    public boolean contains(EventLogic u) {
         return nodes.contains(u);
     }
 
-    public void addNode(Event u){
+    public void addNode(EventLogic u){
         int i = 0;
         if(!nodes.contains(u)) {
-            for (Event event : nodes) {
+            for (EventLogic event : nodes) {
                 if (event.compareTo(u) > 0)
                     break;
                 i++;
@@ -43,16 +44,16 @@ public class EventGraph {
     }
 
 
-    public List<Edge> edgesFrom(Event u) {
+    public List<Edge> edgesFrom(EventLogic u) {
         return edges.get(u).stream()
                 .map(v -> new Edge(u, v))
                 .collect(Collectors.toList());
     }
 
-    public void connect(Event e1, Event e2){
+    public void connect(EventLogic e1, EventLogic e2){
         if(!isAdjacent(e1, e2)){
             int i = 0;
-            for(Event event: edges.get(e1)){
+            for(EventLogic event: edges.get(e1)){
                 if(event.compareTo(e2) > 0)
                     break;
             }
@@ -60,11 +61,11 @@ public class EventGraph {
         }
     }
 
-    public boolean isAdjacent(Event u, Event v) {
+    public boolean isAdjacent(EventLogic u, EventLogic v) {
         return edges.containsKey(u) && edges.get(u).contains(v);
     }
 
-    public boolean pathExists(Event u, Event v) {
+    public boolean pathExists(EventLogic u, EventLogic v) {
         return pathExists(u, v, true);
     }
 
@@ -73,18 +74,18 @@ public class EventGraph {
      * If includeAdjacent is false, it returns true if there exists
      * another path from s to e of distance > 1
      */
-    private boolean pathExists(Event u, Event v, boolean includeAdjacent) {
+    private boolean pathExists(EventLogic u, EventLogic v, boolean includeAdjacent) {
         if (!nodes.contains(u) || !nodes.contains(v)) {
             return false;
         }
         if (includeAdjacent && isAdjacent(u, v)) {
             return true;
         }
-        Deque<Event> stack = new LinkedList<>();
-        Set<Event> visited = new HashSet<>();
+        Deque<EventLogic> stack = new LinkedList<>();
+        Set<EventLogic> visited = new HashSet<>();
         stack.push(u);
         while (!stack.isEmpty()) {
-            Event node = stack.pop();
+            EventLogic node = stack.pop();
             if (node.equals(v)) {
                 return true;
             }
@@ -100,18 +101,18 @@ public class EventGraph {
     }
 
     public static class Edge {
-        final Event s;
-        final Event e;
-        Edge(Event u, Event v) {
+        final EventLogic s;
+        final EventLogic e;
+        Edge(EventLogic u, EventLogic v) {
             this.s = u;
             this.e = v;
         }
 
-        public Event getS() {
+        public EventLogic getS() {
             return s;
         }
 
-        public Event getE() {
+        public EventLogic getE() {
             return e;
         }
 

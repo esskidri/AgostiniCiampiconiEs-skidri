@@ -1,5 +1,9 @@
 package com.travlendar.travlendarServer.model.domain;
 
+import com.travlendar.travlendarServer.logic.modelInterface.TransportSegmentLogic;
+import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
+import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -7,7 +11,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "transport_segment")
-public class TransportSegment implements Serializable{
+public class TransportSegment implements Serializable, TransportSegmentLogic {
     @Column(name = "num_order",insertable = false, updatable = false)
     private long numOrder;
 
@@ -126,6 +130,29 @@ public class TransportSegment implements Serializable{
     }
 
 
+    /***
+     *  Logic Interface Implementation
+     ***/
 
+    @Override
+    public void setMeanOfTransport(MeanOfTransportLogic meanOfTransport) {
+        //TODO needed to mask the OO difference between Public and Private mean of transport
+    }
 
+    @Override
+    public void setOrigin(Coordinates coordinates) {
+        positionAX = coordinates.getLat();
+        positionAY = coordinates.getLng();
+    }
+
+    @Override
+    public void setDestination(Coordinates coordinates) {
+        positionBX = coordinates.getLat();
+        positionBY = coordinates.getLng();
+    }
+
+    @Override
+    public boolean isAdiacent(Coordinates coordinates) {
+        return coordinates.getLat() == positionBX && coordinates.getLng() == positionBY;
+    }
 }

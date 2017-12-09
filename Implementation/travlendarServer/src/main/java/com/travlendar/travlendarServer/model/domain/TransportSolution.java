@@ -1,13 +1,17 @@
 package com.travlendar.travlendarServer.model.domain;
 
 
+import com.travlendar.travlendarServer.logic.modelInterface.TransportSegmentLogic;
+import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLogic;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "transport_solution")
-public class TransportSolution implements Serializable {
+public class TransportSolution implements Serializable, TransportSolutionLogic {
 
     @OneToOne
     @JoinColumn(name="event_id_1",insertable = false, updatable = false)
@@ -53,5 +57,26 @@ public class TransportSolution implements Serializable {
 
     public void setTransportSegments(List<TransportSegment> transportSegments) {
         this.transportSegments = transportSegments;
+    }
+
+    /***
+     *  Logic interface Implementation
+     */
+
+    /***
+     *
+     *
+     *
+     * @param transportSegmentsLogic
+     */
+
+    @Override
+    public void setTransportSegmentsByLogic(List<TransportSegmentLogic> transportSegmentsLogic) {
+        List<TransportSegment> transportSegments = new ArrayList<>();
+
+        for(TransportSegmentLogic transportSegmentLogic : transportSegmentsLogic)
+            transportSegments.add((TransportSegment) transportSegmentLogic);
+
+        setTransportSegments(transportSegments);
     }
 }
