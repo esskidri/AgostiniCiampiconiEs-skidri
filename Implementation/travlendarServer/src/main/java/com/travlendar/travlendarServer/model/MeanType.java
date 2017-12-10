@@ -1,28 +1,49 @@
-package com.travlendar.travlendarServer.logic;
+package com.travlendar.travlendarServer.model;
 
-public enum TypeOfTransport {
+public enum MeanType {
 
-    DRIVING {
-        @Override
-        public String toHttpsFormat() {
-            return "driving";
-        }
-    }, WALKING {
-        @Override
-        public String toHttpsFormat() {
-            return "walking";
-        }
-    }, BICYCLING {
+    BIKE {
         @Override
         public String toHttpsFormat() {
             return "bicycling";
         }
-    }, TRANSIT {
+    },
+    MOTORBIKE {
+        @Override
+        public String toHttpsFormat() {
+            return "driving";
+        }
+    },
+    CAR {
+        @Override
+        public String toHttpsFormat() {
+            return "driving";
+        }
+    },
+    ELECTRIC_CAR {
+        @Override
+        public String toHttpsFormat() {
+            return "driving";
+        }
+    },
+    ELECTRIC_MOTORBIKE {
+        @Override
+        public String toHttpsFormat() {
+            return "driving";
+        }
+    },
+    BUS {
         @Override
         public String toHttpsFormat() {
             return "transit";
         }
     };
 
+    /***
+     *
+     * Interface for Google HTTPS request
+     *
+     * @return
+     */
     public abstract String toHttpsFormat();
 }

@@ -1,10 +1,10 @@
 package com.travlendar.travlendarServer.logic.modelInterface;
 
-import com.travlendar.travlendarServer.logic.TypeOfTransport;
+import com.travlendar.travlendarServer.model.MeanType;
 
 public interface MeanOfTransportLogic {
 
-    public TypeOfTransport getTypeOfTransport();
+    public MeanType getTypeOfTransport();
 
     boolean isPrivate();
 }

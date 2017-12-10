@@ -4,8 +4,7 @@ import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.logic.util.EventGraph;
-import com.travlendar.travlendarServer.model.domain.TransportSolution;
-import com.travlendar.travlendarServer.model.domain.User;
+import com.travlendar.travlendarServer.model.Policy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ public class MainLogic {
 
         for(EventLogic outGoing: events){
             for(EventLogic inGoing: eventGraph.edges().get(outGoing))
-                transportSolutions.add((new TransportSolutionCalculator(Policy.GREEN.getCore())).calculateSolution( outGoing.getCoordinates(), inGoing.getCoordinates(), outGoing.getEndDate(), inGoing.getStartDate(), user.getUserPreferences()));
+                transportSolutions.add((new TransportSolutionCalculator(Policy.GREEN.getCore())).calculateSolution( outGoing.getCoordinates(), inGoing.getCoordinates(), outGoing.getEndDate(), inGoing.getStartDate(), user));
         }
 
         return transportSolutions;
