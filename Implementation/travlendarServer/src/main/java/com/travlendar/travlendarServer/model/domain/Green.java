@@ -1,6 +1,8 @@
 package com.travlendar.travlendarServer.model.domain;
 
 
+import com.travlendar.travlendarServer.model.EnumGreenLevel;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -14,7 +16,7 @@ public class Green {
     private long id;
 
     @Column(name = "level")
-    private String level;
+    private EnumGreenLevel level;
 
     @Column(name = "description")
     private String description;
@@ -36,11 +38,11 @@ public class Green {
         this.id = id;
     }
 
-    public String getLevel() {
+    public EnumGreenLevel getLevel() {
         return level;
     }
 
-    public void setLevel(String level) {
+    public void setLevel(EnumGreenLevel level) {
         this.level = level;
     }
 

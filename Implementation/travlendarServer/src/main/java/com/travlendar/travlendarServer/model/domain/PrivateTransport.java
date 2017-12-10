@@ -1,6 +1,6 @@
 package com.travlendar.travlendarServer.model.domain;
 
-import com.travlendar.travlendarServer.model.MeanOfTransport;
+
 import com.travlendar.travlendarServer.model.MeanType;
 
 import javax.persistence.*;
