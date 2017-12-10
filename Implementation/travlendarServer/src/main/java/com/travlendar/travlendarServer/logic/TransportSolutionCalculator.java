@@ -15,17 +15,18 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TransportSolutionCalculator {
     private CalculatorCore calculatorCore;
-    private List<TransportSegmentLogic> transportSegments;
+    private List<TransportSegmentLogic> transportSegments = new ArrayList<>();
 
     public TransportSolutionCalculator(CalculatorCore calculatorCore) {
         this.calculatorCore = calculatorCore;
     }
 
-    public TransportSolutionLogic calculateSolution(Coordinates startingLocation, Coordinates endingLocation, Timestamp startingTime, Timestamp arrivalTime, UserLogic userLogic){
+    public TransportSolutionLogic calculateSolution(Coordinates startingLocation, Coordinates endingLocation, Timestamp startingTime, Timestamp arrivalTime, UserLogic userLogic) {
         List<MeanOfTransportLogic> meansOfTransport = calculatorCore.getMeanOfTransports(userLogic);
 
         try {
@@ -69,25 +70,24 @@ public class TransportSolutionCalculator {
         GoogleResponseMappedObject googleResponseMappedObject;
         try {
             if (isMeanAvailablePrivately(meansOfTransport.get(0))) {
-                googleResponseMappedObject = callGoogleAPI(startingLocation.toHttpsFormat(), endingLocation.toHttpsFormat(), meansOfTransport.get(0).getTypeOfTransport().toHttpsFormat(), arrivalTime.toString());
+                googleResponseMappedObject = callGoogleAPI(startingLocation.toHttpsFormat(), endingLocation.toHttpsFormat(), meansOfTransport.get(0).getTypeOfTransport().toHttpsFormat(), ((Long) arrivalTime.getTime()).toString());
             } else {
                 Coordinates mediumLocation = getLocationByExternalAPI(meansOfTransport.get(0));
-                googleResponseMappedObject = callGoogleAPI(mediumLocation.toHttpsFormat(), endingLocation.toHttpsFormat(), meansOfTransport.get(0).getTypeOfTransport().toHttpsFormat(), arrivalTime.toString());
-                if(googleResponseMappedObject.getDepartingTime().compareTo(startingTime) < 0)
+                googleResponseMappedObject = callGoogleAPI(mediumLocation.toHttpsFormat(), endingLocation.toHttpsFormat(), meansOfTransport.get(0).getTypeOfTransport().toHttpsFormat(), ((Long) arrivalTime.getTime()).toString());
+                if (googleResponseMappedObject.getDepartingTime().compareTo(startingTime) < 0)
                     throw new EarlyStartException();
                 calculateSegment(startingLocation, mediumLocation, startingTime, googleResponseMappedObject.getDepartingTime(), meansOfTransport.subList(1, meansOfTransport.size()));
             }
             insertTransportSegments(googleResponseMappedObject, meansOfTransport.get(0));
-            if(googleResponseMappedObject.isPartialSolution())
-                calculateSegment(googleResponseMappedObject.getEndingLocation(), endingLocation, googleResponseMappedObject.getArrivalTime(), arrivalTime,meansOfTransport.subList(1, meansOfTransport.size()));
+            if (googleResponseMappedObject.isPartialSolution())
+                calculateSegment(googleResponseMappedObject.getEndingLocation(), endingLocation, googleResponseMappedObject.getArrivalTime(), arrivalTime, meansOfTransport.subList(1, meansOfTransport.size()));
         } catch (MeanNotAvailableException e) {
-            if(meansOfTransport.size() != 0)
+            if (meansOfTransport.size() != 0)
                 calculateSegment(startingLocation, endingLocation, startingTime, arrivalTime, meansOfTransport.subList(1, meansOfTransport.size()));
             else
                 throw new NoMeanAvailableExpection();
-        }
-        catch (EarlyStartException e){
-            if(meansOfTransport.size() != 0)
+        } catch (EarlyStartException e) {
+            if (meansOfTransport.size() != 0)
                 calculateSegment(startingLocation, endingLocation, startingTime, arrivalTime, meansOfTransport.subList(1, meansOfTransport.size()));
             else
                 throw new CannotArriveInTimeException();
@@ -104,7 +104,7 @@ public class TransportSolutionCalculator {
 
         int i = 0;
 
-        for(TransportSegmentLogic transportSegment1: transportSegments) {
+        for (TransportSegmentLogic transportSegment1 : transportSegments) {
             if (transportSegment1.isAdiacent(googleResponseMappedObject.getStartingLocation())) {
                 break;
             }
@@ -126,11 +126,8 @@ public class TransportSolutionCalculator {
      * @param endingLocation
      * @param meanOfTransport
      * @param arrivalTime
-     * @return
-     *
-     * This method call the google API to request the calculation of a route between two points
+     * @return This method call the google API to request the calculation of a route between two points
      * with a specific mean of transport
-     *
      */
     private GoogleResponseMappedObject callGoogleAPI(String startingLocation, String endingLocation, String meanOfTransport, String arrivalTime) throws EarlyStartException {
         GoogleResponseMappedObject googleResponseMappedObject;

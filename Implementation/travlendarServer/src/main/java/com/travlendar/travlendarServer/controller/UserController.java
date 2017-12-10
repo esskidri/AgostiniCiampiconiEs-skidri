@@ -4,7 +4,10 @@ package com.travlendar.travlendarServer.controller;
 
 import com.travlendar.travlendarServer.controller.Exception.UserException;
 import com.travlendar.travlendarServer.extra.Converter;
+import com.travlendar.travlendarServer.logic.MainLogic;
+import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
+import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLogic;
 import com.travlendar.travlendarServer.model.Policy;
 import com.travlendar.travlendarServer.model.dao.*;
 import com.travlendar.travlendarServer.model.domain.*;
@@ -19,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -41,19 +45,6 @@ public class UserController {
           return "User succesfully created";
     }
 
-    @ResponseStatus(value=HttpStatus.FORBIDDEN,reason="user Exception")
-    @ExceptionHandler(UserException.class)
-    public String handleUserException(UserException ex) {
-          return ex.getMessage();
-    }
-
-
-
-    @ResponseStatus(value=HttpStatus.UNAUTHORIZED,reason="MIAOASDAOSDASOD error")
-    @ExceptionHandler(Exception.class)
-    public String handleCustomException(UserException ex) {
-        return ex.getMessage();
-    }
 
 
 
@@ -176,8 +167,18 @@ public class UserController {
     @ResponseBody
     public String fetch() {
        User user=userDao.findOne((long) 6);
-       List<MeanOfTransportLogic> ms= user.getMeanPreferences();
+     //List<MeanOfTransportLogic> ms= user.getMeanPreferences();
+       MainLogic mainLogic=new MainLogic();
+       List<EventLogic> eventLogics=new ArrayList<>();
 
+       Event e1=eventDao.findOne((long)31);
+       Event e2=eventDao.findOne((long)32);
+       eventLogics.add(e1);
+       eventLogics.add(e2);
+       List<TransportSolutionLogic> tsl=mainLogic.calculateTransportSolutions(eventLogics,user);
+
+       TransportSolution transportSolution=new TransportSolution();
+       TransportSolutionId transportSolutionId= new TransportSolutionId();
 
        return "okokok";
 

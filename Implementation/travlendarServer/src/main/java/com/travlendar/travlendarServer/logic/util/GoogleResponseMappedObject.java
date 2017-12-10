@@ -78,7 +78,7 @@ public class GoogleResponseMappedObject implements Serializable {
     public void checkCompleteness(String meanOfTransport) {
         int i = 0;
         for(Step step: getSteps()){
-            if(!step.getTravel_mode().equals(meanOfTransport)) {
+            if(!step.getTravel_mode().equals(meanOfTransport.toUpperCase())) {
                 cutWay(i);
                 break;
             }

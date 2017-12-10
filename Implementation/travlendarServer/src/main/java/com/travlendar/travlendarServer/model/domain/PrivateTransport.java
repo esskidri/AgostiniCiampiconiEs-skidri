@@ -123,12 +123,12 @@ public class PrivateTransport implements MeanOfTransportLogic {
 
     @Override
     public MeanType getTypeOfTransport() {
-        return null;
+        return type;
     }
 
     @Override
     public EnumGreenLevel getGreenLevel() {
-        return null;
+        return green.getLevel();
     }
 
     @Override

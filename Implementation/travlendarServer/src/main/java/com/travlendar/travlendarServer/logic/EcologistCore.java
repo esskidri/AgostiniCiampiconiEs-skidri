@@ -25,6 +25,7 @@ public class EcologistCore implements CalculatorCore {
         MeanOfTransportLogic best = meansOfTransport.get(index);
 
         for(MeanOfTransportLogic meanOfTransport: meansOfTransport.subList(index +1, meansOfTransport.size())){
+            //TODO order preservation
             if(!comapareGreenMeanOfTransport(best, meanOfTransport))
                 best = meanOfTransport;
         }
@@ -35,6 +36,6 @@ public class EcologistCore implements CalculatorCore {
         }
 
         if(index < meansOfTransport.size() -1)
-            orderMeanByGreen(meansOfTransport, index -1);
+            orderMeanByGreen(meansOfTransport, index +1);
     }
 }

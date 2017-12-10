@@ -45,14 +45,19 @@ public class EventGraph {
 
 
     public List<Edge> edgesFrom(EventLogic u) {
-        return edges.get(u).stream()
+        if(edges.containsKey(u))
+            return edges.get(u).stream()
                 .map(v -> new Edge(u, v))
                 .collect(Collectors.toList());
+        else
+            return new ArrayList<>();
     }
 
     public void connect(EventLogic e1, EventLogic e2){
         if(!isAdjacent(e1, e2)){
             int i = 0;
+            if(!edges.containsKey(e1))
+                edges.put(e1, new ArrayList<>());
             for(EventLogic event: edges.get(e1)){
                 if(event.compareTo(e2) > 0)
                     break;

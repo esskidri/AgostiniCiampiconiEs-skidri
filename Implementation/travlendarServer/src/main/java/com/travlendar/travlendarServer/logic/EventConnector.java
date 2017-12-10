@@ -8,6 +8,7 @@ import com.travlendar.travlendarServer.model.domain.Event;
 import com.travlendar.travlendarServer.logic.util.EventGraph;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,6 +20,8 @@ public class EventConnector {
 
     public static EventGraph findConnection(List<EventLogic> events){
         EventGraph eventGraph = new EventGraph(events, new HashMap<>());
+        for(EventLogic event: events)
+            eventGraph.edges().put(event, new ArrayList<>());
 
         int i = 0;
 
@@ -26,7 +29,7 @@ public class EventConnector {
             if(event.isEndEvent()){
                 insertHomeEvent(eventGraph,event);
             }
-            else if(i != eventGraph.nodes().size())
+            else if(i < eventGraph.nodes().size() - 1)
                 if(event.compareTo(eventGraph.nodes().get(i + 1)) != 0)
                     eventGraph.connect(event, eventGraph.nodes().get(i + 1));
             i++;

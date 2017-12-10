@@ -20,4 +20,5 @@ public class Converter {
         long time = date.getTime();
         return new Timestamp(time);
     }
+
 }
