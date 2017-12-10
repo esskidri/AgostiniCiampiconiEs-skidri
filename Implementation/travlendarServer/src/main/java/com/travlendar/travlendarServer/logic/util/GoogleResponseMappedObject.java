@@ -43,6 +43,10 @@ public class GoogleResponseMappedObject implements Serializable {
         return getLeg().getEnd_location();
     }
 
+    public Coordinates getStartingLocation() {
+        return getLeg().getStart_location();
+    }
+
     public void setDepartingTime(Timestamp departingTime) {
         this.departingTime = departingTime;
     }
