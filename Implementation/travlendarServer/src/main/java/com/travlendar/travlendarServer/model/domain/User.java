@@ -6,6 +6,8 @@ import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.model.Policy;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -174,6 +176,31 @@ public class User implements UserLogic {
 
     @Override
     public List<MeanOfTransportLogic> getMeanPreferences() {
-        return null;
+        int index;
+        List<MeanOfTransportLogic> means = new ArrayList<>();
+
+        //sort the user order
+        List<UserOrder> us=this.userOrders;
+        Collections.sort(us,(UserOrder u1, UserOrder u2) ->{
+            return ((Integer)u1.getOrder()).compareTo(u2.getOrder());
+        });
+
+
+        //foreach order wired with the user, if the record is consistent (only one transport field is !null)
+        //add the mean in the list with the correct index
+        for(UserOrder u:us){
+            if(!(u.getPrivateTransport()!=null && u.getPublicTransport()!=null)) {
+                if (u.getPrivateTransport() != null) {
+                    MeanOfTransportLogic m = u.getPrivateTransport();
+                    means.add(m);
+                } else if (u.getPublicTransport() != null) {
+                    MeanOfTransportLogic m = u.getPublicTransport();
+                    means.add(m);
+                }
+            }
+        }
+
+
+        return  means;
     }
 }

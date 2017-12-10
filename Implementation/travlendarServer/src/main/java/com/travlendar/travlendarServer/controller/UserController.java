@@ -2,14 +2,11 @@ package com.travlendar.travlendarServer.controller;
 
 // Imports ...
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.travlendar.travlendarServer.controller.Exception.UserException;
 import com.travlendar.travlendarServer.extra.Converter;
 import com.travlendar.travlendarServer.model.Policy;
 import com.travlendar.travlendarServer.model.dao.*;
 import com.travlendar.travlendarServer.model.domain.*;
-import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -180,16 +177,7 @@ public class UserController {
         return "okokok";
     }
 
-    @RequestMapping("/fetchJson")
-    @ResponseBody
-    public JSONObject fetchJson() {
-
-        String message;
-        JSONObject json = new JSONObject();
-        json.put("name", "student");
-
-        return json;
-    }
+    //TODO re-add Fetch JSON
 
 
     @RequestMapping("/transportSolution")
