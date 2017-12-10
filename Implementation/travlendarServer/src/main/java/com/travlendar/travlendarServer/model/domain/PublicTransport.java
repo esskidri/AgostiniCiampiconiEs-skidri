@@ -1,5 +1,7 @@
 package com.travlendar.travlendarServer.model.domain;
 
+import com.travlendar.travlendarServer.model.MeanType;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -31,9 +33,66 @@ public class PublicTransport {
     @OneToMany(mappedBy = "publicTransport")
     private List<TransportSegment> transportSegments;
 
+    @Column(name="type")
+    private MeanType type;
+
     private PublicTransport(){}
 
+    public long getId() {
+        return id;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<UserPublicTransport> getUserpublicTransports() {
+        return UserpublicTransports;
+    }
+
+    public void setUserpublicTransports(List<UserPublicTransport> userpublicTransports) {
+        UserpublicTransports = userpublicTransports;
+    }
+
+    public Green getGreen() {
+        return green;
+    }
+
+    public void setGreen(Green green) {
+        this.green = green;
+    }
+
+    public List<PublicTransport> getPublicTransport() {
+        return publicTransport;
+    }
+
+    public void setPublicTransport(List<PublicTransport> publicTransport) {
+        this.publicTransport = publicTransport;
+    }
+
+    public List<TransportSegment> getTransportSegments() {
+        return transportSegments;
+    }
+
+    public void setTransportSegments(List<TransportSegment> transportSegments) {
+        this.transportSegments = transportSegments;
+    }
+
+    public MeanType getType() {
+        return type;
+    }
+
+    public void setType(MeanType type) {
+        this.type = type;
+    }
 }
 
 

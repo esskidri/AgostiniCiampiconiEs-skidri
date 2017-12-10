@@ -1,6 +1,8 @@
 package com.travlendar.travlendarServer.model.domain;
 
 
+import com.travlendar.travlendarServer.model.EnumPolicy;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -32,7 +34,7 @@ public class User  {
     private String fiscal_code;
 
     @Column(name="policy")
-    private String policy;
+    private EnumPolicy policy;
 
     @ManyToMany(mappedBy = "users")
     private List<PrivateTransport> privateTransportList;
@@ -108,11 +110,11 @@ public class User  {
         this.fiscal_code = fiscal_code;
     }
 
-    public String getPolicy() {
+    public EnumPolicy getPolicy() {
         return policy;
     }
 
-    public void setPolicy(String policy) {
+    public void setPolicy(EnumPolicy policy) {
         this.policy = policy;
     }
 

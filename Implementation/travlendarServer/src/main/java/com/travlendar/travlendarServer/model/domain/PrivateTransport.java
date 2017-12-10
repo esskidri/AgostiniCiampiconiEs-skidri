@@ -1,5 +1,8 @@
 package com.travlendar.travlendarServer.model.domain;
 
+import com.travlendar.travlendarServer.model.MeanOfTransport;
+import com.travlendar.travlendarServer.model.MeanType;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -16,7 +19,7 @@ public class PrivateTransport {
     private String name;
 
     @Column(name="type")
-    private String type;
+    private MeanType type;
 
     @Column(name="displacement")
     private int displacement;
@@ -41,7 +44,7 @@ public class PrivateTransport {
 
     public PrivateTransport(){}
 
-    public PrivateTransport(String name, String type, int displacement, String license_plate, List<User> users, Green green, List<TransportSegment> transportSegments) {
+    public PrivateTransport(String name, MeanType type, int displacement, String license_plate, List<User> users, Green green, List<TransportSegment> transportSegments) {
         this.name = name;
         this.type = type;
         this.displacement = displacement;
@@ -67,11 +70,11 @@ public class PrivateTransport {
         this.name = name;
     }
 
-    public String getType() {
+    public MeanType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(MeanType type) {
         this.type = type;
     }
 
