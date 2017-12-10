@@ -124,6 +124,11 @@ public class PrivateTransport implements MeanOfTransportLogic{
     }
 
     @Override
+    public EnumGreenLevel getGreenLevel() {
+        return null;
+    }
+
+    @Override
     public boolean isPrivate() {
         return true;
     }
