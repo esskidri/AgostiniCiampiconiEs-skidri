@@ -4,7 +4,7 @@ import com.travlendar.travlendarServer.model.MeanType;
 
 public interface MeanOfTransportLogic {
 
-    public MeanType getTypeOfTransport();
-
+    MeanType getTypeOfTransport();
+    EnumGreenLevel getGreenLevel();
     boolean isPrivate();
 }

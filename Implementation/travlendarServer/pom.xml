@@ -50,6 +50,17 @@
             <artifactId>spring-test</artifactId>
             <version>4.3.7.RELEASE</version>
         </dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+        <dependency>
+            <groupId>net.minidev</groupId>
+            <artifactId>json-smart</artifactId>
+            <version>2.3</version>
+        </dependency>
+
     </dependencies>
 
 

@@ -40,12 +40,6 @@ public class RequestHandler {
         User user=userDao.findOne(id);
         PrivateTransport privateTransport=new PrivateTransport();
 
-
-
-
-
-
-
         Response r=new Response("");
         return r;
     }
