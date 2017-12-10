@@ -46,7 +46,7 @@ public class User implements UserLogic {
     private List<FreeTime> freeTimes;
 
     @OneToMany(mappedBy = "user")
-    private List<UserPublicTransport> UserpublicTransports;
+    private List<UserPublicTransport> UserPublicTransports;
 
     @OneToMany(mappedBy = "user")
     private List<UserOrder> userOrders;
@@ -148,11 +148,11 @@ public class User implements UserLogic {
     }
 
     public List<UserPublicTransport> getUserpublicTransports() {
-        return UserpublicTransports;
+        return UserPublicTransports;
     }
 
     public void setUserpublicTransports(List<UserPublicTransport> userpublicTransports) {
-        UserpublicTransports = userpublicTransports;
+        UserPublicTransports = userpublicTransports;
     }
 
     public List<UserOrder> getUserOrders() {
