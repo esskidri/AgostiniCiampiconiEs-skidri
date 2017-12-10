@@ -136,7 +136,10 @@ public class TransportSegment implements Serializable, TransportSegmentLogic {
 
     @Override
     public void setMeanOfTransport(MeanOfTransportLogic meanOfTransport) {
-        //TODO needed to mask the OO difference between Public and Private mean of transport
+        if(meanOfTransport.isPrivate())
+            privateTransport = (PrivateTransport) meanOfTransport;
+        else
+            publicTransport = (PublicTransport) meanOfTransport;
     }
 
     @Override

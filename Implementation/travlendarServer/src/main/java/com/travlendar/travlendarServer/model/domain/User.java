@@ -1,6 +1,8 @@
 package com.travlendar.travlendarServer.model.domain;
 
 
+import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
+import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.model.Policy;
 
 import javax.persistence.*;
@@ -8,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "user")
-public class User  {
+public class User implements UserLogic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -54,7 +56,7 @@ public class User  {
 
     public User() { }
 
-    public User(String first_name, String last_name, String email, Integer age, String sex, String fiscal_code, String policy) {
+    public User(String first_name, String last_name, String email, Integer age, String sex, String fiscal_code, Policy policy) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
@@ -169,5 +171,8 @@ public class User  {
     }
 
 
-
+    @Override
+    public List<MeanOfTransportLogic> getMeanPreferences() {
+        return null;
+    }
 }
