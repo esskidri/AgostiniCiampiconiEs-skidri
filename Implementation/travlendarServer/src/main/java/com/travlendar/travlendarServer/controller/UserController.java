@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.travlendar.travlendarServer.controller.Exception.UserException;
 import com.travlendar.travlendarServer.extra.Converter;
+import com.travlendar.travlendarServer.model.Policy;
 import com.travlendar.travlendarServer.model.dao.*;
 import com.travlendar.travlendarServer.model.domain.*;
 import net.minidev.json.JSONObject;
@@ -33,7 +34,7 @@ public class UserController {
     @ResponseBody
     public String create(@RequestParam("email") String email, @RequestParam("fn") String f_name,
                          @RequestParam("ln") String l_name, @RequestParam("age") int age,
-                         @RequestParam("sex") String sex,@RequestParam("policy")String policy) throws Exception {
+                         @RequestParam("sex") String sex,@RequestParam("policy")Policy policy) throws Exception {
 
           //validator.request
         
@@ -72,12 +73,9 @@ public class UserController {
             desc += "fcode: " + user.getFiscal_code() + "\n";
             desc += "sex:   " + user.getSex() + "\n";
             desc += "age:   " + user.getAge() + "\n";
-            desc += "policy:" + user.getPolicy() + "\n";
+            desc += "policy:" + user.getPolicy().toString() + "\n";
             //desc+="numbPMeans:"+user.getPrivateTransportList().size()+"  name of first:   "+user.getPrivateTransportList().get(0).getName()+"\n";
             System.out.println(desc);
-            PrivateTransport p1 = user.getPrivateTransportList().get(0);
-            //p1.setName("TESLAROADSTER");
-            userDao.save(user);
 
         } catch (Exception ex) {
             return "User not found";

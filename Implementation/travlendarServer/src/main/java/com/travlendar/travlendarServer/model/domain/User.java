@@ -36,6 +36,7 @@ public class User implements UserLogic {
     private String fiscal_code;
 
     @Column(name="policy")
+    @Enumerated(EnumType.STRING)
     private Policy policy;
 
     @ManyToMany(mappedBy = "users")

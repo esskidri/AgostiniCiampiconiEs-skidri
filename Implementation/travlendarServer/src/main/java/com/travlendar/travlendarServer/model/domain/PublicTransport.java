@@ -36,6 +36,7 @@ public class PublicTransport implements MeanOfTransportLogic {
     private List<TransportSegment> transportSegments;
 
     @Column(name="type")
+    @Enumerated(EnumType.STRING)
     private MeanType type;
 
     private PublicTransport(){}
