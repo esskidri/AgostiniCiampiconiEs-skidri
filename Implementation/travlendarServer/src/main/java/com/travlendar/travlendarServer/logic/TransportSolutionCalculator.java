@@ -6,6 +6,7 @@ import com.travlendar.travlendarServer.logic.exceptions.MeanNotAvailableExceptio
 import com.travlendar.travlendarServer.logic.exceptions.NoMeanAvailableExpection;
 import com.travlendar.travlendarServer.logic.modelInterface.TransportSegmentLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLogic;
+import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.logic.util.GoogleResponseMappedObject;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
 import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
@@ -24,8 +25,8 @@ public class TransportSolutionCalculator {
         this.calculatorCore = calculatorCore;
     }
 
-    public TransportSolutionLogic calculateSolution(Coordinates startingLocation, Coordinates endingLocation, Timestamp startingTime, Timestamp arrivalTime, UserPreferences userPreferences){
-        List<MeanOfTransportLogic> meansOfTransport = calculatorCore.getMeanOfTransports(userPreferences);
+    public TransportSolutionLogic calculateSolution(Coordinates startingLocation, Coordinates endingLocation, Timestamp startingTime, Timestamp arrivalTime, UserLogic userLogic){
+        List<MeanOfTransportLogic> meansOfTransport = calculatorCore.getMeanOfTransports(userLogic);
 
         try {
             calculateSegment(startingLocation, endingLocation, startingTime, arrivalTime, meansOfTransport);
