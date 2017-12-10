@@ -172,8 +172,11 @@ public class Event implements Serializable,  EventLogic {
 
     @Override
     public Coordinates getCoordinates() {
-        //TODO
-        return null;
+        Coordinates coordinates = new Coordinates();
+        coordinates.setLat(posX);
+        coordinates.setLng(posY);
+
+        return coordinates;
     }
 
 

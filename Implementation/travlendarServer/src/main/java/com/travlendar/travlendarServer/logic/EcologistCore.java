@@ -11,10 +11,30 @@ public class EcologistCore implements CalculatorCore {
     public List<MeanOfTransportLogic> getMeanOfTransports(UserLogic userLogic) {
         List<MeanOfTransportLogic> meansOfTransport = userLogic.getMeanPreferences();
 
-        return null;
+        orderMeanByGreen(meansOfTransport, 0);
+
+        return meansOfTransport;
     }
 
-    private boolean comapareMeanOfTransport(MeanOfTransportLogic meanOfTransport1, MeanOfTransportLogic meanOfTransport2){
+    private boolean comapareGreenMeanOfTransport(MeanOfTransportLogic meanOfTransport1, MeanOfTransportLogic meanOfTransport2){
+        //TODO
         return true;
+    }
+
+    private void orderMeanByGreen(List<MeanOfTransportLogic> meansOfTransport, int index){
+        MeanOfTransportLogic best = meansOfTransport.get(index);
+
+        for(MeanOfTransportLogic meanOfTransport: meansOfTransport.subList(index +1, meansOfTransport.size())){
+            if(!comapareGreenMeanOfTransport(best, meanOfTransport))
+                best = meanOfTransport;
+        }
+
+        if(meansOfTransport.indexOf(best) != index) {
+            meansOfTransport.remove(best);
+            meansOfTransport.add(0, best);
+        }
+
+        if(index < meansOfTransport.size() -1)
+            orderMeanByGreen(meansOfTransport, index -1);
     }
 }

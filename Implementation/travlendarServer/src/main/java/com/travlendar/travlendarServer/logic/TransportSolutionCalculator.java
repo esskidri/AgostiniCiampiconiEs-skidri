@@ -32,9 +32,11 @@ public class TransportSolutionCalculator {
             calculateSegment(startingLocation, endingLocation, startingTime, arrivalTime, meansOfTransport);
         } catch (NoMeanAvailableExpection noMeanAvailableExpection) {
             //TODO
+            System.out.println("NoMeanAvailableException");
             noMeanAvailableExpection.printStackTrace();
         } catch (CannotArriveInTimeException e) {
             //TODO
+            System.out.println("CannotArriveInTimeException");
             e.printStackTrace();
         }
 
