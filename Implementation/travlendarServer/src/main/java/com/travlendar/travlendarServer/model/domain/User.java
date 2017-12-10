@@ -34,6 +34,7 @@ public class User  {
     private String fiscal_code;
 
     @Column(name="policy")
+    @Enumerated(EnumType.STRING)
     private Policy policy;
 
     @ManyToMany(mappedBy = "users")
@@ -54,7 +55,7 @@ public class User  {
 
     public User() { }
 
-    public User(String first_name, String last_name, String email, Integer age, String sex, String fiscal_code, String policy) {
+    public User(String first_name, String last_name, String email, Integer age, String sex, String fiscal_code, Policy policy) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
