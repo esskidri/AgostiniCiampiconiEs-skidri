@@ -2,9 +2,13 @@ package com.travlendar.travlendarServer.controller;
 
 // Imports ...
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.travlendar.travlendarServer.controller.Exception.UserException;
 import com.travlendar.travlendarServer.extra.Converter;
 import com.travlendar.travlendarServer.model.dao.*;
 import com.travlendar.travlendarServer.model.domain.*;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -24,25 +28,37 @@ public class UserController {
     @Autowired
     private UserDao userDao;
 
-    /**
-     * GET /create  --> Create a new user and save it in the database.
-     */
-    @RequestMapping("/create")
+
+    @RequestMapping("/createUser")
     @ResponseBody
     public String create(@RequestParam("email") String email, @RequestParam("fn") String f_name,
                          @RequestParam("ln") String l_name, @RequestParam("age") int age,
-                         @RequestParam("sex") String sex) {
-        String mpolicy = "green";
-        String userId = "";
-        try {
-            // User user = new User(f_name,l_name,email,age,sex,null,mpolicy);
-            //userDao.save(user);
-            //userId = String.valueOf(user.getId());
-        } catch (Exception ex) {
-            return "Error creating the user: " + ex.toString();
-        }
-        return "User succesfully created with id = " + userId;
+                         @RequestParam("sex") String sex,@RequestParam("policy")String policy) throws Exception {
+
+          //validator.request
+        
+          User user = new User(f_name,l_name,email,age,sex,null,policy);
+          userDao.save(user);
+          return "User succesfully created";
     }
+
+    @ResponseStatus(value=HttpStatus.FORBIDDEN,reason="user Exception")
+    @ExceptionHandler(UserException.class)
+    public String handleUserException(UserException ex) {
+          return ex.getMessage();
+    }
+
+
+
+    @ResponseStatus(value=HttpStatus.UNAUTHORIZED,reason="MIAOASDAOSDASOD error")
+    @ExceptionHandler(Exception.class)
+    public String handleCustomException(UserException ex) {
+        return ex.getMessage();
+    }
+
+
+
+
 
     @RequestMapping("/userDescription")
     @ResponseBody
@@ -163,7 +179,18 @@ public class UserController {
     @RequestMapping("/fetch")
     @ResponseBody
     public String fetch() {
-        return "";
+        return "okokok";
+    }
+
+    @RequestMapping("/fetchJson")
+    @ResponseBody
+    public JSONObject fetchJson() {
+
+        String message;
+        JSONObject json = new JSONObject();
+        json.put("name", "student");
+
+        return json;
     }
 
 
@@ -193,17 +220,9 @@ public class UserController {
         TransportSolution transportSolution = new TransportSolution(e1, e2, tsId, null);
         transportSolutionDao.save(transportSolution);
         String s = " " + e1.getId();
-
         return s;
    }
 
-
-    @ResponseStatus(value=HttpStatus.UNAUTHORIZED,
-            reason="Data integrity violation")    //risposta che arriva al Client
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public void dataError() {
-        //gestire qui l' errore
-    }
 
 
 
