@@ -1,11 +1,14 @@
 package com.travlendar.travlendarServer.model.domain;
 
+import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
+import com.travlendar.travlendarServer.model.MeanType;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "private_transport")
-public class PrivateTransport {
+public class PrivateTransport implements MeanOfTransportLogic{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -113,5 +116,15 @@ public class PrivateTransport {
 
     public void setTransportSegments(List<TransportSegment> transportSegments) {
         this.transportSegments = transportSegments;
+    }
+
+    @Override
+    public MeanType getTypeOfTransport() {
+        return null;
+    }
+
+    @Override
+    public boolean isPrivate() {
+        return true;
     }
 }

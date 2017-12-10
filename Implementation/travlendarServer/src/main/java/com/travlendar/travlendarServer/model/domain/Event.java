@@ -1,5 +1,9 @@
 package com.travlendar.travlendarServer.model.domain;
 
+import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
+import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
+import org.jetbrains.annotations.NotNull;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -7,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "event")
-public class Event implements Serializable,Comparable<Event>{
+public class Event implements Serializable,  EventLogic {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -148,18 +152,36 @@ public class Event implements Serializable,Comparable<Event>{
         return endEvent;
     }
 
+    /***
+     *  Logic Interface Implementation
+     */
 
-    public boolean overlapping(Event e){
-        if(this.compareTo(e) < 0 && e.startDate.compareTo(this.endDate) < 0)
+
+    /***
+     *
+     * @param e
+     * @return
+     */
+
+    @Override
+    public boolean overlapping(EventLogic e){
+        if(this.compareTo(e) < 0 && e.getStartDate().compareTo(this.endDate) < 0)
             return true;
         return false;
     }
 
     @Override
-    public int compareTo(Event e) {
-        if(this.startDate.compareTo(e.startDate)!= 0)
-            return this.startDate.compareTo(e.startDate);
+    public Coordinates getCoordinates() {
+        //TODO
+        return null;
+    }
+
+
+    @Override
+    public int compareTo(@NotNull EventLogic e) {
+        if(this.startDate.compareTo(e.getStartDate())!= 0)
+            return this.startDate.compareTo(e.getStartDate());
         else
-            return this.endDate.compareTo(endDate);
+            return this.endDate.compareTo(e.getEndDate());
     }
 }

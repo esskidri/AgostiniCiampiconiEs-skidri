@@ -3,8 +3,8 @@ package com.travlendar.travlendarServer.logic;
 
 
 
+import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
 import com.travlendar.travlendarServer.model.domain.Event;
-import com.travlendar.travlendarServer.model.domain.TransportSolution;
 import com.travlendar.travlendarServer.logic.util.EventGraph;
 
 
@@ -12,18 +12,18 @@ import java.util.HashMap;
 import java.util.List;
 
 public class EventConnector {
-    private EventGraph eventGraph;
-    private List<TransportSolution> transportSolutions;
 
-    public EventConnector(List<Event> events) {
-        eventGraph = new EventGraph(events, new HashMap<>());
+    private EventConnector(List<EventLogic> events) {
+
     }
 
-    public void findConnection(){
+    public static EventGraph findConnection(List<EventLogic> events){
+        EventGraph eventGraph = new EventGraph(events, new HashMap<>());
+
         int i = 0;
 
-        for(Event event: eventGraph.nodes()){
-            if(event.getEndEvent()){
+        for(EventLogic event: eventGraph.nodes()){
+            if(event.isEndEvent()){
                 insertHomeEvent(eventGraph,event);
             }
             else if(i != eventGraph.nodes().size())
@@ -32,7 +32,7 @@ public class EventConnector {
             i++;
         }
 
-        for(Event event: eventGraph.nodes()){
+        for(EventLogic event: eventGraph.nodes()){
             for(EventGraph.Edge edge: eventGraph.edgesFrom(event)){
                 if(event.overlapping(edge.getE())){
                     for(EventGraph.Edge edge1: eventGraph.edgesFrom(edge.getS()))
@@ -41,13 +41,14 @@ public class EventConnector {
             }
         }
 
+        return eventGraph;
     }
 
-    private void insertHomeEvent(EventGraph eventGraph, Event endEvent){
+    private static void insertHomeEvent(EventGraph eventGraph, EventLogic endEvent){
         //TODO
     }
 
-    class Home extends Event{
+    class Home extends Event {
         //TODO
         /*@Override
         public int compareTo(Event e) {
