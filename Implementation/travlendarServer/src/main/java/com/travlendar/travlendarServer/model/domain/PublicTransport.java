@@ -1,5 +1,7 @@
 package com.travlendar.travlendarServer.model.domain;
 
+import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
+import com.travlendar.travlendarServer.model.EnumGreenLevel;
 import com.travlendar.travlendarServer.model.MeanType;
 
 import javax.persistence.*;
@@ -7,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "public_transport")
-public class PublicTransport {
+public class PublicTransport implements MeanOfTransportLogic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -92,6 +94,21 @@ public class PublicTransport {
 
     public void setType(MeanType type) {
         this.type = type;
+    }
+
+    @Override
+    public MeanType getTypeOfTransport() {
+        return null;
+    }
+
+    @Override
+    public EnumGreenLevel getGreenLevel() {
+        return null;
+    }
+
+    @Override
+    public boolean isPrivate() {
+        return false;
     }
 }
 
