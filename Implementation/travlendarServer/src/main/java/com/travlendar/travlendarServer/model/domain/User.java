@@ -109,6 +109,7 @@ public class User implements UserLogic {
         this.age = age;
     }
 
+
     public String getSex() {
         return sex;
     }

@@ -4,6 +4,7 @@ package com.travlendar.travlendarServer.controller;
 
 import com.travlendar.travlendarServer.controller.Exception.UserException;
 import com.travlendar.travlendarServer.extra.Converter;
+import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
 import com.travlendar.travlendarServer.model.Policy;
 import com.travlendar.travlendarServer.model.dao.*;
 import com.travlendar.travlendarServer.model.domain.*;
@@ -174,7 +175,12 @@ public class UserController {
     @RequestMapping("/fetch")
     @ResponseBody
     public String fetch() {
-        return "okokok";
+       User user=userDao.findOne((long) 6);
+       List<MeanOfTransportLogic> ms= user.getMeanPreferences();
+
+
+       return "okokok";
+
     }
 
     //TODO re-add Fetch JSON

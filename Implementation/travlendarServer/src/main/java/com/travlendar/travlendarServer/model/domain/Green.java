@@ -16,6 +16,7 @@ public class Green {
     private long id;
 
     @Column(name = "level")
+    @Enumerated(EnumType.STRING)
     private EnumGreenLevel level;
 
     @Column(name = "description")
