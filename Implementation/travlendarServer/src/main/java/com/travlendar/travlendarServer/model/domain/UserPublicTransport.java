@@ -22,6 +22,6 @@ public class UserPublicTransport implements Serializable{
     @JoinColumn(name = "public_transport_id")
     private PublicTransport publicTransport;
 
-
+    public UserPublicTransport(){}
 
 }

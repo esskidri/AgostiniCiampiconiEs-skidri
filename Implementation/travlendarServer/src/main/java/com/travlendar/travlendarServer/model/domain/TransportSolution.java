@@ -59,6 +59,15 @@ public class TransportSolution implements Serializable, TransportSolutionLogic {
         this.transportSegments = transportSegments;
     }
 
+    public TransportSolution(){}
+
+    public TransportSolution(Event event1, Event event2, TransportSolutionId transportSolutionId, List<TransportSegment> transportSegments) {
+        this.event1 = event1;
+        this.event2 = event2;
+        this.transportSolutionId = transportSolutionId;
+        this.transportSegments = transportSegments;
+    }
+
     /***
      *  Logic interface Implementation
      */

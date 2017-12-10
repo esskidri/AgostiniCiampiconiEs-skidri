@@ -48,6 +48,19 @@ public class Event implements Serializable,  EventLogic {
     @OneToMany(cascade = CascadeType.ALL, mappedBy="event2")
     private List<TransportSolution> transportSolutions2;
 
+
+    public Event(Timestamp startDate, Timestamp endDate, float posX, float posY, String description, String name, boolean endEvent) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.posX = posX;
+        this.posY = posY;
+        this.description = description;
+        this.name = name;
+        this.endEvent = endEvent;
+    }
+
+    public Event(){}
+
     public long getId() {
         return id;
     }
@@ -156,7 +169,6 @@ public class Event implements Serializable,  EventLogic {
             return true;
         return false;
     }
-
 
     @Override
     public Coordinates getCoordinates() {
