@@ -21,6 +21,7 @@ public class PrivateTransport implements MeanOfTransportLogic {
     private String name;
 
     @Column(name="type")
+    @Enumerated(EnumType.STRING)
     private MeanType type;
 
     @Column(name="displacement")
