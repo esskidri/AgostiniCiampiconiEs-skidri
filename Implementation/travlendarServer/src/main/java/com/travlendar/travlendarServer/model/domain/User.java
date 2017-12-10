@@ -52,6 +52,16 @@ public class User  {
 
     public User() { }
 
+    public User(String first_name, String last_name, String email, Integer age, String sex, String fiscal_code, String policy) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.age = age;
+        this.sex = sex;
+        this.fiscal_code = fiscal_code;
+        this.policy = policy;
+    }
+
     public long getId() {
         return id;
     }
