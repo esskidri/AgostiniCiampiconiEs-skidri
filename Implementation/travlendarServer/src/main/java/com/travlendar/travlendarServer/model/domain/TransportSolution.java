@@ -1,6 +1,7 @@
 package com.travlendar.travlendarServer.model.domain;
 
 
+import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.TransportSegmentLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLogic;
 
@@ -87,5 +88,15 @@ public class TransportSolution implements Serializable, TransportSolutionLogic {
             transportSegments.add((TransportSegment) transportSegmentLogic);
 
         setTransportSegments(transportSegments);
+    }
+
+    @Override
+    public void setStartEvent(EventLogic event) {
+        event1 = (Event) event;
+    }
+
+    @Override
+    public void setEndEvent(EventLogic event) {
+        event2 = (Event) event;
     }
 }

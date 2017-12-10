@@ -16,9 +16,13 @@ public class MainLogic {
         List<TransportSolutionLogic> transportSolutions = new ArrayList<>();
 
         for(EventLogic outGoing: events){
-            for(EventLogic inGoing: eventGraph.edges().get(outGoing))
+            for(EventLogic inGoing: eventGraph.edges().get(outGoing)) {
                 //TODO change defined POLICY with user getter
-                transportSolutions.add((new TransportSolutionCalculator(Policy.GREEN.getCore())).calculateSolution( outGoing.getCoordinates(), inGoing.getCoordinates(), outGoing.getEndDate(), inGoing.getStartDate(), user));
+                TransportSolutionLogic transportSolutionLogic = (new TransportSolutionCalculator(Policy.GREEN.getCore())).calculateSolution(outGoing.getCoordinates(), inGoing.getCoordinates(), outGoing.getEndDate(), inGoing.getStartDate(), user);
+                transportSolutionLogic.setStartEvent(outGoing);
+                transportSolutionLogic.setEndEvent(inGoing);
+                transportSolutions.add(transportSolutionLogic);
+            }
         }
 
         return transportSolutions;
