@@ -133,7 +133,7 @@ public class UserController {
             TransportSegmentId transportSegmentId = new TransportSegmentId((long) 0, (long) 9, (long) 13);
             TransportSegment transportSegment = transportSegmentDao.findOne(transportSegmentId);
             List<Event> event = (List<Event>) eventDao.findAll();
-            System.out.println("AVARAAAAAAAAAAAAA");
+
         } catch (Exception ex) {
             return "Error creating the user: " + ex.toString();
         }
@@ -146,7 +146,7 @@ public class UserController {
         try {
             List<User> users = (List<User>) userDao.findAll();
             List<Event> events = (List<Event>) eventDao.findAll();
-            System.out.println("AVARAAAAAAAAAAAAA");
+
         } catch (Exception ex) {
             return "Error creating the user: " + ex.toString();
         }
@@ -209,6 +209,8 @@ public class UserController {
             }
         }
     }
+
+
     //TODO re-add Fetch JSON
 
 
