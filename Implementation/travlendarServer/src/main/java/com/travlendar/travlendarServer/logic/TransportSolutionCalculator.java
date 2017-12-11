@@ -127,6 +127,8 @@ public class TransportSolutionCalculator {
 
         transportSegment.setOrigin(googleResponseMappedObject.getStartingLocation());
         transportSegment.setDestination(googleResponseMappedObject.getEndingLocation());
+        transportSegment.setDistance(googleResponseMappedObject.getDistance());
+        transportSegment.setDuration(googleResponseMappedObject.getDuration());
 
         int i = 0;
 

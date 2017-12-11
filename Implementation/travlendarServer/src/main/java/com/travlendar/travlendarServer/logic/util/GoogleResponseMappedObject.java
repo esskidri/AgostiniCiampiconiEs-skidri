@@ -67,6 +67,14 @@ public class GoogleResponseMappedObject implements Serializable {
         return arrivalTime;
     }
 
+    public int getDistance(){
+        return getLeg().getDistance().getValue();
+    }
+
+    public int getDuration(){
+        return getLeg().getDuration().getValue();
+    }
+
     public boolean isPartialSolution() {
         return partialSolution;
     }
