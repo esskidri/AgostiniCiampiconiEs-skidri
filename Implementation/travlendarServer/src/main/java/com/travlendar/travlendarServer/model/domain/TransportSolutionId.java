@@ -18,4 +18,20 @@ public class TransportSolutionId implements Serializable {
         this.event_id_1 = event_id_1;
         this.event_id_2 = event_id_2;
     }
+
+    public long getEvent_id_1() {
+        return event_id_1;
+    }
+
+    public void setEvent_id_1(long event_id_1) {
+        this.event_id_1 = event_id_1;
+    }
+
+    public long getEvent_id_2() {
+        return event_id_2;
+    }
+
+    public void setEvent_id_2(long event_id_2) {
+        this.event_id_2 = event_id_2;
+    }
 }

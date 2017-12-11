@@ -129,6 +129,9 @@ public class TransportSegment implements Serializable, TransportSegmentLogic {
         this.positionBY = positionBY;
     }
 
+    public void setTransportSegmentId(TransportSegmentId transportSegmentId) {
+        this.transportSegmentId = transportSegmentId;
+    }
 
     /***
      *  Logic Interface Implementation

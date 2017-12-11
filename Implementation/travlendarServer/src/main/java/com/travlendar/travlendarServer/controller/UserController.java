@@ -23,6 +23,7 @@ import javax.transaction.Transactional;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -167,7 +168,6 @@ public class UserController {
     @ResponseBody
     public String fetch() {
        User user=userDao.findOne((long) 6);
-     //List<MeanOfTransportLogic> ms= user.getMeanPreferences();
        MainLogic mainLogic=new MainLogic();
        List<EventLogic> eventLogics=new ArrayList<>();
 
@@ -175,11 +175,30 @@ public class UserController {
        Event e2=eventDao.findOne((long)32);
        eventLogics.add(e1);
        eventLogics.add(e2);
+       //computation
        List<TransportSolutionLogic> tsl=mainLogic.calculateTransportSolutions(eventLogics,user);
 
-       TransportSolution transportSolution=new TransportSolution();
-       TransportSolutionId transportSolutionId= new TransportSolutionId();
-
+       List<TransportSolution> transportSolutions=new ArrayList<>();
+       int i=0;
+       //compose and save transport solutions
+       for (TransportSolutionLogic x:tsl){
+           transportSolutions.add((TransportSolution)x);
+           TransportSolutionId tsID=new TransportSolutionId(transportSolutions.get(i).getEvent1().getId(),
+                                                            transportSolutions.get(i).getEvent2().getId());
+           transportSolutions.get(i).setTransportSolutionId(tsID);
+           i++;
+       }
+       transportSolutionDao.save(transportSolutions);
+       //compose and save transport segments
+       for(TransportSolution t:transportSolutions) {
+           int segmentOrder=0;
+           for(TransportSegment transportSegment:t.getTransportSegments()){
+             TransportSegmentId transportSegmentId=new TransportSegmentId(segmentOrder,t.getEvent1().getId(),t.getEvent2().getId());
+             transportSegment.setTransportSegmentId(transportSegmentId);
+             transportSegmentDao.save(transportSegment);
+             segmentOrder++;
+           }
+       }
        return "okokok";
 
     }
