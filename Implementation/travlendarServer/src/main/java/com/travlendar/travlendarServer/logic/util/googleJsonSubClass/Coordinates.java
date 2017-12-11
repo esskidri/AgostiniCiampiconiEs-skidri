@@ -23,4 +23,13 @@ public class Coordinates {
     public String toHttpsFormat() {
         return lat.toString() + "," +lng.toString();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(! (obj instanceof Coordinates))
+            return false;
+
+        Coordinates coordinates = (Coordinates) obj;
+        return  coordinates.getLat() == this.getLat() && coordinates.getLng() == this.getLng();
+    }
 }
