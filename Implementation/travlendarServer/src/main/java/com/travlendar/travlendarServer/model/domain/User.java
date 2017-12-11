@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "user")
-public class User implements UserLogic {
+public class User extends AbstractEntity implements UserLogic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

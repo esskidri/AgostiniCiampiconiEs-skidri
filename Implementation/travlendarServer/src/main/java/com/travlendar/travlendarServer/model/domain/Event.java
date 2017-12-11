@@ -1,7 +1,9 @@
 package com.travlendar.travlendarServer.model.domain;
 
+import com.travlendar.travlendarServer.controller.Exception.UserException;
 import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
+import com.travlendar.travlendarServer.model.dao.EntityRepo;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -11,7 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "event")
-public class Event implements Serializable,  EventLogic {
+public class Event  extends  AbstractEntity implements Serializable,  EventLogic,EntityRepo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -186,5 +188,11 @@ public class Event implements Serializable,  EventLogic {
             return this.startDate.compareTo(e.getStartDate());
         else
             return this.endDate.compareTo(e.getEndDate());
+    }
+
+    @Override
+    public <S extends  AbstractEntity> S save(S entity) throws UserException {
+        this.description="salvataggioInternoAVAROOOOO";
+        return null;
     }
 }

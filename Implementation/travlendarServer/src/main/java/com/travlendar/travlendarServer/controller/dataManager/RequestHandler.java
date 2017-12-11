@@ -1,6 +1,8 @@
 package com.travlendar.travlendarServer.controller.dataManager;
 
 
+import com.travlendar.travlendarServer.controller.Exception.UserException;
+import com.travlendar.travlendarServer.model.domain.Event;
 import com.travlendar.travlendarServer.model.domain.PrivateTransport;
 import com.travlendar.travlendarServer.model.domain.User;
 import com.travlendar.travlendarServer.model.dao.FreetTimeDao;
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.sql.Timestamp;
 
 @Controller
 public class RequestHandler {
@@ -27,7 +31,11 @@ public class RequestHandler {
 
     @RequestMapping("/add-event")
     @ResponseBody
-    public Response addEvent() {
+    public Response addEvent(@RequestParam("user_id") Long userId, @RequestParam("start_date") Timestamp startDate,
+                             @RequestParam("end_date")Timestamp endDate,@RequestParam("pos_x") Float posX,
+                             @RequestParam("pos_y") Float posY) {
+
+
 
         Response r=new Response("");
         return r;
@@ -52,6 +60,8 @@ public class RequestHandler {
         Response r=new Response("");
         return r;
     }
+
+
 
 
 

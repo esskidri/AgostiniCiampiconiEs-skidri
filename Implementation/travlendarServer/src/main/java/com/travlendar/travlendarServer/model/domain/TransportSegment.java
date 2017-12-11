@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "transport_segment")
-public class TransportSegment implements Serializable,TransportSegmentLogic {
+public class TransportSegment extends AbstractEntity implements Serializable,TransportSegmentLogic {
     @Column(name = "num_order",insertable = false, updatable = false)
     private long numOrder;
 

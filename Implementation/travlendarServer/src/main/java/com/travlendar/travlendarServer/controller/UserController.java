@@ -153,7 +153,7 @@ public class UserController {
         return " succesfully ";
     }
 
-    @RequestMapping("/event")
+    @RequestMapping("/eventok")
     @ResponseBody
     public String delete() {
         try {
@@ -161,6 +161,22 @@ public class UserController {
         } catch (Exception ex) {
             return "Error : " + ex.toString();
         }
+        return " Succes";
+    }
+
+    @RequestMapping("/event")
+    @ResponseBody
+    public String event() {
+       List<Event> events= (List<Event>) eventDao.findAll();
+       Event e=events.get(0);
+       e.setDescription("ciao");
+
+        try {
+            e.save(e);
+        } catch (UserException e1) {
+            e1.printStackTrace();
+        }
+
         return " Succes";
     }
 
