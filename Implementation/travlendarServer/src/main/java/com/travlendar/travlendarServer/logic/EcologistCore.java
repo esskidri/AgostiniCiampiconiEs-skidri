@@ -16,9 +16,8 @@ public class EcologistCore implements CalculatorCore {
         return meansOfTransport;
     }
 
-    private boolean comapareGreenMeanOfTransport(MeanOfTransportLogic meanOfTransport1, MeanOfTransportLogic meanOfTransport2){
-        //TODO
-        return true;
+    private boolean compareGreenMeanOfTransport(MeanOfTransportLogic meanOfTransport1, MeanOfTransportLogic meanOfTransport2){
+        return meanOfTransport1.getGreenLevel().compareTo(meanOfTransport2.getGreenLevel()) > 0;
     }
 
     private void orderMeanByGreen(List<MeanOfTransportLogic> meansOfTransport, int index){
@@ -26,7 +25,7 @@ public class EcologistCore implements CalculatorCore {
 
         for(MeanOfTransportLogic meanOfTransport: meansOfTransport.subList(index +1, meansOfTransport.size())){
             //TODO order preservation
-            if(!comapareGreenMeanOfTransport(best, meanOfTransport))
+            if(!compareGreenMeanOfTransport(best, meanOfTransport))
                 best = meanOfTransport;
         }
 

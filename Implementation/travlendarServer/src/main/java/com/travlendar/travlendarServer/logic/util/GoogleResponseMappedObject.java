@@ -47,6 +47,10 @@ public class GoogleResponseMappedObject implements Serializable {
         return getLeg().getStart_location();
     }
 
+    public void setStartingLocation(Coordinates coordinates){
+        getLeg().setStart_location(coordinates);
+    }
+
     public void setDepartingTime(Timestamp departingTime) {
         this.departingTime = departingTime;
     }
@@ -83,6 +87,15 @@ public class GoogleResponseMappedObject implements Serializable {
                 break;
             }
             i++;
+        }
+    }
+
+    public void searchPublicLine(){
+        for(Step step: getSteps()){
+            if(step.getTravel_mode() == "TRANSIT"){
+                setStartingLocation(step.getStart_location());
+                break;
+            }
         }
     }
 

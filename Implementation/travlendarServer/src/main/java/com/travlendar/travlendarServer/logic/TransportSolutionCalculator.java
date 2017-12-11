@@ -10,6 +10,7 @@ import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.logic.util.GoogleResponseMappedObject;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
 import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
+import com.travlendar.travlendarServer.model.MeanType;
 import com.travlendar.travlendarServer.model.domain.*;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -42,10 +43,14 @@ public class TransportSolutionCalculator {
         }
 
         TransportSolutionLogic transportSolution = new TransportSolution();
+
+        orderSegments();
+
         transportSolution.setTransportSegmentsByLogic(transportSegments);
 
         return transportSolution;
     }
+
 
     /**
      * @param startingLocation
@@ -70,26 +75,47 @@ public class TransportSolutionCalculator {
         GoogleResponseMappedObject googleResponseMappedObject;
         try {
             if (isMeanAvailablePrivately(meansOfTransport.get(0))) {
+                //This mean is private and the user can use it by the previous movements
                 googleResponseMappedObject = callGoogleAPI(startingLocation.toHttpsFormat(), endingLocation.toHttpsFormat(), meansOfTransport.get(0).getTypeOfTransport().toHttpsFormat(), ((Long) arrivalTime.getTime()).toString());
             } else {
-                Coordinates mediumLocation = getLocationByExternalAPI(meansOfTransport.get(0));
-                googleResponseMappedObject = callGoogleAPI(mediumLocation.toHttpsFormat(), endingLocation.toHttpsFormat(), meansOfTransport.get(0).getTypeOfTransport().toHttpsFormat(), ((Long) arrivalTime.getTime()).toString());
+                //The mean is not a private mean, so the user must reach a medium location to use it
+                Coordinates mediumLocation;
+
+
+                //If it's a mean of the public transport (Bus, Metro, Tram etc) this is handled by the google API
+                if (meansOfTransport.get(0).getTypeOfTransport() == MeanType.BUS) {
+                    googleResponseMappedObject = callGoogleAPI(startingLocation.toHttpsFormat(), endingLocation.toHttpsFormat(), meansOfTransport.get(0).getTypeOfTransport().toHttpsFormat(), ((Long) arrivalTime.getTime()).toString());
+                    googleResponseMappedObject.searchPublicLine();
+                    mediumLocation = googleResponseMappedObject.getStartingLocation();
+                }
+                else {
+                    //Else the medium location is obtained by the position of a private sharing services (MoBike, Enjoy etc)
+                    mediumLocation = getLocationByExternalAPI(meansOfTransport.get(0), startingLocation, endingLocation, arrivalTime);
+                    googleResponseMappedObject = callGoogleAPI(mediumLocation.toHttpsFormat(), endingLocation.toHttpsFormat(), meansOfTransport.get(0).getTypeOfTransport().toHttpsFormat(), ((Long) arrivalTime.getTime()).toString());
+                }
                 if (googleResponseMappedObject.getDepartingTime().compareTo(startingTime) < 0)
                     throw new EarlyStartException();
                 calculateSegment(startingLocation, mediumLocation, startingTime, googleResponseMappedObject.getDepartingTime(), meansOfTransport.subList(1, meansOfTransport.size()));
             }
+
+            //the calculated segment is inserted
             insertTransportSegments(googleResponseMappedObject, meansOfTransport.get(0));
             if (googleResponseMappedObject.isPartialSolution())
+                //If google make you change your mean, we recalculate by the preferences of the user
                 calculateSegment(googleResponseMappedObject.getEndingLocation(), endingLocation, googleResponseMappedObject.getArrivalTime(), arrivalTime, meansOfTransport.subList(1, meansOfTransport.size()));
         } catch (MeanNotAvailableException e) {
+            //In case the mean is not available
             if (meansOfTransport.size() != 0)
                 calculateSegment(startingLocation, endingLocation, startingTime, arrivalTime, meansOfTransport.subList(1, meansOfTransport.size()));
             else
+                //In case there's no more mean to be used for the solution
                 throw new NoMeanAvailableExpection();
         } catch (EarlyStartException e) {
+            //In case the user must leave the event before the end of the antecedent event
             if (meansOfTransport.size() != 0)
                 calculateSegment(startingLocation, endingLocation, startingTime, arrivalTime, meansOfTransport.subList(1, meansOfTransport.size()));
             else
+                //In case there's no more mean to be used for the solution
                 throw new CannotArriveInTimeException();
         }
     }
@@ -112,13 +138,16 @@ public class TransportSolutionCalculator {
         }
 
         transportSegments.add(transportSegment);
+    }
 
-
+    private void orderSegments() {
+        //TODO
     }
 
     @NotNull
-    private Coordinates getLocationByExternalAPI(MeanOfTransportLogic meanOfTransport) throws MeanNotAvailableException {
-        return new Coordinates();
+    private Coordinates getLocationByExternalAPI(MeanOfTransportLogic meanOfTransport, Coordinates startingLocation, Coordinates endingLocation, Timestamp arrivalTime) throws MeanNotAvailableException, EarlyStartException {
+
+        throw new MeanNotAvailableException();
     }
 
     /**
@@ -143,9 +172,10 @@ public class TransportSolutionCalculator {
      * @return This method check if the user own the mean of transport and if he can use it
      */
     @Contract(pure = true)
-    private boolean isMeanAvailablePrivately(MeanOfTransportLogic meanOfTransport) {
-        //TODO implements memory of passed trip
-        //TODO Whole class, not required for current phase of developing
+    private boolean isMeanAvailablePrivately(MeanOfTransportLogic meanOfTransport) throws MeanNotAvailableException{
+        if (!meanOfTransport.isPrivate())
+            return false;
+        //TODO throw exception in case the mean cannot be used
         return true;
     }
 }
