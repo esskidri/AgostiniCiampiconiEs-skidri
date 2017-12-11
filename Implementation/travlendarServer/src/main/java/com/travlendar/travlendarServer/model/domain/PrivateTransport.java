@@ -45,6 +45,19 @@ public class PrivateTransport implements MeanOfTransportLogic {
     @OneToMany(mappedBy = "privateTransport")
     private List<TransportSegment> transportSegments;
 
+    //distance in meters
+    @Column(name="distance")
+    private int distance;
+
+    @Column(name="description")
+    private String description;
+
+    //duration in seconds
+    @Column(name="duration")
+    private int duration;
+
+
+
     public PrivateTransport(){}
 
     public PrivateTransport(String name, MeanType type, int displacement, String license_plate, List<User> users, Green green, List<TransportSegment> transportSegments) {
@@ -119,6 +132,30 @@ public class PrivateTransport implements MeanOfTransportLogic {
 
     public void setTransportSegments(List<TransportSegment> transportSegments) {
         this.transportSegments = transportSegments;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     @Override
