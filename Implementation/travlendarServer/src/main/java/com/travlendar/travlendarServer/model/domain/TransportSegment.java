@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "transport_segment")
-public class TransportSegment implements Serializable, TransportSegmentLogic {
+public class TransportSegment implements Serializable,TransportSegmentLogic {
     @Column(name = "num_order",insertable = false, updatable = false)
     private long numOrder;
 
@@ -48,6 +48,17 @@ public class TransportSegment implements Serializable, TransportSegmentLogic {
 
     @Column(name="position_b_y")
     private Float positionBY;
+
+    //distance in meters
+    @Column(name="distance")
+    private int distance;
+
+    @Column(name="description")
+    private String description;
+
+    //duration in seconds
+    @Column(name="duration")
+    private int duration;
 
     public TransportSegment(){
 
@@ -133,6 +144,30 @@ public class TransportSegment implements Serializable, TransportSegmentLogic {
         this.transportSegmentId = transportSegmentId;
     }
 
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
     /***
      *  Logic Interface Implementation
      ***/
@@ -161,4 +196,8 @@ public class TransportSegment implements Serializable, TransportSegmentLogic {
     public boolean isAdiacent(Coordinates coordinates) {
         return coordinates.getLat() == positionBX && coordinates.getLng() == positionBY;
     }
+
+
+
+
 }

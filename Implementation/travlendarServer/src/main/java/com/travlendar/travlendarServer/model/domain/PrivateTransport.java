@@ -45,6 +45,10 @@ public class PrivateTransport implements MeanOfTransportLogic {
     @OneToMany(mappedBy = "privateTransport")
     private List<TransportSegment> transportSegments;
 
+
+
+
+
     public PrivateTransport(){}
 
     public PrivateTransport(String name, MeanType type, int displacement, String license_plate, List<User> users, Green green, List<TransportSegment> transportSegments) {
