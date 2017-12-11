@@ -142,9 +142,42 @@ public class TransportSolutionCalculator {
         transportSegments.add(transportSegment);
     }
 
+    /**
+     * Reorder the transport solution's segments making them adiacent
+     */
     private void orderSegments() {
-        //TODO
+        int i = 0;
+        int j = 1;
+
+
+        TransportSegmentLogic swapSegment;
+
+        while(j < transportSegments.size()){
+            if(transportSegments.get(j).getOrigin().equals(transportSegments.get(i).getDestination())){
+                swapSegment = transportSegments.get(j);
+                transportSegments.remove(swapSegment);
+                transportSegments.add(i +1, swapSegment);
+                i = i + 1;
+                j = i + 1;
+            }
+            j++;
+        }
+
+        j = transportSegments.size();
+
+        while(j > i){
+            if(transportSegments.get(j).getDestination().equals(transportSegments.get(0).getOrigin())){
+                swapSegment = transportSegments.get(j);
+                transportSegments.remove(swapSegment);
+                transportSegments.add(0, swapSegment);
+                i = i + 1;
+                j = transportSegments.size();
+            }
+            j--;
+        }
     }
+
+
 
     @NotNull
     private Coordinates getLocationByExternalAPI(MeanOfTransportLogic meanOfTransport, Coordinates startingLocation, Coordinates endingLocation, Timestamp arrivalTime) throws MeanNotAvailableException, EarlyStartException {

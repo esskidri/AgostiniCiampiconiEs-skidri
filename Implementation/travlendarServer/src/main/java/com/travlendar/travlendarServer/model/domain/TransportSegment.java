@@ -193,6 +193,22 @@ public class TransportSegment implements Serializable,TransportSegmentLogic {
     }
 
     @Override
+    public Coordinates getOrigin() {
+        Coordinates coordinates = new Coordinates();
+        coordinates.setLat(positionAX);
+        coordinates.setLng(positionAY);
+        return coordinates;
+    }
+
+    @Override
+    public Coordinates getDestination() {
+        Coordinates coordinates = new Coordinates();
+        coordinates.setLat(positionBX);
+        coordinates.setLng(positionBX);
+        return coordinates;
+    }
+
+    @Override
     public boolean isAdiacent(Coordinates coordinates) {
         return coordinates.getLat() == positionBX && coordinates.getLng() == positionBY;
     }
