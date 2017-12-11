@@ -27,11 +27,21 @@ public class RequestHandler {
 
     @RequestMapping("/add-event")
     @ResponseBody
-    public String addEvent() {
+    public Response addEvent() {
 
-
-        return "";
+        Response r=new Response("");
+        return r;
     }
+
+    @RequestMapping("/delete-event")
+    @ResponseBody
+    public Response deleteEvent() {
+
+        Response r=new Response("");
+        return r;
+    }
+
+
 
     @RequestMapping("/add-private-transport")
     @ResponseBody
@@ -39,7 +49,6 @@ public class RequestHandler {
                                         @RequestParam("displacement") int displacement,@RequestParam("license") String licensePlate){
         User user=userDao.findOne(id);
         PrivateTransport privateTransport=new PrivateTransport();
-
         Response r=new Response("");
         return r;
     }
