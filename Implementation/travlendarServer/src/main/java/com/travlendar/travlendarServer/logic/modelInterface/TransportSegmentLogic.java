@@ -8,4 +8,7 @@ public interface TransportSegmentLogic {
     void setOrigin(Coordinates coordinates);
     void setDestination(Coordinates coordinates);
     boolean isAdiacent(Coordinates coordinates);
+    void setDescription(String description);
+    void setDuration(int duration);
+    void setDistance(int distance);
 }
