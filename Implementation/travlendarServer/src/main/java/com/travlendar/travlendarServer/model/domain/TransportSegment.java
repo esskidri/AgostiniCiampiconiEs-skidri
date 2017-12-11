@@ -49,6 +49,17 @@ public class TransportSegment implements Serializable, TransportSegmentLogic {
     @Column(name="position_b_y")
     private Float positionBY;
 
+    //distance in meters
+    @Column(name="distance")
+    private int distance;
+
+    @Column(name="description")
+    private String description;
+
+    //duration in seconds
+    @Column(name="duration")
+    private int duration;
+
     public TransportSegment(){
 
     }
