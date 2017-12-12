@@ -1,5 +1,6 @@
 package com.travlendar.travlendarServer.model.domain;
 
+import com.travlendar.travlendarServer.controller.Exception.DataEntryException;
 import com.travlendar.travlendarServer.controller.Exception.UserException;
 import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
@@ -50,7 +51,7 @@ public class Event  extends  AbstractEntity implements Serializable,  EventLogic
     @OneToMany(cascade = CascadeType.ALL, mappedBy="event2")
     private List<TransportSolution> transportSolutions2;
 
-
+    public Event(){}
     public Event(Timestamp startDate, Timestamp endDate, float posX, float posY, String description, String name, boolean endEvent) {
         this.startDate = startDate;
         this.endDate = endDate;
@@ -61,7 +62,20 @@ public class Event  extends  AbstractEntity implements Serializable,  EventLogic
         this.endEvent = endEvent;
     }
 
-    public Event(){}
+    public Event(User u, Timestamp startDate, Timestamp endDate, Float posX, Float posY, String description, String name, Boolean endEvent){
+        this.user=u;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.posX = posX;
+        this.posY = posY;
+        this.description = description;
+        this.name = name;
+        this.endEvent = endEvent;
+    }
+
+
+
+
 
     public long getId() {
         return id;
@@ -154,6 +168,8 @@ public class Event  extends  AbstractEntity implements Serializable,  EventLogic
         return endEvent;
     }
 
+
+
     /***
      *  Logic Interface Implementation
      */
@@ -191,8 +207,11 @@ public class Event  extends  AbstractEntity implements Serializable,  EventLogic
     }
 
     @Override
-    public <S extends  AbstractEntity> S save(S entity) throws UserException {
-        this.description="salvataggioInternoAVAROOOOO";
+    public <S extends  AbstractEntity> S save(S entity) throws DataEntryException {
+        //name=name.replaceAll("\\s+","");
+        //if(startDate.compareTo(endDate)<0) throw new DataEntryException("endDate before startDate");
+        //if(name==null || name.length()==0)throw new DataEntryException("invalid name for an event");
+        //this.save(this);
         return null;
     }
 }

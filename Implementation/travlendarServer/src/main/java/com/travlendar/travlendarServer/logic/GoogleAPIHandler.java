@@ -50,6 +50,7 @@ public class GoogleAPIHandler {
         GoogleResponseMappedObject googleResponseMappedObject = new GoogleResponseMappedObject();
         ObjectMapper mapper = new ObjectMapper();
 
+
         mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
         mapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
         mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
@@ -76,7 +77,6 @@ public class GoogleAPIHandler {
      */
     private static String httpsRequest(String urlString){
         StringBuilder jsonString = new StringBuilder();
-
         try{
             URL url = new URL(urlString);
             URLConnection connection = url.openConnection();
@@ -89,7 +89,6 @@ public class GoogleAPIHandler {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return jsonString.toString();
     }
 

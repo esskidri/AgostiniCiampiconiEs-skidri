@@ -51,7 +51,7 @@ public class UserController {
 
 
 
-    @RequestMapping("/userDescription")
+    @RequestMapping("/user-description")
     @ResponseBody
     public String userDescription(@RequestParam("id") int id) {
         String desc = "";
@@ -64,7 +64,6 @@ public class UserController {
             desc += "sex:   " + user.getSex() + "\n";
             desc += "age:   " + user.getAge() + "\n";
             desc += "policy:" + user.getPolicy().toString() + "\n";
-            //desc+="numbPMeans:"+user.getPrivateTransportList().size()+"  name of first:   "+user.getPrivateTransportList().get(0).getName()+"\n";
             System.out.println(desc);
 
         } catch (Exception ex) {
@@ -171,14 +170,12 @@ public class UserController {
        Event e=events.get(0);
        e.setDescription("ciao");
 
-        try {
-            e.save(e);
-        } catch (UserException e1) {
-            e1.printStackTrace();
-        }
+
 
         return " Succes";
     }
+
+
 
     @RequestMapping("/fetch")
     @ResponseBody
