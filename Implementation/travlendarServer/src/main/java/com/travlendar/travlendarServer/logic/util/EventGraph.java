@@ -1,7 +1,6 @@
 package com.travlendar.travlendarServer.logic.util;
 
 import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
-import com.travlendar.travlendarServer.model.domain.Event;
 
 import java.util.*;
 import java.util.stream.Collectors;

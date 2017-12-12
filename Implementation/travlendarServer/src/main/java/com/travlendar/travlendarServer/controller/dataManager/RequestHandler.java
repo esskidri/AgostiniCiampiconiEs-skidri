@@ -2,23 +2,23 @@ package com.travlendar.travlendarServer.controller.dataManager;
 
 
 import com.travlendar.travlendarServer.controller.Exception.DataEntryException;
-import com.travlendar.travlendarServer.controller.Exception.UserException;
-import com.travlendar.travlendarServer.model.dao.EventDao;
+import com.travlendar.travlendarServer.model.dao.*;
 import com.travlendar.travlendarServer.model.domain.Event;
 import com.travlendar.travlendarServer.model.domain.PrivateTransport;
 import com.travlendar.travlendarServer.model.domain.User;
-import com.travlendar.travlendarServer.model.dao.FreetTimeDao;
-import com.travlendar.travlendarServer.model.dao.PrivateTransportDao;
-import com.travlendar.travlendarServer.model.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.transaction.Transactional;
 import java.sql.Timestamp;
 
+import static com.travlendar.travlendarServer.extra.Converter.createTimeStampFromDate;
+
 @Controller
+@Transactional
 public class RequestHandler {
 
     /**********DAO AUTOWIRED***********/
@@ -46,16 +46,22 @@ public class RequestHandler {
         Event e=new Event(u,startDate,endDate,posX,posY,description,name,endEvent);
 
         try {
-            e=e.save(e);
-            //eventDao.save(e);
-        } catch (DataEntryException e1) {
-            e1.printStackTrace();
-        } catch (Exception e2){
-            e2.printStackTrace();
+            eventDao.customSave(e);
+        }catch(DataEntryException e1){
+            r.setMessage(e1.getMessage());
+        }catch(Exception e2){
+            r.setMessage("fail"+e2.getMessage());
         }
 
         return r;
     }
+
+
+
+
+
+
+
 
     @RequestMapping("/delete-event")
     @ResponseBody

@@ -2,28 +2,20 @@ package com.travlendar.travlendarServer.controller;
 
 // Imports ...
 
-import com.travlendar.travlendarServer.controller.Exception.UserException;
 import com.travlendar.travlendarServer.extra.Converter;
 import com.travlendar.travlendarServer.logic.MainLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
-import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLogic;
 import com.travlendar.travlendarServer.model.Policy;
 import com.travlendar.travlendarServer.model.dao.*;
 import com.travlendar.travlendarServer.model.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -169,10 +161,7 @@ public class UserController {
        List<Event> events= (List<Event>) eventDao.findAll();
        Event e=events.get(0);
        e.setDescription("ciao");
-
-
-
-        return " Succes";
+       return " Succes";
     }
 
 
