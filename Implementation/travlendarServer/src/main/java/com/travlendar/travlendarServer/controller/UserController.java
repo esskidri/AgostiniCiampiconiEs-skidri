@@ -137,7 +137,7 @@ public class UserController {
         } catch (Exception ex) {
             return "Error creating the user: " + ex.toString();
         }
-        return " succesfully ";
+        return " successfully ";
     }
 
     @RequestMapping("/preferences")
@@ -150,7 +150,7 @@ public class UserController {
         } catch (Exception ex) {
             return "Error creating the user: " + ex.toString();
         }
-        return " succesfully ";
+        return " successfully ";
     }
 
     @RequestMapping("/eventok")
@@ -161,7 +161,7 @@ public class UserController {
         } catch (Exception ex) {
             return "Error : " + ex.toString();
         }
-        return " Succes";
+        return " Success";
     }
 
     @RequestMapping("/event")

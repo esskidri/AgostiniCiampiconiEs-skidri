@@ -99,12 +99,12 @@ public class PublicTransport extends AbstractEntity implements MeanOfTransportLo
 
     @Override
     public MeanType getTypeOfTransport() {
-        return null;
+        return type;
     }
 
     @Override
     public EnumGreenLevel getGreenLevel() {
-        return null;
+        return green.getLevel();
     }
 
     @Override

@@ -163,7 +163,7 @@ public class TransportSolutionCalculator {
             j++;
         }
 
-        j = transportSegments.size();
+        j = transportSegments.size() -1;
 
         while(j > i){
             if(transportSegments.get(j).getDestination().equals(transportSegments.get(0).getOrigin())){
