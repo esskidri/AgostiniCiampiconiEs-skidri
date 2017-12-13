@@ -76,7 +76,6 @@ public class GoogleAPIHandler {
      */
     private static String httpsRequest(String urlString){
         StringBuilder jsonString = new StringBuilder();
-
         try{
             URL url = new URL(urlString);
             URLConnection connection = url.openConnection();
@@ -89,11 +88,6 @@ public class GoogleAPIHandler {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        //TODO remove this
-        System.out.println(urlString);
-        System.out.println(jsonString);
-
         return jsonString.toString();
     }
 

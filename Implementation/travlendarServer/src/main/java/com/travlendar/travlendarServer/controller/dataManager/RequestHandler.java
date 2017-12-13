@@ -1,7 +1,9 @@
 package com.travlendar.travlendarServer.controller.dataManager;
 
 
+import com.travlendar.travlendarServer.controller.Exception.DataEntryException;
 import com.travlendar.travlendarServer.controller.Exception.UserException;
+import com.travlendar.travlendarServer.model.dao.EventDao;
 import com.travlendar.travlendarServer.model.domain.Event;
 import com.travlendar.travlendarServer.model.domain.PrivateTransport;
 import com.travlendar.travlendarServer.model.domain.User;
@@ -26,6 +28,8 @@ public class RequestHandler {
     private FreetTimeDao freetTimeDao;
     @Autowired
     private PrivateTransportDao privateTransportDao;
+    @Autowired
+    private EventDao eventDao;
 
 
 
@@ -33,11 +37,23 @@ public class RequestHandler {
     @ResponseBody
     public Response addEvent(@RequestParam("user_id") Long userId, @RequestParam("start_date") Timestamp startDate,
                              @RequestParam("end_date")Timestamp endDate,@RequestParam("pos_x") Float posX,
-                             @RequestParam("pos_y") Float posY) {
-
-
-
+                             @RequestParam("pos_y") Float posY,@RequestParam("description") String description,
+                             @RequestParam("name") String name,@RequestParam("end_event")Boolean endEvent) {
         Response r=new Response("");
+        //fetch the user
+        User u=userDao.findOne(userId);
+        //create the event
+        Event e=new Event(u,startDate,endDate,posX,posY,description,name,endEvent);
+
+        try {
+            e=e.save(e);
+            //eventDao.save(e);
+        } catch (DataEntryException e1) {
+            e1.printStackTrace();
+        } catch (Exception e2){
+            e2.printStackTrace();
+        }
+
         return r;
     }
 
