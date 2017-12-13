@@ -11,7 +11,7 @@ public class FreeTime extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column(name = "start_date")
     private Timestamp startDate;
@@ -30,11 +30,11 @@ public class FreeTime extends AbstractEntity {
 
     public FreeTime(){}
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

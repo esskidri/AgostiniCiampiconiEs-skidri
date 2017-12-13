@@ -11,7 +11,7 @@ public class UserOrder extends AbstractEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column(name = "order")
     private int order;
@@ -39,11 +39,11 @@ public class UserOrder extends AbstractEntity{
         this.privateTransport = privateTransport;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
