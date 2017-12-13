@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "public_transport")
-public class PublicTransport implements MeanOfTransportLogic {
+public class PublicTransport extends AbstractEntity implements MeanOfTransportLogic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -99,12 +99,12 @@ public class PublicTransport implements MeanOfTransportLogic {
 
     @Override
     public MeanType getTypeOfTransport() {
-        return null;
+        return type;
     }
 
     @Override
     public EnumGreenLevel getGreenLevel() {
-        return null;
+        return green.getLevel();
     }
 
     @Override

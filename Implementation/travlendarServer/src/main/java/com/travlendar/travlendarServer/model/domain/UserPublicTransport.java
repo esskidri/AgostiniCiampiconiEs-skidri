@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "user_public_transport")
-public class UserPublicTransport implements Serializable{
+public class UserPublicTransport extends AbstractEntity implements Serializable{
 
     @Id
     @Column(name = "username")

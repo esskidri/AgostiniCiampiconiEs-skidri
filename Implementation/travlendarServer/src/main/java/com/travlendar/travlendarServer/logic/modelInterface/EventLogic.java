@@ -1,7 +1,6 @@
 package com.travlendar.travlendarServer.logic.modelInterface;
 
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
-import com.travlendar.travlendarServer.model.domain.Event;
 
 import java.sql.Timestamp;
 

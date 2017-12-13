@@ -3,7 +3,7 @@ package com.travlendar.travlendarServer.model.domain;
 import javax.persistence.Column;
 import java.io.Serializable;
 
-public class TransportSegmentId implements Serializable{
+public class TransportSegmentId extends AbstractEntity implements Serializable{
 
     @Column(name="num_order")
     private long num_order;

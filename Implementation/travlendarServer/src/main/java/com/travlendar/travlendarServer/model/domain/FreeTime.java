@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "free_time")
-public class FreeTime {
+public class FreeTime extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

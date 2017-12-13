@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "user_order")
-public class UserOrder {
+public class UserOrder extends AbstractEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

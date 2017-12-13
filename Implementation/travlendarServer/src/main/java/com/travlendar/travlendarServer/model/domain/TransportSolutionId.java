@@ -5,7 +5,7 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Embeddable
-public class TransportSolutionId implements Serializable {
+public class TransportSolutionId extends AbstractEntity implements Serializable {
 
     @Column(name="event_id_1")
     private long event_id_1;

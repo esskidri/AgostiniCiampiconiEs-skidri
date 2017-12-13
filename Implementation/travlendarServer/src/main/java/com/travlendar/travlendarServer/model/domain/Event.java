@@ -3,6 +3,8 @@ package com.travlendar.travlendarServer.model.domain;
 import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.data.domain.Persistable;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,7 +17,7 @@ public class Event implements Serializable,  EventLogic {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column(name = "start_date")
     private Timestamp startDate;
@@ -48,6 +50,7 @@ public class Event implements Serializable,  EventLogic {
     @OneToMany(cascade = CascadeType.ALL, mappedBy="event2")
     private List<TransportSolution> transportSolutions2;
 
+    public Event(){}
 
     public Event(Timestamp startDate, Timestamp endDate, float posX, float posY, String description, String name, boolean endEvent) {
         this.startDate = startDate;
@@ -59,13 +62,27 @@ public class Event implements Serializable,  EventLogic {
         this.endEvent = endEvent;
     }
 
-    public Event(){}
+    public Event(User u, Timestamp startDate, Timestamp endDate, Float posX, Float posY, String description, String name, Boolean endEvent){
+        this.user=u;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.posX = posX;
+        this.posY = posY;
+        this.description = description;
+        this.name = name;
+        this.endEvent = endEvent;
+    }
 
-    public long getId() {
+
+
+
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -152,6 +169,10 @@ public class Event implements Serializable,  EventLogic {
         return endEvent;
     }
 
+    public void cambia(){
+        this.description="cambioooooooooooooooooooo";
+    }
+
     /***
      *  Logic Interface Implementation
      */
@@ -186,5 +207,17 @@ public class Event implements Serializable,  EventLogic {
             return this.startDate.compareTo(e.getStartDate());
         else
             return this.endDate.compareTo(e.getEndDate());
+    }
+
+
+    public void completeSet(User u, Timestamp startDate, Timestamp endDate, Float posX, Float posY, String description, String name, Timestamp endDate1) {
+        this.user=u;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.posX = posX;
+        this.posY = posY;
+        this.description = description;
+        this.name = name;
+        this.endEvent = endEvent;
     }
 }

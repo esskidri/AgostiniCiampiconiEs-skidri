@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "green")
-public class Green {
+public class Green extends AbstractEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

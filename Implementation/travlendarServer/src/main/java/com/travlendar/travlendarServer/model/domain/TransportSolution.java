@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "transport_solution")
-public class TransportSolution implements Serializable, TransportSolutionLogic {
+public class TransportSolution extends AbstractEntity implements Serializable, TransportSolutionLogic {
 
     @OneToOne
     @JoinColumn(name="event_id_1",insertable = false, updatable = false)

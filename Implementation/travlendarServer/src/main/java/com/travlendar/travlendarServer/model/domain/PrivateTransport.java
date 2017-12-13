@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "private_transport")
-public class PrivateTransport implements MeanOfTransportLogic {
+public class PrivateTransport extends AbstractEntity implements MeanOfTransportLogic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
