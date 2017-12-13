@@ -17,8 +17,7 @@ public class MainLogic {
 
         for(EventLogic outGoing: events){
             for(EventLogic inGoing: eventGraph.edges().get(outGoing)) {
-                //TODO change defined POLICY with user getter
-                TransportSolutionLogic transportSolutionLogic = (new TransportSolutionCalculator(Policy.GREEN.getCore())).calculateSolution(outGoing.getCoordinates(), inGoing.getCoordinates(), outGoing.getEndDate(), inGoing.getStartDate(), user);
+                TransportSolutionLogic transportSolutionLogic = (new TransportSolutionCalculator(user.getPolicy().getCore())).calculateSolution(outGoing.getCoordinates(), inGoing.getCoordinates(), outGoing.getEndDate(), inGoing.getStartDate(), user);
                 transportSolutionLogic.setStartEvent(outGoing);
                 transportSolutionLogic.setEndEvent(inGoing);
                 transportSolutions.add(transportSolutionLogic);

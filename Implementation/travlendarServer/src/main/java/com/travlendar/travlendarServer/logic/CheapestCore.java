@@ -8,6 +8,7 @@ import java.util.List;
 public class CheapestCore implements CalculatorCore {
     @Override
     public List<MeanOfTransportLogic> getMeanOfTransports(UserLogic userLogic) {
-        return null;
+        //TODO
+        return userLogic.getMeanPreferences();
     }
 }
