@@ -5,6 +5,8 @@ import com.travlendar.travlendarServer.model.domain.Event;
 import com.travlendar.travlendarServer.model.domain.User;
 import org.springframework.data.repository.CrudRepository;
 
+import static com.travlendar.travlendarServer.extra.Tools.coordinatesValidation;
+
 public interface EventDao extends CrudRepository<Event, Long> {
 
     /**
@@ -17,6 +19,7 @@ public interface EventDao extends CrudRepository<Event, Long> {
         e.setName(e.getName().replaceAll("\\s+",""));
         if(e.getStartDate().compareTo(e.getEndDate())>0) throw new DataEntryException("EndDate before StartDate");
         if(e.getName()==null || e.getName().length()<1) throw new DataEntryException("invalid name");
+        coordinatesValidation(e.getPosX(),e.getPosY());
         save(e);
         return e;
     }

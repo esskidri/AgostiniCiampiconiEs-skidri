@@ -4,7 +4,6 @@ package com.travlendar.travlendarServer.controller.dataManager;
 import com.travlendar.travlendarServer.controller.Exception.DataEntryException;
 import com.travlendar.travlendarServer.model.dao.*;
 import com.travlendar.travlendarServer.model.domain.Event;
-import com.travlendar.travlendarServer.model.domain.PrivateTransport;
 import com.travlendar.travlendarServer.model.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
-
-import static com.travlendar.travlendarServer.extra.Converter.createTimeStampFromDate;
 
 /**
  * Request Handler is responsible to manage and process the external request,for each request mapping we return a
@@ -43,7 +40,7 @@ public class RequestHandler {
                              @RequestParam("end_date")Timestamp endDate,@RequestParam("pos_x") Float posX,
                              @RequestParam("pos_y") Float posY,@RequestParam("description") String description,
                              @RequestParam("name") String name,@RequestParam("end_event")Boolean endEvent) {
-        Response r=new Response("");
+        Response r=new Response("ok");
         try{
             //fetch the user
             User u=userDao.findOne(userId);
@@ -62,7 +59,7 @@ public class RequestHandler {
     @RequestMapping("/delete-event")
     @ResponseBody
     public Response deleteEvent(@RequestParam("user_id")Long userId,@RequestParam("event_id")Long eventId) {
-        Response r=new Response("");
+        Response r=new Response("ok");
         try{
             //fetch the user
             User u=userDao.findOne(userId);
@@ -84,7 +81,7 @@ public class RequestHandler {
                              @RequestParam("end_date")Timestamp endDate,@RequestParam("pos_x") Float posX,
                              @RequestParam("pos_y") Float posY,@RequestParam("description") String description,
                              @RequestParam("name") String name,@RequestParam("end_event")Boolean endEvent) {
-        Response r=new Response("");
+        Response r=new Response("ok");
         try{
             //fetch the user
             User u=userDao.findOne(userId);
@@ -98,6 +95,22 @@ public class RequestHandler {
             r.setMessage("fail"+e2.getMessage());
         }
         return r;
+    }
+
+
+    @RequestMapping("/fetch-events")
+    @ResponseBody
+    public Response fetchEvents(@RequestParam("user_id") Long userId){
+        Response r=new Response("ok");
+        try{
+            //fetch the user
+            User u=userDao.findOne(userId);
+            r.setMessage(u.getEvents().toString());
+        }catch(Exception e2){
+            r.setMessage("fail"+e2.getMessage());
+        }
+        return r;
+
     }
 
 

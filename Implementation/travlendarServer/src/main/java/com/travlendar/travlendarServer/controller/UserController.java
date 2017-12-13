@@ -2,7 +2,7 @@ package com.travlendar.travlendarServer.controller;
 
 // Imports ...
 
-import com.travlendar.travlendarServer.extra.Converter;
+import com.travlendar.travlendarServer.extra.Tools;
 import com.travlendar.travlendarServer.logic.MainLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLogic;
@@ -222,10 +222,10 @@ public class UserController {
         List<User> us = (List<User>) userDao.findAll();
         User u = us.get(0);
 
-        Timestamp t1 = Converter.createTimeStampFromDate("11/09/2007/2:00");
-        Timestamp t2 = Converter.createTimeStampFromDate("11/09/2007/3:00");
-        Timestamp t3 = Converter.createTimeStampFromDate("11/09/2007/4:00");
-        Timestamp t4 = Converter.createTimeStampFromDate("11/09/2007/6:00");
+        Timestamp t1 = Tools.createTimeStampFromDate("11/09/2007/2:00");
+        Timestamp t2 = Tools.createTimeStampFromDate("11/09/2007/3:00");
+        Timestamp t3 = Tools.createTimeStampFromDate("11/09/2007/4:00");
+        Timestamp t4 = Tools.createTimeStampFromDate("11/09/2007/6:00");
 
         Event e1 = new Event(t1, t2, (float) 45, (float) 46.0, "nuoto", "nuoto", false);
         Event e2 = new Event(t3, t4, (float) 45, (float) 46.0, "palestra", "palestra", false);
