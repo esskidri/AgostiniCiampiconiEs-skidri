@@ -17,21 +17,20 @@ public class EcologistCore implements CalculatorCore {
     }
 
     private boolean compareGreenMeanOfTransport(MeanOfTransportLogic meanOfTransport1, MeanOfTransportLogic meanOfTransport2){
-        return meanOfTransport1.getGreenLevel().compareTo(meanOfTransport2.getGreenLevel()) > 0;
+        return meanOfTransport1.getGreenLevel().compareTo(meanOfTransport2.getGreenLevel()) >= 0;
     }
 
     private void orderMeanByGreen(List<MeanOfTransportLogic> meansOfTransport, int index){
         MeanOfTransportLogic best = meansOfTransport.get(index);
 
         for(MeanOfTransportLogic meanOfTransport: meansOfTransport.subList(index +1, meansOfTransport.size())){
-            //TODO order preservation
             if(!compareGreenMeanOfTransport(best, meanOfTransport))
                 best = meanOfTransport;
         }
 
         if(meansOfTransport.indexOf(best) != index) {
             meansOfTransport.remove(best);
-            meansOfTransport.add(0, best);
+            meansOfTransport.add(index, best);
         }
 
         if(index < meansOfTransport.size() -1)

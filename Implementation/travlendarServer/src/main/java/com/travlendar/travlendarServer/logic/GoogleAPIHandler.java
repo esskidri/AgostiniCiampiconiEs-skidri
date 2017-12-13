@@ -33,12 +33,13 @@ public class GoogleAPIHandler {
     private static final String API_KEY = "AIzaSyClU3xiXoQgD3E_VrESZB8s3nxxm0gecVc";
 
     public static void main(String[] args) {
-
-        System.out.println(httpsRequest(constructHttpsUrl("Rome","Milan", "walking", "1391374800")));
+        //TODO Remove main()
+        System.out.println(constructHttpsUrl("Rome","Milan", "transit", "1513162800000"));
+        System.out.println(httpsRequest(constructHttpsUrl("Rome","Milan", "transit", "1513162800000")));
 
         //Testing https request and Google JSON to POJO mapping
         GoogleResponseMappedObject googleResponseMappedObject;
-        googleResponseMappedObject = fromJsonToObject(httpsRequest(constructHttpsUrl("Roma","Milano", "transit", "1391374800")));
+        googleResponseMappedObject = fromJsonToObject(httpsRequest(constructHttpsUrl("Via+Celeste+Clericetti,+32,+20133+Milano+MI","Via+delle+Rimembranze,+20068+Peschiera+Borromeo+MI", "transit", "1513342800000")));
 
     }
 
@@ -49,7 +50,6 @@ public class GoogleAPIHandler {
     private static GoogleResponseMappedObject fromJsonToObject(String jsonString){
         GoogleResponseMappedObject googleResponseMappedObject = new GoogleResponseMappedObject();
         ObjectMapper mapper = new ObjectMapper();
-
 
         mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
         mapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
