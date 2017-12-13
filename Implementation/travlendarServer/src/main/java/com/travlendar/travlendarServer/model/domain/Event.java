@@ -1,11 +1,10 @@
 package com.travlendar.travlendarServer.model.domain;
 
-import com.travlendar.travlendarServer.controller.Exception.DataEntryException;
-import com.travlendar.travlendarServer.controller.Exception.UserException;
 import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
-import com.travlendar.travlendarServer.model.dao.EntityRepo;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.data.domain.Persistable;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,11 +13,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "event")
-public class Event  extends  AbstractEntity implements Serializable,  EventLogic,EntityRepo {
+public class Event implements Serializable,  EventLogic {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column(name = "start_date")
     private Timestamp startDate;
@@ -52,6 +51,7 @@ public class Event  extends  AbstractEntity implements Serializable,  EventLogic
     private List<TransportSolution> transportSolutions2;
 
     public Event(){}
+
     public Event(Timestamp startDate, Timestamp endDate, float posX, float posY, String description, String name, boolean endEvent) {
         this.startDate = startDate;
         this.endDate = endDate;
@@ -77,11 +77,12 @@ public class Event  extends  AbstractEntity implements Serializable,  EventLogic
 
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -168,7 +169,9 @@ public class Event  extends  AbstractEntity implements Serializable,  EventLogic
         return endEvent;
     }
 
-
+    public void cambia(){
+        this.description="cambioooooooooooooooooooo";
+    }
 
     /***
      *  Logic Interface Implementation
@@ -206,12 +209,15 @@ public class Event  extends  AbstractEntity implements Serializable,  EventLogic
             return this.endDate.compareTo(e.getEndDate());
     }
 
-    @Override
-    public <S extends  AbstractEntity> S save(S entity) throws DataEntryException {
-        //name=name.replaceAll("\\s+","");
-        //if(startDate.compareTo(endDate)<0) throw new DataEntryException("endDate before startDate");
-        //if(name==null || name.length()==0)throw new DataEntryException("invalid name for an event");
-        //this.save(this);
-        return null;
+
+    public void completeSet(User u, Timestamp startDate, Timestamp endDate, Float posX, Float posY, String description, String name, Timestamp endDate1) {
+        this.user=u;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.posX = posX;
+        this.posY = posY;
+        this.description = description;
+        this.name = name;
+        this.endEvent = endEvent;
     }
 }
