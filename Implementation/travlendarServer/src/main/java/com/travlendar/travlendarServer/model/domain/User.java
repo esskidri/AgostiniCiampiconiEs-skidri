@@ -4,6 +4,7 @@ package com.travlendar.travlendarServer.model.domain;
 import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.model.Policy;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.ArrayList;

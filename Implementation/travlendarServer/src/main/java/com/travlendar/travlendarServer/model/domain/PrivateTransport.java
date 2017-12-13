@@ -6,6 +6,7 @@ import com.travlendar.travlendarServer.model.EnumGreenLevel;
 import com.travlendar.travlendarServer.model.MeanType;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,7 +23,7 @@ public class PrivateTransport extends AbstractEntity implements MeanOfTransportL
 
     @Column(name="type")
     @Enumerated(EnumType.STRING)
-    private MeanType type;
+    private MeanType meanType;
 
     @Column(name="displacement")
     private int displacement;
@@ -47,13 +48,19 @@ public class PrivateTransport extends AbstractEntity implements MeanOfTransportL
 
 
 
-
-
-    public PrivateTransport(){}
-
-    public PrivateTransport(String name, MeanType type, int displacement, String license_plate, List<User> users, Green green, List<TransportSegment> transportSegments) {
+    public PrivateTransport(User u, String name, MeanType meanType, int displacement, String license, Green green){
+        this.users=new ArrayList<>();
+        users.add(u);
         this.name = name;
-        this.type = type;
+        this.meanType = meanType;
+        this.displacement = displacement;
+        this.license_plate = license;
+        this.green=green;
+    }
+
+    public PrivateTransport(String name, MeanType meanType, int displacement, String license_plate, List<User> users, Green green, List<TransportSegment> transportSegments) {
+        this.name = name;
+        this.meanType = meanType;
         this.displacement = displacement;
         this.license_plate = license_plate;
         this.users = users;
@@ -77,12 +84,12 @@ public class PrivateTransport extends AbstractEntity implements MeanOfTransportL
         this.name = name;
     }
 
-    public MeanType getType() {
-        return type;
+    public MeanType getMeanType() {
+        return meanType;
     }
 
-    public void setType(MeanType type) {
-        this.type = type;
+    public void setMeanType(MeanType meanType) {
+        this.meanType = meanType;
     }
 
     public int getDisplacement() {
@@ -125,9 +132,18 @@ public class PrivateTransport extends AbstractEntity implements MeanOfTransportL
         this.transportSegments = transportSegments;
     }
 
+    public PrivateTransport(User user, String name, MeanType meanType, int displacement, String license_plate) {
+        this.users=new ArrayList<>();
+        users.add(user);
+        this.name = name;
+        this.meanType = meanType;
+        this.displacement = displacement;
+        this.license_plate = license_plate;
+    }
+
     @Override
     public MeanType getTypeOfTransport() {
-        return type;
+        return meanType;
     }
 
     @Override
