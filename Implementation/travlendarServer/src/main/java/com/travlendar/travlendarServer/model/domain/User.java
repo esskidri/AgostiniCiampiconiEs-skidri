@@ -204,4 +204,12 @@ public class User extends AbstractEntity implements UserLogic {
 
         return  means;
     }
+
+    public PrivateTransport getPrivateTransportById(long id){
+        for (PrivateTransport privateTransport: this.getPrivateTransportList()) {
+           if(privateTransport.getId() == id) return privateTransport;
+        }
+        return null;
+    }
+
 }

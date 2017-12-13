@@ -4,8 +4,11 @@ package com.travlendar.travlendarServer.controller.dataManager;
 import com.travlendar.travlendarServer.controller.Exception.DataEntryException;
 import com.travlendar.travlendarServer.model.dao.*;
 import com.travlendar.travlendarServer.model.domain.Event;
+import com.travlendar.travlendarServer.model.domain.PrivateTransport;
 import com.travlendar.travlendarServer.model.domain.User;
+import com.travlendar.travlendarServer.model.domain.UserOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.support.NullValue;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,11 +29,16 @@ public class RequestHandler {
     @Autowired
     private UserDao userDao;
     @Autowired
+    private UserOrderDao userOrderDao;
+    @Autowired
     private FreetTimeDao freetTimeDao;
     @Autowired
     private PrivateTransportDao privateTransportDao;
     @Autowired
+    private PublicTransportDao publicTransportDao;
+    @Autowired
     private EventDao eventDao;
+
 
 
 
@@ -110,12 +118,32 @@ public class RequestHandler {
             r.setMessage("fail"+e2.getMessage());
         }
         return r;
-
     }
 
+    @RequestMapping("/add-order")
+    @ResponseBody
+    public Response addOrder(@RequestParam("user_id") Long userId,
+                             @RequestParam("transport_id") Long transportId,
+                             @RequestParam("type_transport") boolean type,
+                             @RequestParam("num_order") int numOrder){
+        Response r=new Response("ok");
+        try{
+            //fetch the user
+            User u = userDao.findOne(userId);
+            UserOrder ur;
+            if(type){
+                ur = new UserOrder(numOrder,u, null,u.getPrivateTransportById(transportId));
+            }else{
+                ur = new UserOrder(numOrder,u,publicTransportDao.findOne(transportId),null);
+            }
 
+            userOrderDao.customSave(u,ur);
 
-
+        }catch(Exception e2){
+            r.setMessage("fail"+e2.getMessage());
+        }
+        return r;
+    }
 
 
 

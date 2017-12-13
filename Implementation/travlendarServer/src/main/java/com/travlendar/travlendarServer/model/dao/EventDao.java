@@ -20,7 +20,7 @@ public interface EventDao extends CrudRepository<Event, Long> {
         if(e.getStartDate().compareTo(e.getEndDate())>0) throw new DataEntryException("EndDate before StartDate");
         if(e.getName()==null || e.getName().length()<1) throw new DataEntryException("invalid name");
         coordinatesValidation(e.getPosX(),e.getPosY());
-        save(e);
+
         return e;
     }
 
@@ -48,4 +48,6 @@ public interface EventDao extends CrudRepository<Event, Long> {
         customSave(e);
         return e;
     }
+
+
 }
