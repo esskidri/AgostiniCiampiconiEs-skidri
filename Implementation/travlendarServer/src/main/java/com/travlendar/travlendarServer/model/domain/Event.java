@@ -210,5 +210,14 @@ public class Event implements Serializable,  EventLogic {
     }
 
 
-
+    public void completeSet(User u, Timestamp startDate, Timestamp endDate, Float posX, Float posY, String description, String name, Timestamp endDate1) {
+        this.user=u;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.posX = posX;
+        this.posY = posY;
+        this.description = description;
+        this.name = name;
+        this.endEvent = endEvent;
+    }
 }

@@ -17,6 +17,10 @@ import java.sql.Timestamp;
 
 import static com.travlendar.travlendarServer.extra.Converter.createTimeStampFromDate;
 
+/**
+ * Request Handler is responsible to manage and process the external request,for each request mapping we return a
+ * response to send to the client. The data inserted validity is handled inside the DAO with default methods.
+ */
 @Controller
 @Transactional
 public class RequestHandler {
@@ -40,48 +44,66 @@ public class RequestHandler {
                              @RequestParam("pos_y") Float posY,@RequestParam("description") String description,
                              @RequestParam("name") String name,@RequestParam("end_event")Boolean endEvent) {
         Response r=new Response("");
-        //fetch the user
-        User u=userDao.findOne(userId);
-        //create the event
-        Event e=new Event(u,startDate,endDate,posX,posY,description,name,endEvent);
-
-        try {
+        try{
+            //fetch the user
+            User u=userDao.findOne(userId);
+            //create the event
+            Event e=new Event(u,startDate,endDate,posX,posY,description,name,endEvent);
             eventDao.customSave(e);
         }catch(DataEntryException e1){
             r.setMessage(e1.getMessage());
         }catch(Exception e2){
             r.setMessage("fail"+e2.getMessage());
         }
-
         return r;
     }
-
-
-
-
-
-
 
 
     @RequestMapping("/delete-event")
     @ResponseBody
-    public Response deleteEvent() {
-
+    public Response deleteEvent(@RequestParam("user_id")Long userId,@RequestParam("event_id")Long eventId) {
         Response r=new Response("");
+        try{
+            //fetch the user
+            User u=userDao.findOne(userId);
+            //fetch the event
+            Event e=eventDao.findOne(eventId);
+            eventDao.customDelete(e,u);
+        }catch(DataEntryException e1){
+            r.setMessage(e1.getMessage());
+        }catch(Exception e2){
+            r.setMessage("fail"+e2.getMessage());
+        }
         return r;
     }
 
 
-
-    @RequestMapping("/add-private-transport")
+    @RequestMapping("/update-event")
     @ResponseBody
-    public Response addPrivateTransport(@RequestParam("user_id") Long id,@RequestParam("name") String name,@RequestParam("type") String type,
-                                        @RequestParam("displacement") int displacement,@RequestParam("license") String licensePlate){
-        User user=userDao.findOne(id);
-        PrivateTransport privateTransport=new PrivateTransport();
+    public Response updateEvent(@RequestParam("user_id") Long userId,@RequestParam("event_id")Long eventId, @RequestParam("start_date") Timestamp startDate,
+                             @RequestParam("end_date")Timestamp endDate,@RequestParam("pos_x") Float posX,
+                             @RequestParam("pos_y") Float posY,@RequestParam("description") String description,
+                             @RequestParam("name") String name,@RequestParam("end_event")Boolean endEvent) {
         Response r=new Response("");
+        try{
+            //fetch the user
+            User u=userDao.findOne(userId);
+            //fetch the event
+            Event e=eventDao.findOne(eventId);
+            e.completeSet(u,startDate,endDate,posX,posY,description,name,endDate);
+            eventDao.customSave(e);
+        }catch(DataEntryException e1){
+            r.setMessage(e1.getMessage());
+        }catch(Exception e2){
+            r.setMessage("fail"+e2.getMessage());
+        }
         return r;
     }
+
+
+
+
+
 
 
 
