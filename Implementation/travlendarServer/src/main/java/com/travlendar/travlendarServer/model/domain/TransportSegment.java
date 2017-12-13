@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Table(name = "transport_segment")
 public class TransportSegment extends AbstractEntity implements Serializable,TransportSegmentLogic {
     @Column(name = "num_order",insertable = false, updatable = false)
-    private long numOrder;
+    private Long numOrder;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumns({
@@ -76,11 +76,11 @@ public class TransportSegment extends AbstractEntity implements Serializable,Tra
         this.positionBY = positionBY;
     }
 
-    public long getNumOrder() {
+    public Long getNumOrder() {
         return numOrder;
     }
 
-    public void setNumOrder(long numOrder) {
+    public void setNumOrder(Long numOrder) {
         this.numOrder = numOrder;
     }
 

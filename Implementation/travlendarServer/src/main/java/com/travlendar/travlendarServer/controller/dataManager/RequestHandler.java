@@ -2,8 +2,10 @@ package com.travlendar.travlendarServer.controller.dataManager;
 
 
 import com.travlendar.travlendarServer.controller.Exception.DataEntryException;
+import com.travlendar.travlendarServer.model.MeanType;
 import com.travlendar.travlendarServer.model.dao.*;
 import com.travlendar.travlendarServer.model.domain.Event;
+import com.travlendar.travlendarServer.model.domain.Green;
 import com.travlendar.travlendarServer.model.domain.PrivateTransport;
 import com.travlendar.travlendarServer.model.domain.User;
 import com.travlendar.travlendarServer.model.domain.UserOrder;
@@ -38,7 +40,8 @@ public class RequestHandler {
     private PublicTransportDao publicTransportDao;
     @Autowired
     private EventDao eventDao;
-
+    @Autowired
+    private GreenDao greenDao;
 
 
 
@@ -58,7 +61,7 @@ public class RequestHandler {
         }catch(DataEntryException e1){
             r.setMessage(e1.getMessage());
         }catch(Exception e2){
-            r.setMessage("fail"+e2.getMessage());
+            r.setMessage("fail: "+e2.getMessage());
         }
         return r;
     }
@@ -69,15 +72,13 @@ public class RequestHandler {
     public Response deleteEvent(@RequestParam("user_id")Long userId,@RequestParam("event_id")Long eventId) {
         Response r=new Response("ok");
         try{
-            //fetch the user
             User u=userDao.findOne(userId);
-            //fetch the event
             Event e=eventDao.findOne(eventId);
             eventDao.customDelete(e,u);
         }catch(DataEntryException e1){
             r.setMessage(e1.getMessage());
         }catch(Exception e2){
-            r.setMessage("fail"+e2.getMessage());
+            r.setMessage("fail: "+e2.getMessage());
         }
         return r;
     }
@@ -85,22 +86,21 @@ public class RequestHandler {
 
     @RequestMapping("/update-event")
     @ResponseBody
-    public Response updateEvent(@RequestParam("user_id") Long userId,@RequestParam("event_id")Long eventId, @RequestParam("start_date") Timestamp startDate,
-                             @RequestParam("end_date")Timestamp endDate,@RequestParam("pos_x") Float posX,
-                             @RequestParam("pos_y") Float posY,@RequestParam("description") String description,
-                             @RequestParam("name") String name,@RequestParam("end_event")Boolean endEvent) {
+    public Response updateEvent(@RequestParam("user_id") Long userId,@RequestParam("event_id")Long eventId,
+                                @RequestParam("start_date") Timestamp startDate,
+                                @RequestParam("end_date")Timestamp endDate,@RequestParam("pos_x") Float posX,
+                                @RequestParam("pos_y") Float posY,@RequestParam("description") String description,
+                                @RequestParam("name") String name,@RequestParam("end_event")Boolean endEvent) {
         Response r=new Response("ok");
         try{
-            //fetch the user
             User u=userDao.findOne(userId);
-            //fetch the event
             Event e=eventDao.findOne(eventId);
             e.completeSet(u,startDate,endDate,posX,posY,description,name,endDate);
-            eventDao.customSave(e);
+            eventDao.customUpdate(e,u);
         }catch(DataEntryException e1){
             r.setMessage(e1.getMessage());
         }catch(Exception e2){
-            r.setMessage("fail"+e2.getMessage());
+            r.setMessage("fail: "+e2.getMessage());
         }
         return r;
     }
@@ -111,11 +111,37 @@ public class RequestHandler {
     public Response fetchEvents(@RequestParam("user_id") Long userId){
         Response r=new Response("ok");
         try{
-            //fetch the user
             User u=userDao.findOne(userId);
             r.setMessage(u.getEvents().toString());
         }catch(Exception e2){
-            r.setMessage("fail"+e2.getMessage());
+            r.setMessage("fail: "+e2.getMessage());
+        }
+        return r;
+    }
+
+    @RequestMapping("/add-private-transport")
+    @ResponseBody
+    public Response addPrivateTransport(@RequestParam("user_id") Long userId,@RequestParam("name") String name,
+                                        @RequestParam ("type")String type,@RequestParam("displacement")int displacement,
+                                        @RequestParam("license_plate") String license){
+        Response r=new Response("ok");
+        try {
+            //convert type
+            MeanType meanType = MeanType.valueOf(type);
+            //fetch correct green
+            Green green = greenDao.findByLevel(meanType.getGreenEnum());
+            //fetch user owner
+            User u = userDao.findOne(userId);
+            if(u==null)throw new DataEntryException("user not found");
+            //create
+            PrivateTransport p = new PrivateTransport(u, name, meanType, displacement, license, green);
+            //save
+            privateTransportDao.customSave(p);
+            //todo aggiungere l' user order
+        }catch (DataEntryException e) {
+            r.setMessage(e.getMessage());
+        }catch(Exception e){
+            r.setMessage("fail: "+e.getMessage());
         }
         return r;
     }
@@ -144,6 +170,10 @@ public class RequestHandler {
         }
         return r;
     }
+
+
+
+
 
 
 

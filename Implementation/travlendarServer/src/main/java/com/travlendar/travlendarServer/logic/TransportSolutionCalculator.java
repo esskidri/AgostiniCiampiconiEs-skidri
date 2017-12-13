@@ -163,7 +163,7 @@ public class TransportSolutionCalculator {
             j++;
         }
 
-        j = transportSegments.size();
+        j = transportSegments.size() -1;
 
         while(j > i){
             if(transportSegments.get(j).getDestination().equals(transportSegments.get(0).getOrigin())){
@@ -193,7 +193,7 @@ public class TransportSolutionCalculator {
      * @return This method call the google API to request the calculation of a route between two points
      * with a specific mean of transport
      */
-    private GoogleResponseMappedObject callGoogleAPI(String startingLocation, String endingLocation, String meanOfTransport, String arrivalTime) throws EarlyStartException {
+    private GoogleResponseMappedObject callGoogleAPI(String startingLocation, String endingLocation, String meanOfTransport, String arrivalTime) throws EarlyStartException, MeanNotAvailableException {
         GoogleResponseMappedObject googleResponseMappedObject;
 
         googleResponseMappedObject = GoogleAPIHandler.askGoogle(startingLocation, endingLocation, meanOfTransport, arrivalTime);

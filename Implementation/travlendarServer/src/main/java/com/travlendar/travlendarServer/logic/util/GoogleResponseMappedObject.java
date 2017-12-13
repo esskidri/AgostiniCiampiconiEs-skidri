@@ -1,5 +1,6 @@
 package com.travlendar.travlendarServer.logic.util;
 
+import com.travlendar.travlendarServer.logic.exceptions.MeanNotAvailableException;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.*;
 
 import java.io.Serializable;
@@ -18,6 +19,7 @@ public class GoogleResponseMappedObject implements Serializable {
     //supporting attribute
     private Timestamp departingTime;
     private Timestamp arrivalTime;
+    private String status;
     private boolean partialSolution = false;
 
 
@@ -87,15 +89,22 @@ public class GoogleResponseMappedObject implements Serializable {
         return routes.get(0).getLegs().get(0);
     }
 
-    public void checkCompleteness(String meanOfTransport) {
-        int i = 0;
-        for(Step step: getSteps()){
-            if(!step.getTravel_mode().equals(meanOfTransport.toUpperCase())) {
-                cutWay(i);
-                break;
+    public void checkCompleteness(String meanOfTransport) throws MeanNotAvailableException {
+        if(status.equals("OK")) {
+            int i = 0;
+            for (Step step : getSteps()) {
+                if (!step.getTravel_mode().equals(meanOfTransport.toUpperCase())) {
+                    cutWay(i);
+                    break;
+                }
+                i++;
             }
-            i++;
         }
+        else if(status.equals("NOT_FOUND") || status.equals("ZERO_RESULTS") || status.equals("MAX_WAYPOINTS_EXCEEDED") || status.equals("MAX_ROUTE_LENGTH_EXCEEDED") || status.equals("INVALID_REQUEST") || status.equals("REQUEST_DENIED") || status.equals("UNKNOWN_ERROR") )
+            throw new MeanNotAvailableException(status);
+        else if(status.equals("OVER_QUERY_LIMIT"))
+            throw new MeanNotAvailableException("Maximum number of daily query reached, service will not be available since tomorrow");
+
     }
 
     public void searchPublicLine(){
