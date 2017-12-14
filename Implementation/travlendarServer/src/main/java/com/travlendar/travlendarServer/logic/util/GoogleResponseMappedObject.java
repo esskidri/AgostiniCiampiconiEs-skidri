@@ -95,13 +95,29 @@ public class GoogleResponseMappedObject implements Serializable {
         return partialSolution;
     }
 
-    private List<Step> getSteps(){
+    public List<Step> getSteps(){
         return getLeg().getSteps();
     }
 
-    private Leg getLeg(){
+    public String getFirstTravelMode(){
+        return getSteps().get(0).getTravel_mode();
+    }
+
+    public Leg getLeg(){
         return routes.get(0).getLegs().get(0);
     }
+
+
+
+    /***
+     * Logic Methods
+     */
+
+    /***
+     *
+     * @param meanOfTransport
+     * @throws MeanNotAvailableException
+     */
 
     public void checkCompleteness(String meanOfTransport) throws MeanNotAvailableException {
         if(status == null || status.equals("OK")) {
