@@ -43,6 +43,16 @@ public class GoogleAPIHandler {
 
     }
 
+    /**
+     *
+     * Public method that call the Google API by the parameters passed
+     *
+     * @param origin
+     * @param destination
+     * @param meanOfTransport
+     * @param arrivalTime
+     * @return
+     */
     public static GoogleResponseMappedObject askGoogle(String origin, String destination, String meanOfTransport, String arrivalTime){
         return fromJsonToObject(httpsRequest(constructHttpsUrl(origin, destination, meanOfTransport, arrivalTime)));
     }

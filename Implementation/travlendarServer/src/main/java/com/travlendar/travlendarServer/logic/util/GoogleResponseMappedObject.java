@@ -16,6 +16,18 @@ public class GoogleResponseMappedObject implements Serializable {
     List<GeocodedWaypoint> geocoded_waypoints;
     List<Route> routes;
 
+    public GoogleResponseMappedObject(List<GeocodedWaypoint> geocoded_waypoints, List<Route> routes, Timestamp departingTime, Timestamp arrivalTime, String status, boolean partialSolution) {
+        this.geocoded_waypoints = geocoded_waypoints;
+        this.routes = routes;
+        this.departingTime = departingTime;
+        this.arrivalTime = arrivalTime;
+        this.status = status;
+        this.partialSolution = partialSolution;
+    }
+
+    public GoogleResponseMappedObject() {
+    }
+
     //supporting attribute
     private Timestamp departingTime;
     private Timestamp arrivalTime;
@@ -38,7 +50,9 @@ public class GoogleResponseMappedObject implements Serializable {
         return routes;
     }
 
-
+    public String getStatus() {
+        return status;
+    }
 
     /*** Supporting methods for logic ***/
     public Coordinates getEndingLocation() {
@@ -90,7 +104,7 @@ public class GoogleResponseMappedObject implements Serializable {
     }
 
     public void checkCompleteness(String meanOfTransport) throws MeanNotAvailableException {
-        if(status.equals("OK")) {
+        if(status == null || status.equals("OK")) {
             int i = 0;
             for (Step step : getSteps()) {
                 if (!step.getTravel_mode().equals(meanOfTransport.toUpperCase())) {
@@ -109,7 +123,7 @@ public class GoogleResponseMappedObject implements Serializable {
 
     public void searchPublicLine(){
         for(Step step: getSteps()){
-            if(step.getTravel_mode() == "TRANSIT"){
+            if(step.getTravel_mode().equals("TRANSIT")){
                 setStartingLocation(step.getStart_location());
                 break;
             }
@@ -128,7 +142,7 @@ public class GoogleResponseMappedObject implements Serializable {
         }
 
         getLeg().setSteps(getSteps().subList(0, i));
-        getLeg().setEnd_location(getSteps().get(getSteps().size()).getEnd_location());
+        getLeg().setEnd_location(getSteps().get(getSteps().size() -1).getEnd_location());
         getLeg().setEnd_address("modified"); //TODO secondario
 
         duration.setValue(time);

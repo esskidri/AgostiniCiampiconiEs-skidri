@@ -9,6 +9,16 @@ public class GeocodedWaypoint implements Serializable {
     String place_id;
     List<String> types;
 
+    public GeocodedWaypoint(String geocoder_status, Boolean partial_match, String place_id, List<String> types) {
+        this.geocoder_status = geocoder_status;
+        this.partial_match = partial_match;
+        this.place_id = place_id;
+        this.types = types;
+    }
+
+    public GeocodedWaypoint() {
+    }
+
     public String getGeocoder_status() {
         return geocoder_status;
     }

@@ -28,7 +28,7 @@ public class TransportSolutionCalculator {
     }
 
     public TransportSolutionLogic calculateSolution(Coordinates startingLocation, Coordinates endingLocation, Timestamp startingTime, Timestamp arrivalTime, UserLogic userLogic) {
-        List<MeanOfTransportLogic> meansOfTransport = calculatorCore.getMeanOfTransports(userLogic);
+        List<MeanOfTransportLogic> meansOfTransport = calculatorCore.getMeanOfTransports(userLogic, startingLocation, endingLocation, startingTime, arrivalTime);
 
         try {
             calculateSegment(startingLocation, endingLocation, startingTime, arrivalTime, meansOfTransport);

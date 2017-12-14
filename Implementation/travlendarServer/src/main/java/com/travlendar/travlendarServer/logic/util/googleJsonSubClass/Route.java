@@ -9,6 +9,17 @@ public class Route {
     Polyline overview_polyline;
     String summary;
 
+    public Route(Bounds bounds, String copyrights, List<Leg> legs, Polyline overview_polyline, String summary) {
+        this.bounds = bounds;
+        this.copyrights = copyrights;
+        this.legs = legs;
+        this.overview_polyline = overview_polyline;
+        this.summary = summary;
+    }
+
+    public Route() {
+    }
+
     /*** Getter and setter for object mapping ***/
 
     public Bounds getBounds() {
