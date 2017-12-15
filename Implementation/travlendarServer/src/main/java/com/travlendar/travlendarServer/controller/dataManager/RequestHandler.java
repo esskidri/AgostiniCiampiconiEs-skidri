@@ -1,22 +1,22 @@
 package com.travlendar.travlendarServer.controller.dataManager;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.travlendar.travlendarServer.controller.Exception.DataEntryException;
 import com.travlendar.travlendarServer.model.MeanType;
+import com.travlendar.travlendarServer.model.clientModel.EventClient;
 import com.travlendar.travlendarServer.model.dao.*;
-import com.travlendar.travlendarServer.model.domain.Event;
-import com.travlendar.travlendarServer.model.domain.Green;
-import com.travlendar.travlendarServer.model.domain.PrivateTransport;
-import com.travlendar.travlendarServer.model.domain.User;
-import com.travlendar.travlendarServer.model.domain.UserOrder;
+import com.travlendar.travlendarServer.model.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 /**
  * Request Handler is responsible to manage and process the external request,for each request mapping we return a
@@ -111,7 +111,11 @@ public class RequestHandler {
         Response r=new Response("ok");
         try{
             User u=userDao.findOne(userId);
-            r.setMessage(u.getEvents().toString());
+            ArrayList<EventClient> eventClients = new ArrayList<EventClient>();
+            for(Event event : u.getEvents())  eventClients.add(event.getEventClient());
+            ObjectMapper mapper = new ObjectMapper();
+            String jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(eventClients);
+            r.setObj(jsonInString);
         }catch(Exception e2){
             r.setMessage("fail: "+e2.getMessage());
         }
@@ -166,6 +170,24 @@ public class RequestHandler {
 
         }catch(Exception e2){
             r.setMessage("fail"+e2.getMessage());
+        }
+        return r;
+    }
+
+    @RequestMapping("/add-free-time")
+    @ResponseBody
+    public Response addFreeTime(@RequestParam("user_id") Long userId,
+                                @RequestParam("start_date") Timestamp startDate,
+                                @RequestParam("end_date") Timestamp endDate,
+                                @RequestParam("duration") int duration){
+        Response r=new Response("ok");
+        //fetch the user
+        User u = userDao.findOne(userId);
+        FreeTime freeTime = new FreeTime(startDate, endDate, duration, u);
+        try {
+            freetTimeDao.customSave(freeTime);
+        }catch(Exception e){
+            r.setMessage("fail"+e.getMessage());
         }
         return r;
     }

@@ -45,7 +45,7 @@ public class PrivateTransport extends AbstractEntity implements MeanOfTransportL
 
     @OneToMany(mappedBy = "privateTransport")
     private List<TransportSegment> transportSegments;
-    private MeanType type;
+
 
 
     public PrivateTransport(User u, String name, MeanType meanType, int displacement, String license, Green green){
@@ -160,7 +160,7 @@ public class PrivateTransport extends AbstractEntity implements MeanOfTransportL
         return true;
     }
 
-    public void setType(MeanType type) {
-        this.type = type;
+    public void setType(MeanType meanType) {
+        this.meanType = meanType;
     }
 }

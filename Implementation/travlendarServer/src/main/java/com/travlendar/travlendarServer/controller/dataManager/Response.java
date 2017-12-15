@@ -1,8 +1,12 @@
 package com.travlendar.travlendarServer.controller.dataManager;
 
+import com.travlendar.travlendarServer.model.clientModel.EventClient;
+
+import java.util.List;
+
 public class Response {
     private String message;
-    private Object obj;
+    private String obj;
 
     public Response(String message) {
         this.message = message;
@@ -17,7 +21,7 @@ public class Response {
         return obj;
     }
 
-    public void setObj(Object obj) {
+    public void setObj(String obj) {
         this.obj = obj;
     }
 

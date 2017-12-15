@@ -30,6 +30,13 @@ public class FreeTime extends AbstractEntity {
 
     public FreeTime(){}
 
+    public FreeTime(Timestamp startDate, Timestamp endDate, int duration, User user) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.duration = duration;
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }
