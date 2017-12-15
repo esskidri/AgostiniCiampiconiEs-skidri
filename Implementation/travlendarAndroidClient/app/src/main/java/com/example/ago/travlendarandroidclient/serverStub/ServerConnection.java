@@ -1,7 +1,9 @@
 package com.example.ago.travlendarandroidclient.serverStub;
 
+import com.example.ago.travlendarandroidclient.model.Event;
 import com.example.ago.travlendarandroidclient.serverStub.HttpGetRequest;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -18,6 +20,18 @@ public class ServerConnection {
     public static String getUserDescription(Long id){
         String result="";
         String url=serverUrl+"/user-description/?"+"id="+id;
+        HttpGetRequest getRequest = new HttpGetRequest();
+        try {
+            result = getRequest.execute(url).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static String fetchEvents(Long id){
+        String result="";
+        String url=serverUrl+"/fetch-events/?"+"id="+id;
         HttpGetRequest getRequest = new HttpGetRequest();
         try {
             result = getRequest.execute(url).get();
