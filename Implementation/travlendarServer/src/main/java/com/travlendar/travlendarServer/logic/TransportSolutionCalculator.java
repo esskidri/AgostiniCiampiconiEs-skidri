@@ -76,7 +76,7 @@ public class TransportSolutionCalculator {
         try {
             if (isMeanAvailablePrivately(meansOfTransport.get(0))) {
                 //This mean is private and the user can use it by the previous movements
-                googleResponseMappedObject = callGoogleAPI(startingLocation.toHttpsFormat(), endingLocation.toHttpsFormat(), meansOfTransport.get(0).getTypeOfTransport().toHttpsFormat(), ((Long) arrivalTime.getTime()).toString());
+                googleResponseMappedObject = callGoogleAPI(startingLocation, endingLocation, meansOfTransport.get(0), arrivalTime);
             } else {
                 //The mean is not a private mean, so the user must reach a medium location to use it
                 Coordinates mediumLocation;
@@ -84,14 +84,14 @@ public class TransportSolutionCalculator {
 
                 //If it's a mean of the public transport (Bus, Metro, Tram etc) this is handled by the google API
                 if (meansOfTransport.get(0).getTypeOfTransport() == MeanType.BUS) {
-                    googleResponseMappedObject = callGoogleAPI(startingLocation.toHttpsFormat(), endingLocation.toHttpsFormat(), meansOfTransport.get(0).getTypeOfTransport().toHttpsFormat(), ((Long) arrivalTime.getTime()).toString());
+                    googleResponseMappedObject = callGoogleAPI(startingLocation, endingLocation, meansOfTransport.get(0), arrivalTime);
                     googleResponseMappedObject.searchPublicLine();
                     mediumLocation = googleResponseMappedObject.getStartingLocation();
                 }
                 else {
                     //Else the medium location is obtained by the position of a private sharing services (MoBike, Enjoy etc)
                     mediumLocation = getLocationByExternalAPI(meansOfTransport.get(0), startingLocation, endingLocation, arrivalTime);
-                    googleResponseMappedObject = callGoogleAPI(mediumLocation.toHttpsFormat(), endingLocation.toHttpsFormat(), meansOfTransport.get(0).getTypeOfTransport().toHttpsFormat(), ((Long) arrivalTime.getTime()).toString());
+                    googleResponseMappedObject = callGoogleAPI(mediumLocation, endingLocation, meansOfTransport.get(0), arrivalTime);
                 }
                 if (googleResponseMappedObject.getDepartingTime().compareTo(startingTime) < 0)
                     throw new EarlyStartException();
@@ -180,7 +180,7 @@ public class TransportSolutionCalculator {
 
 
     @NotNull
-    private Coordinates getLocationByExternalAPI(MeanOfTransportLogic meanOfTransport, Coordinates startingLocation, Coordinates endingLocation, Timestamp arrivalTime) throws MeanNotAvailableException, EarlyStartException {
+    private Coordinates getLocationByExternalAPI(MeanOfTransportLogic meanOfTransport, Coordinates startingLocation, Coordinates endingLocation, Timestamp arrivalTime) throws MeanNotAvailableException {
 
         throw new MeanNotAvailableException();
     }
@@ -193,11 +193,11 @@ public class TransportSolutionCalculator {
      * @return This method call the google API to request the calculation of a route between two points
      * with a specific mean of transport
      */
-    private GoogleResponseMappedObject callGoogleAPI(String startingLocation, String endingLocation, String meanOfTransport, String arrivalTime) throws EarlyStartException, MeanNotAvailableException {
+    private GoogleResponseMappedObject callGoogleAPI(Coordinates startingLocation, Coordinates endingLocation, MeanOfTransportLogic meanOfTransport, Timestamp arrivalTime) throws EarlyStartException, MeanNotAvailableException {
         GoogleResponseMappedObject googleResponseMappedObject;
 
         googleResponseMappedObject = GoogleAPIHandler.askGoogle(startingLocation, endingLocation, meanOfTransport, arrivalTime);
-        googleResponseMappedObject.checkCompleteness(meanOfTransport);
+        googleResponseMappedObject.checkCompleteness(meanOfTransport.getTypeOfTransport().toHttpsFormat());
 
         return googleResponseMappedObject;
     }

@@ -30,4 +30,8 @@ public class Tools {
         }
     }
 
+    public static String getSecondsFromTimeStamp(Timestamp timestamp){
+        return ((Long) (timestamp.getTime()/1000)).toString();
+    }
+
 }
