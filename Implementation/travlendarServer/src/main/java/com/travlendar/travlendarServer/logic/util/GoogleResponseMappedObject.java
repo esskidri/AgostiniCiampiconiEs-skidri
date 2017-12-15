@@ -10,11 +10,11 @@ import java.util.List;
 /**
  * This class contain all the attributes needed to grant an useful mapping with the google response
  * ObjectMapper of the jackson databind library contain the method to grant a correct mapping
- * This class will also implement useful method to extract important information for out algorithm
+ * This class will also implement useful method to extract important information for our algorithm
  */
 public class GoogleResponseMappedObject implements Serializable {
-    List<GeocodedWaypoint> geocoded_waypoints;
-    List<Route> routes;
+    private List<GeocodedWaypoint> geocoded_waypoints;
+    private List<Route> routes;
 
     public GoogleResponseMappedObject(List<GeocodedWaypoint> geocoded_waypoints, List<Route> routes, Timestamp departingTime, Timestamp arrivalTime, String status, boolean partialSolution) {
         this.geocoded_waypoints = geocoded_waypoints;
