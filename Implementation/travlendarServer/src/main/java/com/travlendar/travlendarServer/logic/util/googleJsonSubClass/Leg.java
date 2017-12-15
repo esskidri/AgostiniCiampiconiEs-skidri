@@ -13,6 +13,21 @@ public class Leg {
     List<String> warnings;
     List<Integer> waypoint_order;
 
+    public Leg(InfoPair distance, InfoPair duration, String end_address, Coordinates end_location, String start_address, Coordinates start_location, List<Step> steps, List<String> warnings, List<Integer> waypoint_order) {
+        this.distance = distance;
+        this.duration = duration;
+        this.end_address = end_address;
+        this.end_location = end_location;
+        this.start_address = start_address;
+        this.start_location = start_location;
+        this.steps = steps;
+        this.warnings = warnings;
+        this.waypoint_order = waypoint_order;
+    }
+
+    public Leg() {
+    }
+
     public InfoPair getDistance() {
         return distance;
     }

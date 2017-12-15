@@ -4,6 +4,14 @@ public class Coordinates {
     Float lat;
     Float lng;
 
+    public Coordinates(Double lat, Double lng) {
+        this.lat = lat.floatValue();
+        this.lng = lng.floatValue();
+    }
+
+    public Coordinates() {
+    }
+
     public Float getLat() {
         return lat;
     }

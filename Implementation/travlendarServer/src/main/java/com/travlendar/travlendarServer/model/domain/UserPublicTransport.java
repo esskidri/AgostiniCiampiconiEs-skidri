@@ -24,4 +24,27 @@ public class UserPublicTransport extends AbstractEntity implements Serializable{
 
     public UserPublicTransport(){}
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public PublicTransport getPublicTransport() {
+        return publicTransport;
+    }
+
+    public void setPublicTransport(PublicTransport publicTransport) {
+        this.publicTransport = publicTransport;
+    }
 }

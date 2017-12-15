@@ -4,6 +4,14 @@ public class InfoPair {
     String text;
     int value;
 
+    public InfoPair(String text, int value) {
+        this.text = text;
+        this.value = value;
+    }
+
+    public InfoPair() {
+    }
+
     public String getText() {
         return text;
     }

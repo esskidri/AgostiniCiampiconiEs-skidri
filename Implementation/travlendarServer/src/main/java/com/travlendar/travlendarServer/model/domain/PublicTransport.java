@@ -30,6 +30,7 @@ public class PublicTransport extends AbstractEntity implements MeanOfTransportLo
 
 
     @OneToMany(mappedBy = "publicTransport")
+    //TODO da rimuovere
     private List<PublicTransport> publicTransport;
 
     @OneToMany(mappedBy = "publicTransport")
@@ -39,7 +40,7 @@ public class PublicTransport extends AbstractEntity implements MeanOfTransportLo
     @Enumerated(EnumType.STRING)
     private MeanType type;
 
-    private PublicTransport(){}
+    public PublicTransport(){}
 
     public Long getId() {
         return id;

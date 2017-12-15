@@ -10,6 +10,20 @@ public class Step {
     Coordinates start_location;
     String travel_mode;
 
+    public Step(InfoPair distance, InfoPair duration, Coordinates end_location, String html_instructions, String maneuver, Polyline polyline, Coordinates start_location, String travel_mode) {
+        this.distance = distance;
+        this.duration = duration;
+        this.end_location = end_location;
+        this.html_instructions = html_instructions;
+        this.maneuver = maneuver;
+        this.polyline = polyline;
+        this.start_location = start_location;
+        this.travel_mode = travel_mode;
+    }
+
+    public Step() {
+    }
+
     /*** Getter and setter for object mapping ***/
 
     public InfoPair getDistance() {

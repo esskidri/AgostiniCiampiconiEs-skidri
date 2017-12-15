@@ -4,6 +4,14 @@ public class Bounds {
     Coordinates northeast;
     Coordinates southwest;
 
+    public Bounds(Coordinates northeast, Coordinates southwest) {
+        this.northeast = northeast;
+        this.southwest = southwest;
+    }
+
+    public Bounds() {
+    }
+
     public Coordinates getNortheast() {
         return northeast;
     }

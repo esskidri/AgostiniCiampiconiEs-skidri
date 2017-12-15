@@ -16,6 +16,18 @@ public class GoogleResponseMappedObject implements Serializable {
     List<GeocodedWaypoint> geocoded_waypoints;
     List<Route> routes;
 
+    public GoogleResponseMappedObject(List<GeocodedWaypoint> geocoded_waypoints, List<Route> routes, Timestamp departingTime, Timestamp arrivalTime, String status, boolean partialSolution) {
+        this.geocoded_waypoints = geocoded_waypoints;
+        this.routes = routes;
+        this.departingTime = departingTime;
+        this.arrivalTime = arrivalTime;
+        this.status = status;
+        this.partialSolution = partialSolution;
+    }
+
+    public GoogleResponseMappedObject() {
+    }
+
     //supporting attribute
     private Timestamp departingTime;
     private Timestamp arrivalTime;
@@ -38,6 +50,9 @@ public class GoogleResponseMappedObject implements Serializable {
         return routes;
     }
 
+    public String getStatus() {
+        return status;
+    }
 
 
     /*** Supporting methods for logic ***/
@@ -61,6 +76,8 @@ public class GoogleResponseMappedObject implements Serializable {
         this.arrivalTime = arrivalTime;
     }
 
+    //TODO add update methods
+
     public Timestamp getDepartingTime() {
         return departingTime;
     }
@@ -81,16 +98,35 @@ public class GoogleResponseMappedObject implements Serializable {
         return partialSolution;
     }
 
-    private List<Step> getSteps(){
+    public List<Step> getSteps(){
         return getLeg().getSteps();
     }
 
-    private Leg getLeg(){
+    public String getFirstTravelMode(){
+        return getSteps().get(0).getTravel_mode();
+    }
+
+    public Leg getLeg(){
         return routes.get(0).getLegs().get(0);
     }
 
+
+
+    /***
+     * Logic Methods
+     */
+
+    /***
+     *
+     * Check if the response is complete by the meaning required
+     * If not it call cutWay Method
+     *
+     * @param meanOfTransport
+     * @throws MeanNotAvailableException
+     */
+
     public void checkCompleteness(String meanOfTransport) throws MeanNotAvailableException {
-        if(status.equals("OK")) {
+        if(status == null || status.equals("OK")) {
             int i = 0;
             for (Step step : getSteps()) {
                 if (!step.getTravel_mode().equals(meanOfTransport.toUpperCase())) {
@@ -109,32 +145,48 @@ public class GoogleResponseMappedObject implements Serializable {
 
     public void searchPublicLine(){
         for(Step step: getSteps()){
-            if(step.getTravel_mode() == "TRANSIT"){
+            if(step.getTravel_mode().equals("TRANSIT")){
                 setStartingLocation(step.getStart_location());
                 break;
             }
         }
     }
 
+    /**
+     *
+     * This method remove the steps that does not use the desired mean
+     * and recalculates the fundamental parameters (duration, length etc..)
+     *
+     * @param i index from which the google response must be cut
+     */
     private void cutWay(int i) {
         partialSolution = true;
+        int length;
         int time;
         InfoPair duration= new InfoPair();
+        InfoPair distance = new InfoPair();
 
         time = getLeg().getDuration().getValue();
+        length = getLeg().getDistance().getValue();
 
         for(Step step: getSteps().subList(i, getSteps().size())){
             time -= step.getDuration().getValue();
+            length -= step.getDuration().getValue();
         }
 
         getLeg().setSteps(getSteps().subList(0, i));
-        getLeg().setEnd_location(getSteps().get(getSteps().size()).getEnd_location());
+        getLeg().setEnd_location(getSteps().get(getSteps().size() -1).getEnd_location());
         getLeg().setEnd_address("modified"); //TODO secondario
 
         duration.setValue(time);
         duration.setText(" modified"); //TODO secondario
 
+        distance.setValue(length);
+        distance.setText(" modified"); //TODO secondario
+
         getLeg().setDuration(duration);
 
     }
+
+
 }
