@@ -38,7 +38,7 @@ public class CalendarView extends AppCompatActivity implements WeekView.EventCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar_view);
-        
+
 
 
         // Get a reference for the week view in the layout.
