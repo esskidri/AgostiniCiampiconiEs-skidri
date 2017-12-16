@@ -1,9 +1,13 @@
 <resources>
-    <string name="app_name">travlendarAndroidClient</string>
+    <string name="app_name">Travlendar+</string>
     <string name="title_activity_navigation_drawer">NavigationDrawer</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    <string name="welcome_navigation_drawer">Welcome</string>
     <string name="action_settings">Settings</string>
+    <string name="userFullName">Andrea Agostini</string>
+    <string name="agenda">Agenda</string>
+    <string name="private_means">Private Means</string>
+    <string name="public_services">Public Services</string>
+    <string name="preferences">Transport Preferences</string>
 </resources>

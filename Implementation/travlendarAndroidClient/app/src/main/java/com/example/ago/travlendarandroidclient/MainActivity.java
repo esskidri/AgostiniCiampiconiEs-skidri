@@ -38,12 +38,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (v.getId()) {
             case R.id.button:
-                Intent intent=new Intent(this,CalendarView.class);
-                startActivity(intent);
+                    Intent intent=new Intent(this,CalendarView.class);
+                    startActivity(intent);
                 break;
                 case R.id.request:
-                //String s=serverConnection.fetchEvents((long) 6);
-               // Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+                    Intent intentb=new Intent(this,NavigationDrawer.class);
+                    startActivity(intentb);
+
                 break;
             default:
                 break;
