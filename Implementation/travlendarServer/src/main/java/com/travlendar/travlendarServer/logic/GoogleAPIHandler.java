@@ -4,7 +4,10 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.travlendar.travlendarServer.extra.Tools;
+import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
 import com.travlendar.travlendarServer.logic.util.GoogleResponseMappedObject;
+import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,6 +15,8 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.Timestamp;
+import java.util.Collections;
 
 import static java.lang.Thread.sleep;
 
@@ -53,8 +58,23 @@ public class GoogleAPIHandler {
      * @param arrivalTime
      * @return
      */
-    public static GoogleResponseMappedObject askGoogle(String origin, String destination, String meanOfTransport, String arrivalTime){
-        return fromJsonToObject(httpsRequest(constructHttpsUrl(origin, destination, meanOfTransport, arrivalTime)));
+    public static GoogleResponseMappedObject askGoogle(Coordinates origin, Coordinates destination, MeanOfTransportLogic meanOfTransport, Timestamp arrivalTime){
+        return fromJsonToObject(httpsRequest(constructHttpsUrl(origin.toHttpsFormat(), destination.toHttpsFormat(), meanOfTransport.getTypeOfTransport().toHttpsFormat(), Tools.getSecondsFromTimeStamp(arrivalTime))));
+    }
+
+
+    /**
+     * OVERLOADED METHOD
+     * Public method that call the Google API by the parameters passed
+     *
+     * @param origin
+     * @param destination
+     * @param typeOfTransport //parameter overloaded
+     * @param arrivalTime
+     * @return
+     */
+    public static GoogleResponseMappedObject askGoogle(Coordinates origin, Coordinates destination, String typeOfTransport, Timestamp arrivalTime){
+        return fromJsonToObject(httpsRequest(constructHttpsUrl(origin.toHttpsFormat(), destination.toHttpsFormat(), typeOfTransport, Tools.getSecondsFromTimeStamp(arrivalTime))));
     }
 
     private static GoogleResponseMappedObject fromJsonToObject(String jsonString){

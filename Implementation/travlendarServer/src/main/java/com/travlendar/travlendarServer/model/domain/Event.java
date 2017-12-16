@@ -2,6 +2,7 @@ package com.travlendar.travlendarServer.model.domain;
 
 import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
+import com.travlendar.travlendarServer.model.clientModel.EventClient;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Persistable;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -217,6 +219,16 @@ public class Event implements Serializable,  EventLogic {
         else
             return this.endDate.compareTo(e.getEndDate());
     }
+
+
+    public EventClient getEventClient(){
+        EventClient eventClient = new EventClient(this.startDate,this.endDate,this.posX,this.posY,
+                                                    this.description,this.name,this.endEvent);
+        return eventClient;
+    }
+
+
+
 
 
 
