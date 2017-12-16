@@ -68,6 +68,10 @@ public class PrivateTransport extends AbstractEntity implements MeanOfTransportL
         this.transportSegments = transportSegments;
     }
 
+    public PrivateTransport() {
+
+    }
+
     public Long getId() {
         return id;
     }
@@ -155,4 +159,6 @@ public class PrivateTransport extends AbstractEntity implements MeanOfTransportL
     public boolean isPrivate() {
         return true;
     }
+
+
 }
