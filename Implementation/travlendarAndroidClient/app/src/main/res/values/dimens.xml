@@ -1,7 +1,7 @@
 <resources>
     <dimen name="slv_item_height">66dip</dimen>
     <dimen name="slv_item_height2">120dip</dimen>
-
+    <dimen name="margin_16">16dp</dimen>
     <dimen name="slv_item_bg_btn_width">48dip</dimen>
     <dimen name="slv_item_bg_btn2_width">60dip</dimen>
     <dimen name="slv_item_bg_btn_width_img">100dip</dimen>

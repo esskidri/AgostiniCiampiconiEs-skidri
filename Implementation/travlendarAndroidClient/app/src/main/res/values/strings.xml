@@ -10,4 +10,15 @@
     <string name="private_means">Private Means</string>
     <string name="public_services">Public Services</string>
     <string name="preferences">Transport Preferences</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!-- Vertical Stepper View Sample Item -->
+    <string name="content_step_0">This is the first step. Click OK button to next step.\n\nTest Message.</string>
+    <string name="content_step_1">This is the second step. Click OK button to next step or Cancel button to previous step.\n\nThe summary text of each step is optional. If you haven\'t set, summary view won\'t be displayed.</string>
+    <string name="content_step_2">This is the last step. You can finish steps now.</string>
+
+    <string name="toggle_animation_button">Toggle Animation</string>
 </resources>
