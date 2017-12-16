@@ -125,31 +125,45 @@ public class GoogleResponseMappedObject implements Serializable {
      * @throws MeanNotAvailableException
      */
 
-    public void checkCompleteness(String meanOfTransport) throws MeanNotAvailableException {
+    public void checkCompleteness(String meanOfTransport, Timestamp arrivalTime) throws MeanNotAvailableException {
+        boolean isPartial = false;
+        setArrivalTime(arrivalTime);
         if(status == null || status.equals("OK")) {
             int i = 0;
             for (Step step : getSteps()) {
                 if (!step.getTravel_mode().equals(meanOfTransport.toUpperCase())) {
-                    cutWay(i);
+                    isPartial = true;
                     break;
                 }
                 i++;
             }
+            if(isPartial)
+                cutWay(i, getSteps().size(), arrivalTime);
+
+            setDepartingTime(new Timestamp(((int) arrivalTime.getTime()/1000) - getDuration()));
+
         }
         else if(status.equals("NOT_FOUND") || status.equals("ZERO_RESULTS") || status.equals("MAX_WAYPOINTS_EXCEEDED") || status.equals("MAX_ROUTE_LENGTH_EXCEEDED") || status.equals("INVALID_REQUEST") || status.equals("REQUEST_DENIED") || status.equals("UNKNOWN_ERROR") )
             throw new MeanNotAvailableException(status);
         else if(status.equals("OVER_QUERY_LIMIT"))
             throw new MeanNotAvailableException("Maximum number of daily query reached, service will not be available since tomorrow");
 
+
     }
 
-    public void searchPublicLine(){
+    public void searchPublicLine(Timestamp arrivalTime){
+        int i = 0;
+
+
         for(Step step: getSteps()){
             if(step.getTravel_mode().equals("TRANSIT")){
                 setStartingLocation(step.getStart_location());
                 break;
             }
+            i++;
         }
+        if(i != 0)
+            cutWay(0, i, arrivalTime);
     }
 
     /**
@@ -159,32 +173,52 @@ public class GoogleResponseMappedObject implements Serializable {
      *
      * @param i index from which the google response must be cut
      */
-    private void cutWay(int i) {
+    private void cutWay(int i, int j, Timestamp arrivalTime) {
         partialSolution = true;
+        int dateTime;
         int length;
-        int time;
+        int timeDuration;
         InfoPair duration= new InfoPair();
         InfoPair distance = new InfoPair();
 
-        time = getLeg().getDuration().getValue();
+        timeDuration = getLeg().getDuration().getValue();
         length = getLeg().getDistance().getValue();
 
-        for(Step step: getSteps().subList(i, getSteps().size())){
-            time -= step.getDuration().getValue();
+        if(i == 0)
+            dateTime = (int) arrivalTime.getTime()/1000 - timeDuration;
+        else
+            dateTime = (int) arrivalTime.getTime()/1000;
+
+        for(Step step: getSteps().subList(i, j)){
+            if(i == 0)
+                dateTime += step.getDuration().getValue();
+            else
+                dateTime -= step.getDuration().getValue();
+
+            timeDuration -= step.getDuration().getValue();
             length -= step.getDuration().getValue();
         }
 
-        getLeg().setSteps(getSteps().subList(0, i));
+        if(i == 0)
+            getLeg().setSteps(getSteps().subList(i,j));
+        else
+            getLeg().setSteps(getSteps().subList(0, i));
+
         getLeg().setEnd_location(getSteps().get(getSteps().size() -1).getEnd_location());
         getLeg().setEnd_address("modified"); //TODO secondario
 
-        duration.setValue(time);
+        duration.setValue(timeDuration);
         duration.setText(" modified"); //TODO secondario
 
         distance.setValue(length);
         distance.setText(" modified"); //TODO secondario
 
         getLeg().setDuration(duration);
+
+        if(i == 0)
+            setDepartingTime(new Timestamp(dateTime*1000));
+        else
+            setArrivalTime(new Timestamp(dateTime*1000));
 
     }
 

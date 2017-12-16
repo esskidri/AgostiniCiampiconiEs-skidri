@@ -22,13 +22,14 @@ import java.util.List;
 public class TransportSolutionCalculator {
     private CalculatorCore calculatorCore;
     private List<TransportSegmentLogic> transportSegments = new ArrayList<>();
+    private List<MeanOfTransportLogic> meansOfTransport;
 
     public TransportSolutionCalculator(CalculatorCore calculatorCore) {
         this.calculatorCore = calculatorCore;
     }
 
     public TransportSolutionLogic calculateSolution(Coordinates startingLocation, Coordinates endingLocation, Timestamp startingTime, Timestamp arrivalTime, UserLogic userLogic) {
-        List<MeanOfTransportLogic> meansOfTransport = calculatorCore.getMeanOfTransports(userLogic, startingLocation, endingLocation, startingTime, arrivalTime);
+        this.meansOfTransport = calculatorCore.getMeanOfTransports(userLogic, startingLocation, endingLocation, startingTime, arrivalTime);
 
         try {
             calculateSegment(startingLocation, endingLocation, startingTime, arrivalTime, meansOfTransport);
@@ -85,7 +86,7 @@ public class TransportSolutionCalculator {
                 //If it's a mean of the public transport (Bus, Metro, Tram etc) this is handled by the google API
                 if (meansOfTransport.get(0).getTypeOfTransport() == MeanType.BUS) {
                     googleResponseMappedObject = callGoogleAPI(startingLocation, endingLocation, meansOfTransport.get(0), arrivalTime);
-                    googleResponseMappedObject.searchPublicLine();
+                    googleResponseMappedObject.searchPublicLine(arrivalTime);
                     mediumLocation = googleResponseMappedObject.getStartingLocation();
                 }
                 else {
@@ -100,9 +101,12 @@ public class TransportSolutionCalculator {
 
             //the calculated segment is inserted
             insertTransportSegments(googleResponseMappedObject, meansOfTransport.get(0));
-            if (googleResponseMappedObject.isPartialSolution())
+            if (googleResponseMappedObject.isPartialSolution()) {
                 //If google make you change your mean, we recalculate by the preferences of the user
+                List<MeanOfTransportLogic> meanOfTransportLogics = this.meansOfTransport;
+                meanOfTransportLogics.remove(meansOfTransport.get(0));
                 calculateSegment(googleResponseMappedObject.getEndingLocation(), endingLocation, googleResponseMappedObject.getArrivalTime(), arrivalTime, meansOfTransport.subList(1, meansOfTransport.size()));
+            }
         } catch (MeanNotAvailableException e) {
             //In case the mean is not available
             if (meansOfTransport.size() != 0)
@@ -197,7 +201,7 @@ public class TransportSolutionCalculator {
         GoogleResponseMappedObject googleResponseMappedObject;
 
         googleResponseMappedObject = GoogleAPIHandler.askGoogle(startingLocation, endingLocation, meanOfTransport, arrivalTime);
-        googleResponseMappedObject.checkCompleteness(meanOfTransport.getTypeOfTransport().toHttpsFormat());
+        googleResponseMappedObject.checkCompleteness(meanOfTransport.getTypeOfTransport().toHttpsFormat(), arrivalTime);
 
         return googleResponseMappedObject;
     }
