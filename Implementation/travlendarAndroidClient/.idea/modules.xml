@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\pc utente\Documents\GitHub\AgostiniCiampiconiEs-skidri\Implementation\travlendarAndroidClient\app\app.iml" filepath="C:\Users\pc utente\Documents\GitHub\AgostiniCiampiconiEs-skidri\Implementation\travlendarAndroidClient\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/travlendarAndroidClient.iml" filepath="$PROJECT_DIR$/travlendarAndroidClient.iml" />
-      <module fileurl="file://C:\Users\pc utente\Documents\GitHub\AgostiniCiampiconiEs-skidri\Implementation\travlendarAndroidClient\travlendarAndroidClient.iml" filepath="C:\Users\pc utente\Documents\GitHub\AgostiniCiampiconiEs-skidri\Implementation\travlendarAndroidClient\travlendarAndroidClient.iml" />
     </modules>
   </component>
 </project>
