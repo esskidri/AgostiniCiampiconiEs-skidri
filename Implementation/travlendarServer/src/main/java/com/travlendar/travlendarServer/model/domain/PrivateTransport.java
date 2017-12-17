@@ -160,7 +160,5 @@ public class PrivateTransport extends AbstractEntity implements MeanOfTransportL
         return true;
     }
 
-    public void setType(MeanType meanType) {
-        this.meanType = meanType;
-    }
+
 }

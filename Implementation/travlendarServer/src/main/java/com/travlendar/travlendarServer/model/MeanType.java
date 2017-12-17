@@ -10,48 +10,76 @@ public enum MeanType {
         public String toHttpsFormat() {
             return "bicycling";
         }
+
         @Override
-        public EnumGreenLevel getGreenEnum(){return EnumGreenLevel.HIGH;}
+        public EnumGreenLevel getGreenEnum() {
+            return EnumGreenLevel.HIGH;
+        }
     },
     MOTORBIKE {
         @Override
         public String toHttpsFormat() {
             return "driving";
         }
+
         @Override
-        public EnumGreenLevel getGreenEnum(){return EnumGreenLevel.LOW;}
+        public EnumGreenLevel getGreenEnum() {
+            return EnumGreenLevel.LOW;
+        }
     },
     CAR {
         @Override
         public String toHttpsFormat() {
             return "driving";
         }
+
         @Override
-        public EnumGreenLevel getGreenEnum(){return EnumGreenLevel.LOW;}
+        public EnumGreenLevel getGreenEnum() {
+            return EnumGreenLevel.LOW;
+        }
     },
     ELECTRIC_CAR {
         @Override
         public String toHttpsFormat() {
             return "driving";
         }
+
         @Override
-        public EnumGreenLevel getGreenEnum(){return EnumGreenLevel.HIGH;}
+        public EnumGreenLevel getGreenEnum() {
+            return EnumGreenLevel.HIGH;
+        }
     },
     ELECTRIC_MOTORBIKE {
         @Override
         public String toHttpsFormat() {
             return "driving";
         }
+
         @Override
-        public EnumGreenLevel getGreenEnum(){return EnumGreenLevel.HIGH;}
+        public EnumGreenLevel getGreenEnum() {
+            return EnumGreenLevel.HIGH;
+        }
     },
     BUS {
         @Override
         public String toHttpsFormat() {
             return "transit";
         }
+
         @Override
-        public EnumGreenLevel getGreenEnum(){return EnumGreenLevel.MEDIUM;}
+        public EnumGreenLevel getGreenEnum() {
+            return EnumGreenLevel.MEDIUM;
+        }
+    },WALKING {
+        @Override
+        public String toHttpsFormat() {
+            return "walking";
+        }
+
+        @Override
+        public EnumGreenLevel getGreenEnum() {
+            return EnumGreenLevel.HIGH;
+        }
     };
 
     /***

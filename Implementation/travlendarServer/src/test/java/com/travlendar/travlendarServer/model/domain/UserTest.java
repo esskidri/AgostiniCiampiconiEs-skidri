@@ -28,17 +28,17 @@ public class UserTest {
 
         PrivateTransport privateTransport1 = new PrivateTransport();
         privateTransport1.setGreen(greenHigh);
-        privateTransport1.setType(MeanType.BIKE);
+        privateTransport1.setMeanType(MeanType.BIKE);
         privateTransport1.setUsers(users);
 
         PrivateTransport privateTransport2 = new PrivateTransport();
         privateTransport2.setGreen(greenLow);
-        privateTransport2.setType(MeanType.CAR);
+        privateTransport2.setMeanType(MeanType.CAR);
         privateTransport2.setUsers(users);
 
         PrivateTransport privateTransport3 = new PrivateTransport();
         privateTransport3.setGreen(greenMedium);
-        privateTransport3.setType(MeanType.ELECTRIC_CAR);
+        privateTransport3.setMeanType(MeanType.ELECTRIC_CAR);
         privateTransport3.setUsers(users);
 
         PublicTransport publicTransport = new PublicTransport();
