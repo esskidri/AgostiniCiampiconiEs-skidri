@@ -74,6 +74,8 @@ public class TransportSolutionCalculator {
      */
     private void calculateSegment(Coordinates startingLocation, Coordinates endingLocation, Timestamp startingTime, Timestamp arrivalTime, List<MeanOfTransportLogic> meansOfTransport) throws NoMeanAvailableExpection, CannotArriveInTimeException {
         GoogleResponseMappedObject googleResponseMappedObject;
+        if (meansOfTransport.size() == 0)
+            throw new NoMeanAvailableExpection();
         try {
             if (isMeanAvailablePrivately(meansOfTransport.get(0))) {
                 //This mean is private and the user can use it by the previous movements
@@ -103,9 +105,13 @@ public class TransportSolutionCalculator {
             insertTransportSegments(googleResponseMappedObject, meansOfTransport.get(0));
             if (googleResponseMappedObject.isPartialSolution()) {
                 //If google make you change your mean, we recalculate by the preferences of the user
-                List<MeanOfTransportLogic> meanOfTransportLogics = this.meansOfTransport;
+                List<MeanOfTransportLogic> meanOfTransportLogics = new ArrayList<>();
+                meanOfTransportLogics.addAll(this.meansOfTransport);
                 meanOfTransportLogics.remove(meansOfTransport.get(0));
-                calculateSegment(googleResponseMappedObject.getEndingLocation(), endingLocation, googleResponseMappedObject.getArrivalTime(), arrivalTime, meansOfTransport.subList(1, meansOfTransport.size()));
+                for(MeanOfTransportLogic meanOfTransportLogic: this.meansOfTransport)
+                    if(!isMeanAvailablePrivately( meanOfTransportLogic))
+                        meanOfTransportLogics.remove(meanOfTransportLogic);
+                calculateSegment(googleResponseMappedObject.getEndingLocation(), endingLocation, googleResponseMappedObject.getArrivalTime(), arrivalTime, meanOfTransportLogics);
             }
         } catch (MeanNotAvailableException e) {
             //In case the mean is not available

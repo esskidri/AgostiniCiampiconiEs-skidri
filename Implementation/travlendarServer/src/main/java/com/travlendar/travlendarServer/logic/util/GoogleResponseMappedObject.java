@@ -128,10 +128,13 @@ public class GoogleResponseMappedObject implements Serializable {
     public void checkCompleteness(String meanOfTransport, Timestamp arrivalTime) throws MeanNotAvailableException {
         boolean isPartial = false;
         setArrivalTime(arrivalTime);
+        boolean meanFounded = false;
         if(status == null || status.equals("OK")) {
             int i = 0;
             for (Step step : getSteps()) {
-                if (!step.getTravel_mode().equals(meanOfTransport.toUpperCase())) {
+                if(step.getTravel_mode().equals(meanOfTransport.toUpperCase()))
+                    meanFounded = true;
+                if (!step.getTravel_mode().equals(meanOfTransport.toUpperCase()) && meanFounded) {
                     isPartial = true;
                     break;
                 }
@@ -140,7 +143,7 @@ public class GoogleResponseMappedObject implements Serializable {
             if(isPartial)
                 cutWay(i, getSteps().size(), arrivalTime);
 
-            setDepartingTime(new Timestamp(((int) arrivalTime.getTime()/1000) - getDuration()));
+            setDepartingTime(new Timestamp(( arrivalTime.getTime()/1000) - getDuration()));
 
         }
         else if(status.equals("NOT_FOUND") || status.equals("ZERO_RESULTS") || status.equals("MAX_WAYPOINTS_EXCEEDED") || status.equals("MAX_ROUTE_LENGTH_EXCEEDED") || status.equals("INVALID_REQUEST") || status.equals("REQUEST_DENIED") || status.equals("UNKNOWN_ERROR") )
@@ -174,8 +177,9 @@ public class GoogleResponseMappedObject implements Serializable {
      * @param i index from which the google response must be cut
      */
     private void cutWay(int i, int j, Timestamp arrivalTime) {
-        partialSolution = true;
-        int dateTime;
+        if(i != 0)
+            partialSolution = true;
+        long dateTime;
         int length;
         int timeDuration;
         InfoPair duration= new InfoPair();
@@ -185,9 +189,9 @@ public class GoogleResponseMappedObject implements Serializable {
         length = getLeg().getDistance().getValue();
 
         if(i == 0)
-            dateTime = (int) arrivalTime.getTime()/1000 - timeDuration;
+            dateTime =  arrivalTime.getTime()/1000 - timeDuration;
         else
-            dateTime = (int) arrivalTime.getTime()/1000;
+            dateTime =  arrivalTime.getTime()/1000;
 
         for(Step step: getSteps().subList(i, j)){
             if(i == 0)
@@ -200,12 +204,12 @@ public class GoogleResponseMappedObject implements Serializable {
         }
 
         if(i == 0)
-            getLeg().setSteps(getSteps().subList(i,j));
-        else
+            getLeg().setSteps(getSteps().subList(j,getSteps().size()));
+        else {
             getLeg().setSteps(getSteps().subList(0, i));
-
-        getLeg().setEnd_location(getSteps().get(getSteps().size() -1).getEnd_location());
-        getLeg().setEnd_address("modified"); //TODO secondario
+            getLeg().setEnd_location(getSteps().get(getSteps().size() - 1).getEnd_location());
+            getLeg().setEnd_address("modified"); //TODO secondario
+        }
 
         duration.setValue(timeDuration);
         duration.setText(" modified"); //TODO secondario
