@@ -1,9 +1,14 @@
 package com.example.ago.travlendarandroidclient.Fragment;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,18 +63,19 @@ public class VerticalStepperAdapterDemoFragment extends Fragment implements ISte
             if(index==sol.getTransportSegment().size()-1){
                 return "Finish: "+sol.getTransportSegment().get(index).getName();
             }
-            return "Step " + index+ ": " +sol.getTransportSegment().get(index).getAdressA();
+            return "Step:" +sol.getTransportSegment().get(index).getAdressA();
         }
 
         @Override
         public @Nullable CharSequence getSummary(int index) {
+            String str="<b>"+sol.getTransportSegment().get(0).getAdressA()+"</b>";
 
             switch (index) {
                 case 0:
                     return Html.fromHtml("You are started from "
-                            + (mVerticalStepperView.getCurrentStep() > index ? " <b>Here!</b>" : ""));
+                            + (mVerticalStepperView.getCurrentStep() > index ? " <b>!</b>" : ""));
                 default:
-                    return Html.fromHtml(                              (mVerticalStepperView.getCurrentStep() > index ? " <b>Done!</b>" : ""));
+                    return Html.fromHtml(                              (mVerticalStepperView.getCurrentStep() > index ? str : ""));
 
             }
         }
@@ -136,10 +142,18 @@ public class VerticalStepperAdapterDemoFragment extends Fragment implements ISte
             }else{
                 s = "road to: " + sol.getTransportSegment().get(index).getAdressB() + "\n";
             }
-            s+= "\nCost: "+sol.getTransportSegment().get(index).cost()+" €";
+            SpannableString spannableString = new SpannableString("@");
+            Drawable d = getResources().getDrawable(R.drawable.ic_about_us);
+            d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+            ImageSpan span = new ImageSpan(d, ImageSpan.ALIGN_BOTTOM);
+            spannableString.setSpan(span, spannableString.toString().indexOf("@"),  spannableString.toString().indexOf("@")+1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+
+            s+= "\n"+spannableString+sol.getTransportSegment().get(index).cost()+" €";
             s+= "\nDistance: "+sol.getTransportSegment().get(index).distance()+" km";
             s+= "\nMean: "+sol.getTransportSegment().get(index).mean();
+
             return s;
+
         }
 
     }
