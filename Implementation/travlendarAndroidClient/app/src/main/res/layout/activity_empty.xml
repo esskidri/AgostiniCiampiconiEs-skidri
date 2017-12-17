@@ -30,8 +30,9 @@
         <FrameLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            android:layout_height="511dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:layout_editor_absoluteY="56dp" />
 
     </android.support.design.widget.CoordinatorLayout>
 
@@ -40,7 +41,7 @@
         android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:menu="@menu/activity_navigation_drawer_drawer"/>
+        app:menu="@menu/activity_navigation_drawer_drawer" />
 
 </android.support.v4.widget.DrawerLayout>
 

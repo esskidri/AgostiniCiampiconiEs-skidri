@@ -24,7 +24,7 @@
             android:name=".NavigationDrawer"
             android:label="@string/title_activity_navigation_drawer"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".EmptyActivity" />
+        <activity android:name=".TransportSolutionView" />
     </application>
 
 </manifest> <!-- android:theme="@style/AppTheme" -->

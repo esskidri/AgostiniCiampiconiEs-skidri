@@ -172,11 +172,11 @@
 				android:text="Change point activated color"/>
 
 		<Button
-				android:id="@+id/btn_change_done_icon"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="24dp"
-				android:text="Change point done icon"/>
+			android:id="@+id/btn_change_done_icon"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="24dp"
+			android:text="Change point done icon" />
 
 	</LinearLayout>
 

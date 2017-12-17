@@ -1,4 +1,4 @@
-package com.example.ago.travlendarandroidclient;
+package com.example.ago.travlendarandroidclient.Fragment;
 
 import android.content.Context;
 import android.net.Uri;
@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.example.ago.travlendarandroidclient.R;
 
 import moe.feng.common.stepperview.IStepperAdapter;
 import moe.feng.common.stepperview.VerticalStepperItemView;
