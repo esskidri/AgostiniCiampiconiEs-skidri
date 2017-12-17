@@ -1,7 +1,9 @@
 package com.travlendar.travlendarServer.controller.dataManager;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.travlendar.travlendarServer.controller.Exception.DataEntryException;
 import com.travlendar.travlendarServer.model.MeanType;
 import com.travlendar.travlendarServer.model.clientModel.EventClient;
@@ -107,19 +109,19 @@ public class RequestHandler {
 
     @RequestMapping("/fetch-events")
     @ResponseBody
-    public Response fetchEvents(@RequestParam("user_id") Long userId){
+    public String fetchEvents(@RequestParam("user_id") Long userId){
         Response r=new Response("ok");
         try{
             User u=userDao.findOne(userId);
             ArrayList<EventClient> eventClients = new ArrayList<EventClient>();
             for(Event event : u.getEvents())  eventClients.add(event.getEventClient());
-            ObjectMapper mapper = new ObjectMapper();
-            String jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(eventClients);
-            r.setObj(jsonInString);
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss.S").setPrettyPrinting().create();
+            String jsonInString = gson.toJson(eventClients);
+            return jsonInString;
         }catch(Exception e2){
             r.setMessage("fail: "+e2.getMessage());
         }
-        return r;
+        return "fail";
     }
 
     @RequestMapping("/add-private-transport")
