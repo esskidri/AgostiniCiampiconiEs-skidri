@@ -1,5 +1,7 @@
 package com.travlendar.travlendarServer.model.domain;
 
+import com.travlendar.travlendarServer.model.clientModel.UserPublicTransportClient;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -46,5 +48,11 @@ public class UserPublicTransport extends AbstractEntity implements Serializable{
 
     public void setPublicTransport(PublicTransport publicTransport) {
         this.publicTransport = publicTransport;
+    }
+
+    public UserPublicTransportClient getUserPublicTransportClient(){
+        UserPublicTransportClient userPublicTransportClient = new UserPublicTransportClient(username,
+                publicTransport.getPublicTransportClient());
+        return userPublicTransportClient;
     }
 }

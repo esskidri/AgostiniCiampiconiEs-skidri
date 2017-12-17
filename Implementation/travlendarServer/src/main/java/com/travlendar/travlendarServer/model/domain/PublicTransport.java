@@ -3,6 +3,7 @@ package com.travlendar.travlendarServer.model.domain;
 import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
 import com.travlendar.travlendarServer.model.EnumGreenLevel;
 import com.travlendar.travlendarServer.model.MeanType;
+import com.travlendar.travlendarServer.model.clientModel.PublicTransportClient;
 
 import javax.persistence.*;
 import java.util.List;
@@ -111,6 +112,11 @@ public class PublicTransport extends AbstractEntity implements MeanOfTransportLo
     @Override
     public boolean isPrivate() {
         return false;
+    }
+
+    public PublicTransportClient getPublicTransportClient(){
+        PublicTransportClient publicTransportClient = new PublicTransportClient(id, name , type);
+        return publicTransportClient;
     }
 }
 

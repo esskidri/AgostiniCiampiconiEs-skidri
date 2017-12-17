@@ -4,6 +4,10 @@ package com.travlendar.travlendarServer.model.domain;
 import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.model.Policy;
+import com.travlendar.travlendarServer.model.clientModel.PrivateTransportClient;
+import com.travlendar.travlendarServer.model.clientModel.PublicTransportClient;
+import com.travlendar.travlendarServer.model.clientModel.UserClient;
+import com.travlendar.travlendarServer.model.clientModel.UserPublicTransportClient;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -158,6 +162,14 @@ public class User extends AbstractEntity implements UserLogic {
         UserPublicTransports = userpublicTransports;
     }
 
+    public List<UserPublicTransport> getUserPublicTransports() {
+        return UserPublicTransports;
+    }
+
+    public void setUserPublicTransports(List<UserPublicTransport> userPublicTransports) {
+        UserPublicTransports = userPublicTransports;
+    }
+
     public List<UserOrder> getUserOrders() {
         return userOrders;
     }
@@ -210,6 +222,20 @@ public class User extends AbstractEntity implements UserLogic {
            if(privateTransport.getId() == id) return privateTransport;
         }
         return null;
+    }
+
+    public UserClient getUserClient(){
+        ArrayList<PrivateTransportClient>  privateTransportsClient = new ArrayList<>();
+        for (PrivateTransport pt: this.getPrivateTransportList()) {
+            privateTransportsClient.add(pt.getPrivateTransportClient());
+        }
+        ArrayList<UserPublicTransportClient>  userpublicTransportsClient = new ArrayList<>();
+        for (UserPublicTransport pt: this.getUserPublicTransports()) {
+            userpublicTransportsClient.add(pt.getUserPublicTransportClient());
+        }
+        UserClient userClient = new UserClient(id,first_name,last_name,email,age,sex,fiscal_code,policy,
+                privateTransportsClient, userpublicTransportsClient);
+        return userClient;
     }
 
 }

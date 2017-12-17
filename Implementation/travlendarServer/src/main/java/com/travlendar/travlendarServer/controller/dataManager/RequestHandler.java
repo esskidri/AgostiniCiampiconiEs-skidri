@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.travlendar.travlendarServer.controller.Exception.DataEntryException;
 import com.travlendar.travlendarServer.model.MeanType;
 import com.travlendar.travlendarServer.model.clientModel.EventClient;
+import com.travlendar.travlendarServer.model.clientModel.UserClient;
 import com.travlendar.travlendarServer.model.dao.*;
 import com.travlendar.travlendarServer.model.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,22 @@ public class RequestHandler {
 
 
 
+    @RequestMapping("/get-user")
+    @ResponseBody
+    public String getEvent(@RequestParam("user_id") Long userId) {
+        Response r=new Response("ok");
+        try{
+            User u=userDao.findOne(userId);
+            UserClient userClient= u.getUserClient();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String jsonInString = gson.toJson(userClient);
+            return jsonInString;
+
+        }catch(Exception e2){
+            r.setMessage("fail: "+e2.getMessage());
+        }
+        return "fail";
+    }
     @RequestMapping("/add-event")
     @ResponseBody
     public Response addEvent(@RequestParam("user_id") Long userId, @RequestParam("start_date") Timestamp startDate,
