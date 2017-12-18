@@ -1,7 +1,6 @@
 package com.travlendar.travlendarServer.model.dao;
 
-import com.travlendar.travlendarServer.model.EnumGreenLevel;
-import com.travlendar.travlendarServer.model.MeanType;
+import com.travlendar.travlendarServer.model.enumModel.EnumGreenLevel;
 import com.travlendar.travlendarServer.model.domain.Green;
 import org.springframework.data.repository.CrudRepository;
 

@@ -10,7 +10,7 @@ import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.logic.util.GoogleResponseMappedObject;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
 import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
-import com.travlendar.travlendarServer.model.MeanType;
+import com.travlendar.travlendarServer.model.enumModel.MeanType;
 import com.travlendar.travlendarServer.model.domain.*;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;

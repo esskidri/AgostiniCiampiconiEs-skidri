@@ -4,7 +4,6 @@ import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.logic.util.EventGraph;
-import com.travlendar.travlendarServer.model.Policy;
 
 import java.util.ArrayList;
 import java.util.List;

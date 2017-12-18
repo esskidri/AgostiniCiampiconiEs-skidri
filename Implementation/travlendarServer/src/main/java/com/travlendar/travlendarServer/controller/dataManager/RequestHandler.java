@@ -5,7 +5,7 @@ package com.travlendar.travlendarServer.controller.dataManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.travlendar.travlendarServer.controller.Exception.DataEntryException;
-import com.travlendar.travlendarServer.model.MeanType;
+import com.travlendar.travlendarServer.model.enumModel.MeanType;
 import com.travlendar.travlendarServer.model.clientModel.EventClient;
 import com.travlendar.travlendarServer.model.clientModel.FreeTimeClient;
 import com.travlendar.travlendarServer.model.clientModel.UserClient;
