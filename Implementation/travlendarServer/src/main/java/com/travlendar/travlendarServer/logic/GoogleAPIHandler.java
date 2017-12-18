@@ -39,12 +39,14 @@ public class GoogleAPIHandler {
 
     public static void main(String[] args) {
         //TODO Remove main()
-        System.out.println(constructHttpsUrl("Rome","Milan", "transit", "1513162800000"));
-        System.out.println(httpsRequest(constructHttpsUrl("Rome","Milan", "transit", "1513162800000")));
+        System.out.println(constructHttpsUrl("45.5983,8.91425","45.4642,9.18998", "transit", "1513162800"));
+        System.out.println(httpsRequest(constructHttpsUrl("45.5983,8.91425","45.4642,9.18998", "transit", "1513162800")));
 
         //Testing https request and Google JSON to POJO mapping
         GoogleResponseMappedObject googleResponseMappedObject;
-        googleResponseMappedObject = fromJsonToObject(httpsRequest(constructHttpsUrl("Via+Celeste+Clericetti,+32,+20133+Milano+MI","Via+delle+Rimembranze,+20068+Peschiera+Borromeo+MI", "transit", "1513342800000")));
+        googleResponseMappedObject = fromJsonToObject(httpsRequest(constructHttpsUrl("45.5983,8.91425","45.4642,9.18998", "transit", "1513162800")));
+
+        int i = 0;
 
     }
 
