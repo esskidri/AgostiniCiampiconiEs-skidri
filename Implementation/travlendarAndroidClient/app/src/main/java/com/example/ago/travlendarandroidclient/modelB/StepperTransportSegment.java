@@ -1,4 +1,4 @@
-package com.example.ago.travlendarandroidclient.model;
+package com.example.ago.travlendarandroidclient.modelB;
 
 /**
  * Created by ago on 16/12/2017.

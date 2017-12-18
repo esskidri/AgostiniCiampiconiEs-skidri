@@ -4,7 +4,6 @@ import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic
 import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.logic.util.GoogleResponseMappedObject;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
-import com.travlendar.travlendarServer.model.MeanType;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

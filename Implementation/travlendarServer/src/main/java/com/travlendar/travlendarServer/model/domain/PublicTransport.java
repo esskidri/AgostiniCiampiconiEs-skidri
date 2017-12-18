@@ -1,8 +1,8 @@
 package com.travlendar.travlendarServer.model.domain;
 
 import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
-import com.travlendar.travlendarServer.model.EnumGreenLevel;
-import com.travlendar.travlendarServer.model.MeanType;
+import com.travlendar.travlendarServer.model.enumModel.EnumGreenLevel;
+import com.travlendar.travlendarServer.model.enumModel.MeanType;
 import com.travlendar.travlendarServer.model.clientModel.PublicTransportClient;
 
 import javax.persistence.*;

@@ -1,7 +1,4 @@
-package com.travlendar.travlendarServer.model;
-
-import com.travlendar.travlendarServer.model.domain.Event;
-import com.travlendar.travlendarServer.model.domain.Green;
+package com.travlendar.travlendarServer.model.enumModel;
 
 public enum MeanType {
 

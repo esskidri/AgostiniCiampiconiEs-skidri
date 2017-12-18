@@ -25,6 +25,7 @@
             android:label="@string/title_activity_navigation_drawer"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".TransportSolutionView" />
+        <activity android:name=".MaterialCalendarActivity"></activity>
     </application>
 
 </manifest> <!-- android:theme="@style/AppTheme" -->

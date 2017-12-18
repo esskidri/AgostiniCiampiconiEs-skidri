@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //caricare info utente.
-
+        //->
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -25,8 +25,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button.setOnClickListener(MainActivity.this);
         final Button request = findViewById(R.id.request);
         request.setOnClickListener(MainActivity.this);
-        final Button transportSolution = findViewById(R.id.transport);
+        final Button transportSolution = findViewById(R.id.button3);
         request.setOnClickListener(MainActivity.this);
+
 
         /**graphic button configuration**/
         button.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -47,18 +48,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-
+        Intent intentc=new Intent(this,NavigationDrawer.class);
         switch (v.getId()) {
-            case R.id.button:
+            case R.id.button3:
                     Intent intent=new Intent(this,CalendarView.class);
                     startActivity(intent);
                 break;
             case R.id.request:
-                Intent intentb=new Intent(this,TransportSolutionView.class);
+              //  Intent intentb=new Intent(this,TransportSolutionView.class);
+              //  startActivity(intentb);
+                Intent intentb=new Intent(this,MaterialCalendarActivity.class);
                 startActivity(intentb);
+
                 break;
-            case R.id.transport:
-                Intent intentc=new Intent(this,NavigationDrawer.class);
+            case R.id.button:
                 startActivity(intentc);
                 break;
             default:

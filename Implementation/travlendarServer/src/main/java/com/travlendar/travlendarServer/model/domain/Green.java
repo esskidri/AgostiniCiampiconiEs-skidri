@@ -1,7 +1,7 @@
 package com.travlendar.travlendarServer.model.domain;
 
 
-import com.travlendar.travlendarServer.model.EnumGreenLevel;
+import com.travlendar.travlendarServer.model.enumModel.EnumGreenLevel;
 
 import javax.persistence.*;
 import java.util.List;

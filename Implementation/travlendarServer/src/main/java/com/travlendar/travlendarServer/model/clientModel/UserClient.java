@@ -1,6 +1,6 @@
 package com.travlendar.travlendarServer.model.clientModel;
 
-import com.travlendar.travlendarServer.model.Policy;
+import com.travlendar.travlendarServer.model.enumModel.Policy;
 
 import java.io.Serializable;
 import java.util.ArrayList;
