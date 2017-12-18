@@ -53,7 +53,7 @@ public class NavigationDrawer extends AppCompatActivity
         // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         // finally change the color
-        window.setStatusBarColor(ContextCompat.getColor(this,R.color.colorStatusBar));
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorStatusBar));
     }
 
     @Override
@@ -97,7 +97,7 @@ public class NavigationDrawer extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_agenda) {
-            Intent intent=new Intent(this,CalendarView.class);
+            Intent intent = new Intent(this, CalendarView.class);
             startActivity(intent);
 
         } /*else if (id == R.id.nav_gallery) {

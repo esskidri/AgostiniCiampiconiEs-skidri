@@ -10,6 +10,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.example.ago.travlendarandroidclient.serverStub.ServerConnection;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -43,23 +45,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         // finally change the color
-        window.setStatusBarColor(ContextCompat.getColor(this,R.color.colorStatusBar));
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorStatusBar));
     }
 
     @Override
     public void onClick(View v) {
-        Intent intentc=new Intent(this,NavigationDrawer.class);
+        Intent intentc = new Intent(this, NavigationDrawer.class);
         switch (v.getId()) {
             case R.id.button3:
-                    Intent intent=new Intent(this,CalendarView.class);
-                    startActivity(intent);
+                Intent intent = new Intent(this, CalendarView.class);
+                startActivity(intent);
                 break;
             case R.id.request:
-              //  Intent intentb=new Intent(this,TransportSolutionView.class);
-              //  startActivity(intentb);
-                Intent intentb=new Intent(this,MaterialCalendarActivity.class);
-                startActivity(intentb);
-
+                ServerConnection.userInit((long)6,getApplicationContext());
                 break;
             case R.id.button:
                 startActivity(intentc);

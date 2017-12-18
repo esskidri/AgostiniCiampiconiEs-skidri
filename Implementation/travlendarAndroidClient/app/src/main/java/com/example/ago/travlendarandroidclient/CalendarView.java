@@ -26,9 +26,9 @@ import java.util.List;
 import java.util.Locale;
 
 public class CalendarView extends AppCompatActivity implements WeekView.EventClickListener,
-                                                                 MonthLoader.MonthChangeListener,
-                                                                 WeekView.EventLongPressListener,
-                                                                 WeekView.EmptyViewLongPressListener {
+        MonthLoader.MonthChangeListener,
+        WeekView.EventLongPressListener,
+        WeekView.EmptyViewLongPressListener {
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 5;
     private static final int TYPE_WEEK_VIEW = 3;
@@ -77,7 +77,6 @@ public class CalendarView extends AppCompatActivity implements WeekView.EventCli
     }
 
 
-
     private void createEvents() {
 
     }
@@ -92,11 +91,11 @@ public class CalendarView extends AppCompatActivity implements WeekView.EventCli
         Calendar startTime = Calendar.getInstance();
         startTime.set(Calendar.HOUR_OF_DAY, 3);
         startTime.set(Calendar.MINUTE, 0);
-        startTime.set(Calendar.MONTH, newMonth-1);
+        startTime.set(Calendar.MONTH, newMonth - 1);
         startTime.set(Calendar.YEAR, newYear);
         Calendar endTime = (Calendar) startTime.clone();
         endTime.add(Calendar.HOUR, 1);
-        endTime.set(Calendar.MONTH, newMonth-1);
+        endTime.set(Calendar.MONTH, newMonth - 1);
         WeekViewEvent event = new WeekViewEvent(1, "mia5o", startTime, endTime);
         event.setColor(getResources().getColor(R.color.event_color_01));
         Nevents.add(event);
@@ -104,12 +103,12 @@ public class CalendarView extends AppCompatActivity implements WeekView.EventCli
         startTime = Calendar.getInstance();
         startTime.set(Calendar.HOUR_OF_DAY, 3);
         startTime.set(Calendar.MINUTE, 30);
-        startTime.set(Calendar.MONTH, newMonth-1);
+        startTime.set(Calendar.MONTH, newMonth - 1);
         startTime.set(Calendar.YEAR, newYear);
         endTime = (Calendar) startTime.clone();
         endTime.set(Calendar.HOUR_OF_DAY, 4);
         endTime.set(Calendar.MINUTE, 30);
-        endTime.set(Calendar.MONTH, newMonth-1);
+        endTime.set(Calendar.MONTH, newMonth - 1);
         event = new WeekViewEvent(10, "bau", startTime, endTime);
         event.setColor(getResources().getColor(R.color.event_color_02));
         Nevents.add(event);
@@ -118,20 +117,20 @@ public class CalendarView extends AppCompatActivity implements WeekView.EventCli
         startTime = Calendar.getInstance();
         startTime.set(Calendar.HOUR_OF_DAY, 0);
         startTime.set(Calendar.MINUTE, 45);
-        startTime.set(Calendar.MONTH, newMonth-1);
+        startTime.set(Calendar.MONTH, newMonth - 1);
         startTime.set(Calendar.YEAR, newYear);
-        startTime.set(Calendar.DAY_OF_WEEK,7);
+        startTime.set(Calendar.DAY_OF_WEEK, 7);
         endTime = (Calendar) startTime.clone();
         endTime.set(Calendar.HOUR_OF_DAY, 1);
         endTime.set(Calendar.MINUTE, 30);
-        endTime.set(Calendar.MONTH, newMonth-1);
-        startTime.set(Calendar.DAY_OF_WEEK,7);
+        endTime.set(Calendar.MONTH, newMonth - 1);
+        startTime.set(Calendar.DAY_OF_WEEK, 7);
         event = new WeekViewEvent(10, "bravo cola", startTime, endTime);
         event.setColor(getResources().getColor(R.color.event_color_03));
         Nevents.add(event);
 
         Nevents.addAll(this.events);
-        return  Nevents;
+        return Nevents;
 
     }
 

@@ -17,14 +17,13 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
 
     public static final String REQUEST_METHOD = "GET";
     public static final int READ_TIMEOUT = 15000;
-    public static final int CONNECTION_TIMEOUT = 15000;
-
+    public static final int CONNECTION_TIMEOUT = 5000;
 
 
     @Override
     protected String doInBackground(String... params) {
         String stringUrl = params[0];
-        String result="miao";
+        String result = "miao";
         String inputLine;
 
         try {
@@ -50,7 +49,7 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
             StringBuilder stringBuilder = new StringBuilder();
 
             //Check if the line we are reading is not null
-            while((inputLine = reader.readLine()) != null){
+            while ((inputLine = reader.readLine()) != null) {
                 stringBuilder.append(inputLine);
             }
 
@@ -61,14 +60,14 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
             //Set our result equal to our stringBuilder
             result = stringBuilder.toString();
 
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return result;
     }
 
     @Override
-    protected void onPostExecute(String result){
+    protected void onPostExecute(String result) {
         super.onPostExecute(result);
     }
 }

@@ -1,14 +1,26 @@
 package com.example.ago.travlendarandroidclient;
 
+import com.example.ago.travlendarandroidclient.model.UserClient;
+
 /**
  * Created by ago on 15/12/2017.
  */
 
 
 public class UserSettings {
-    private static long user_id=6;
-    private static String fName="Andrea";
-    private static String lName="Agostini";
+    private static long user_id = 6;
+    private static String fName = "Andrea";
+    private static String lName = "Agostini";
+
+    private static UserClient userClient = null;
+
+    public static UserClient getUserClient() {
+        return userClient;
+    }
+
+    public static void setUserClient(UserClient userClient) {
+        UserSettings.userClient = userClient;
+    }
 
     public static long getUser_id() {
         return user_id;

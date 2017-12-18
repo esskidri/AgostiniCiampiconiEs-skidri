@@ -8,11 +8,9 @@ import android.util.Log;
 import android.view.View;
 
 
-
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 import com.applandeo.materialcalendarview.EventDay;
-
 
 
 import java.util.ArrayList;
@@ -49,22 +47,23 @@ public class MaterialCalendarActivity extends AppCompatActivity {
         List<EventDay> mEventDays = new ArrayList<>();
         CalendarView mCalendarView = (CalendarView) findViewById(R.id.calendarView);
 
-        Calendar c=Calendar.getInstance();
+        Calendar c = Calendar.getInstance();
         c.set(2017, 11, 1);
-        EventDay myEventDay = new EventDay(c,R.drawable.ic_dot_two);
+        EventDay myEventDay = new EventDay(c, R.drawable.ic_dot_two);
         mEventDays.add(myEventDay);
 
-        Calendar c1=Calendar.getInstance();
+        Calendar c1 = Calendar.getInstance();
         c1.set(2017, 11, 2);
-        EventDay myEventDay1 = new EventDay(c1,R.drawable.ic_dot_two_ok);
+        EventDay myEventDay1 = new EventDay(c1, R.drawable.ic_dot_two_ok);
         mEventDays.add(myEventDay1);
-        Calendar c2=Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
         c2.set(2017, 11, 9);
-        EventDay myEventDay2 = new EventDay(c2,R.drawable.ic_dot_three_b);
+        EventDay myEventDay2 = new EventDay(c2, R.drawable.ic_dot_three_b);
         mEventDays.add(myEventDay2);
 
         mCalendarView.setEvents(mEventDays);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         /*if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
@@ -75,18 +74,18 @@ public class MaterialCalendarActivity extends AppCompatActivity {
         }*/
 
 
-
-
     }
+
     private void addNote() {
         //Intent intent = new Intent(this, AddNoteActivity.class);
-       // startActivityForResult(intent, ADD_NOTE);
+        // startActivityForResult(intent, ADD_NOTE);
     }
+
     private void previewNote(EventDay eventDay) {
         //Intent intent = new Intent(this, NotePreviewActivity.class);
         //if(eventDay instanceof MyEventDay){
         //    intent.putExtra(EVENT, (MyEventDay) eventDay);
-       // }
-       // startActivity(intent);
+        // }
+        // startActivity(intent);
     }
 }
