@@ -5,7 +5,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
@@ -14,20 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ago.travlendarandroidclient.R;
-import com.example.ago.travlendarandroidclient.model.StepperTransportSegment;
-import com.example.ago.travlendarandroidclient.model.StepperTransportSolution;
-import com.example.ago.travlendarandroidclient.model.TransportSegmentClient;
-import com.example.ago.travlendarandroidclient.model.TransportSolutionClient;
+import com.example.ago.travlendarandroidclient.modelB.StepperTransportSolution;
+import com.example.ago.travlendarandroidclient.modelB.TransportSolutionClient;
 
-import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.text.Html;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import moe.feng.common.stepperview.IStepperAdapter;
@@ -53,6 +45,7 @@ public class VerticalStepperAdapterDemoFragment extends Fragment implements ISte
             mVerticalStepperView = view.findViewById(R.id.vertical_stepper_view);
             mVerticalStepperView.setStepperAdapter(this);
             mVerticalStepperView.setActivatedColor(getResources().getColor(R.color.colorPrimaryDark));
+            mVerticalStepperView.setNormalColor(getResources().getColor(R.color.colorAccent));
         }
 
         @Override
@@ -73,14 +66,12 @@ public class VerticalStepperAdapterDemoFragment extends Fragment implements ISte
             switch (index) {
                 case 0:
                     return Html.fromHtml("You are started from "
-                            + (mVerticalStepperView.getCurrentStep() > index ? " <b>!</b>" : ""));
+                            + (mVerticalStepperView.getCurrentStep() > index ? str : ""));
                 default:
-                    return Html.fromHtml(                              (mVerticalStepperView.getCurrentStep() > index ? str : ""));
+                    return null;
 
             }
         }
-
-
 
     @Override
         public int size() {

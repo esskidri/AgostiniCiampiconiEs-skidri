@@ -1,7 +1,4 @@
-package com.example.ago.travlendarandroidclient.model;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.example.ago.travlendarandroidclient.modelB;
 
 /**
  * Created by ago on 16/12/2017.

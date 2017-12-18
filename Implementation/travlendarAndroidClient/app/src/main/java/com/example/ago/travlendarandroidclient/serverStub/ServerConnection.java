@@ -1,9 +1,5 @@
 package com.example.ago.travlendarandroidclient.serverStub;
 
-import com.example.ago.travlendarandroidclient.model.Event;
-import com.example.ago.travlendarandroidclient.serverStub.HttpGetRequest;
-
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
