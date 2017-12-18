@@ -86,11 +86,11 @@ public class GoogleResponseMappedObject implements Serializable {
         return arrivalTime;
     }
 
-    public int getDistance(){
+    public long getDistance(){
         return getLeg().getDistance().getValue();
     }
 
-    public int getDuration(){
+    public long getDuration(){
         return getLeg().getDuration().getValue();
     }
 
@@ -127,7 +127,14 @@ public class GoogleResponseMappedObject implements Serializable {
 
     public void checkCompleteness(String meanOfTransport, Timestamp arrivalTime) throws MeanNotAvailableException {
         boolean isPartial = false;
-        setArrivalTime(arrivalTime);
+        if(this.getLeg().getArrival_time() != null)
+            setArrivalTime(new Timestamp(this.getLeg().getArrival_time().getValue()*1000));
+        else {
+            setArrivalTime(arrivalTime);
+            InfoPair arrival_time = new InfoPair();
+            arrival_time.setValue(arrivalTime.getTime()/1000);
+            this.getLeg().setArrival_time(arrival_time);
+        }
         boolean meanFounded = false;
         if(status == null || status.equals("OK")) {
             int i = 0;
@@ -141,9 +148,9 @@ public class GoogleResponseMappedObject implements Serializable {
                 i++;
             }
             if(isPartial)
-                cutWay(i, getSteps().size(), arrivalTime);
+                cutWay(i, getSteps().size(), this.arrivalTime);
 
-            setDepartingTime(new Timestamp(( arrivalTime.getTime()/1000) - getDuration()));
+            setDepartingTime(new Timestamp((((this.getLeg().getArrival_time().getValue() - getDuration())*1000))));
 
         }
         else if(status.equals("NOT_FOUND") || status.equals("ZERO_RESULTS") || status.equals("MAX_WAYPOINTS_EXCEEDED") || status.equals("MAX_ROUTE_LENGTH_EXCEEDED") || status.equals("INVALID_REQUEST") || status.equals("REQUEST_DENIED") || status.equals("UNKNOWN_ERROR") )
@@ -180,8 +187,8 @@ public class GoogleResponseMappedObject implements Serializable {
         if(i != 0)
             partialSolution = true;
         long dateTime;
-        int length;
-        int timeDuration;
+        long length;
+        long timeDuration;
         InfoPair duration= new InfoPair();
         InfoPair distance = new InfoPair();
 

@@ -1,8 +1,11 @@
 package com.travlendar.travlendarServer.logic.util.googleJsonSubClass;
 
+
 import java.util.List;
 
 public class Leg {
+    InfoPair arrival_time;
+    InfoPair departure_time;
     InfoPair distance;
     InfoPair duration;
     String end_address;
@@ -26,6 +29,22 @@ public class Leg {
     }
 
     public Leg() {
+    }
+
+    public InfoPair getArrival_time() {
+        return arrival_time;
+    }
+
+    public void setArrival_time(InfoPair arrival_time) {
+        this.arrival_time = arrival_time;
+    }
+
+    public InfoPair getDeparture_time() {
+        return departure_time;
+    }
+
+    public void setDeparture_time(InfoPair departure_time) {
+        this.departure_time = departure_time;
     }
 
     public InfoPair getDistance() {

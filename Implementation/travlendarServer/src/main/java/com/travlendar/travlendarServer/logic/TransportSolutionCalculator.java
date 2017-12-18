@@ -111,9 +111,8 @@ public class TransportSolutionCalculator {
                 //If google make you change your mean, we recalculate by the preferences of the user
                 List<MeanOfTransportLogic> meanOfTransportLogics = new ArrayList<>();
                 meanOfTransportLogics.addAll(this.meansOfTransport);
-                meanOfTransportLogics.remove(meansOfTransport.get(0));
                 for(MeanOfTransportLogic meanOfTransportLogic: this.meansOfTransport)
-                    if(!isMeanAvailablePrivately( meanOfTransportLogic))
+                    if(meanOfTransportLogic.isPrivate() && !isMeanAvailablePrivately( meanOfTransportLogic))
                         meanOfTransportLogics.remove(meanOfTransportLogic);
                 transportSegmentRecursiveList.clear();
                 calculateSegment(googleResponseMappedObject.getEndingLocation(), endingLocation, googleResponseMappedObject.getArrivalTime(), arrivalTime, meanOfTransportLogics, transportSegmentRecursiveList);
@@ -192,7 +191,6 @@ public class TransportSolutionCalculator {
 
     @NotNull
     private Coordinates getLocationByExternalAPI(MeanOfTransportLogic meanOfTransport, Coordinates startingLocation, Coordinates endingLocation, Timestamp arrivalTime) throws MeanNotAvailableException {
-
         throw new MeanNotAvailableException();
     }
 

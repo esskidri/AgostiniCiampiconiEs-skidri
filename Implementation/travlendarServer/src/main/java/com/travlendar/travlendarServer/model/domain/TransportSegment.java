@@ -51,14 +51,14 @@ public class TransportSegment extends AbstractEntity implements Serializable,Tra
 
     //distance in meters
     @Column(name="distance")
-    private int distance;
+    private long distance;
 
     @Column(name="description")
     private String description;
 
     //duration in seconds
     @Column(name="duration")
-    private int duration;
+    private long duration;
 
     public TransportSegment(){
 
@@ -144,11 +144,11 @@ public class TransportSegment extends AbstractEntity implements Serializable,Tra
         this.transportSegmentId = transportSegmentId;
     }
 
-    public int getDistance() {
+    public long getDistance() {
         return distance;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(long distance) {
         this.distance = distance;
     }
 
@@ -160,11 +160,11 @@ public class TransportSegment extends AbstractEntity implements Serializable,Tra
         this.description = description;
     }
 
-    public int getDuration() {
+    public long getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(long duration) {
         this.duration = duration;
     }
 

@@ -1,6 +1,5 @@
 package com.travlendar.travlendarServer.logic.modelInterface;
 
-import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
 
 public interface TransportSegmentLogic {
@@ -11,6 +10,6 @@ public interface TransportSegmentLogic {
     Coordinates getDestination();
     boolean isAdiacent(Coordinates coordinates);
     void setDescription(String description);
-    void setDuration(int duration);
-    void setDistance(int distance);
+    void setDuration(long duration);
+    void setDistance(long distance);
 }
