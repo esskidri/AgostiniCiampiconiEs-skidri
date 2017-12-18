@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final Button transportSolution = findViewById(R.id.transport);
         request.setOnClickListener(MainActivity.this);
 
+
         /**graphic button configuration**/
         button.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         request.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
