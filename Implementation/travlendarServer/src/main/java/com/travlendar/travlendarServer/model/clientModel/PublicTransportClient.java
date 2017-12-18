@@ -2,7 +2,9 @@ package com.travlendar.travlendarServer.model.clientModel;
 
 import com.travlendar.travlendarServer.model.MeanType;
 
-public class PublicTransportClient {
+import java.io.Serializable;
+
+public class PublicTransportClient implements Serializable {
     private Long id;
     private String name;
     private MeanType type;

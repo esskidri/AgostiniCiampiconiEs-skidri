@@ -1,6 +1,8 @@
 package com.travlendar.travlendarServer.model.domain;
 
 
+import com.travlendar.travlendarServer.model.clientModel.FreeTimeClient;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -71,5 +73,10 @@ public class FreeTime extends AbstractEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public FreeTimeClient getFreeTimeClient(){
+        FreeTimeClient freeTimeClient = new FreeTimeClient(id,startDate,endDate,duration);
+        return freeTimeClient;
     }
 }
