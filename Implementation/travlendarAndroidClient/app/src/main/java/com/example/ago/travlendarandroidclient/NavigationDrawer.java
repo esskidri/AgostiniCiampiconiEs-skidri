@@ -17,8 +17,18 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class NavigationDrawer extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import com.applandeo.materialcalendarview.EventDay;
+import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
+import com.example.ago.travlendarandroidclient.viewInterfaces.DateCardinality;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+public class NavigationDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private com.applandeo.materialcalendarview.CalendarView mCalendarView;
+    private List<EventDay> mEventDays = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +63,35 @@ public class NavigationDrawer extends AppCompatActivity
         // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         // finally change the color
-        window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorStatusBar));
+        window.setStatusBarColor(ContextCompat.getColor(this,R.color.colorStatusBar));
+        /**set the calendar**/
+        mCalendarView = (com.applandeo.materialcalendarview.CalendarView) findViewById(R.id.calendarView);
+        mCalendarView.setOnDayClickListener(new OnDayClickListener() {
+            @Override
+            public void onDayClick(EventDay eventDay) {
+                onDayClicked(eventDay);
+            }
+        });
+        /**load the events in the calendar*/
+        loadEvents();
+    }
+
+    private void onDayClicked(EventDay eventDay) {
+
+    }
+
+    private void loadEvents() {
+        for(DateCardinality d: UserSettings.getDateCardinality()){
+             switch(d.getCardinality()){
+                case 2:mEventDays.add(new EventDay(d.getCalendar(),R.drawable.kic_dot_two_b));
+                    break;
+                case 3:mEventDays.add(new EventDay(d.getCalendar(),R.drawable.ic_dot_three_blue_big));
+                    break;
+                default:mEventDays.add(new EventDay(d.getCalendar(),R.drawable.kic_dot_one_a));
+
+            }
+        }
+        mCalendarView.setEvents(mEventDays);
     }
 
     @Override
@@ -97,7 +135,7 @@ public class NavigationDrawer extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_agenda) {
-            Intent intent = new Intent(this, CalendarView.class);
+            Intent intent=new Intent(this,CalendarView.class);
             startActivity(intent);
 
         } /*else if (id == R.id.nav_gallery) {

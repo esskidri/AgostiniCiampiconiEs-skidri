@@ -7,10 +7,16 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import com.example.ago.travlendarandroidclient.UserSettings;
+import com.example.ago.travlendarandroidclient.model.EventClient;
 import com.example.ago.travlendarandroidclient.model.UserClient;
+import com.example.ago.travlendarandroidclient.modelB.Event;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -38,10 +44,14 @@ public class ServerConnection {
 
     public static String fetchEvents(Long id) {
         String result = "";
-        String url = serverUrl + "/fetch-events/?" + "id=" + id;
+        String url = serverUrl + "/fetch-events/?" + "user_id=" + id;
         HttpGetRequest getRequest = new HttpGetRequest();
         try {
             result = getRequest.execute(url).get();
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss.S").setPrettyPrinting().create();
+            Type type = new TypeToken<ArrayList<EventClient>>(){}.getType();
+            ArrayList<EventClient> eventClient= gson.fromJson(result,type);
+            UserSettings.setEvents(eventClient);
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
@@ -63,6 +73,8 @@ public class ServerConnection {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
+        fetchEvents(id);
+        Toast.makeText(context,"Eventi caricati:"+UserSettings.getEvents().size(),Toast.LENGTH_LONG).show();
     }
 
 }
