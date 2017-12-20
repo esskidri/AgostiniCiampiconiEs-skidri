@@ -1,8 +1,9 @@
 package com.travlendar.travlendarServer.logic.util.googleJsonSubClass;
 
 public class InfoPair {
-    String text;
-    int value;
+    private String text;
+    private String time_zone;
+    private long value;
 
     public InfoPair(String text, int value) {
         this.text = text;
@@ -20,11 +21,19 @@ public class InfoPair {
         this.text = text;
     }
 
-    public int getValue() {
+    public long getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(long value) {
         this.value = value;
+    }
+
+    public String getTimeZone() {
+        return time_zone;
+    }
+
+    public void setTimeZone(String timeZone) {
+        this.time_zone = timeZone;
     }
 }

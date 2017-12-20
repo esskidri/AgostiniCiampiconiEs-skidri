@@ -5,9 +5,10 @@ import com.travlendar.travlendarServer.logic.modelInterface.TransportSegmentLogi
 import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.logic.util.GoogleResponseMappedObject;
+import com.travlendar.travlendarServer.logic.util.TimeRequest;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
 import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
-import com.travlendar.travlendarServer.model.MeanType;
+import com.travlendar.travlendarServer.model.enumModel.MeanType;
 import com.travlendar.travlendarServer.model.domain.*;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -20,9 +21,9 @@ public class TransportSolutionCalculator {
     private CalculatorCore calculatorCore;
     private List<TransportSegmentLogic> transportSegments = new ArrayList<>();
     private List<MeanOfTransportLogic> meansOfTransport;
-    private String typeOfMoment;
+    private TimeRequest typeOfMoment;
 
-    public TransportSolutionCalculator(CalculatorCore calculatorCore, String moment) {
+    public TransportSolutionCalculator(CalculatorCore calculatorCore, TimeRequest moment) {
         this.calculatorCore = calculatorCore;
         typeOfMoment = moment;
     }
@@ -31,7 +32,7 @@ public class TransportSolutionCalculator {
         this.meansOfTransport = calculatorCore.getMeanOfTransports(userLogic, startingLocation, endingLocation, startingTime, arrivalTime);
 
         try {
-            calculateSegmentFromArrival(startingLocation, endingLocation, startingTime, arrivalTime, meansOfTransport);
+            calculateSegment(startingLocation, endingLocation, startingTime, arrivalTime, meansOfTransport, transportSegments);
         } catch (NoMeanAvailableExpection noMeanAvailableExpection) {
             //TODO
             System.out.println("NoMeanAvailableException");
@@ -44,7 +45,7 @@ public class TransportSolutionCalculator {
 
         TransportSolutionLogic transportSolution = new TransportSolution();
 
-        orderSegments();
+        //orderSegments();
 
         transportSolution.setTransportSegmentsByLogic(transportSegments);
 
@@ -55,30 +56,32 @@ public class TransportSolutionCalculator {
     /**
      * @param startingLocation
      * @param endingLocation
-     * @param meansOfTransport
      * @param arrivalTime      This method calculate a route segment of the transport solution with the desired mean.
-     *                         If this mean of transport is contained in the user private mean of transport and is available
-     *                         for the specific situation the Google API will be directly called. If the output of the
-     *                         google API cover all the trip between the two location with the desired mean the method
-     *                         has ended his task, in case not the algorithm call itself with the starting location, as where
-     *                         the Google API indicates that the desired mean of transport will not be used, and with ending
-     *                         location the same ending location which was initially passed to the algorithm (l1).
-     *                         Then he consider as the google solution only for the subroute where the desired mean
-     *                         is used. In case the mean of transport desired to use is a public or a sharing one the
-     *                         specific External API will be called and a location is returned (of a bus stop or of the
-     *                         nearest car to be reserved) and used as a location l2. First of all the algorithm recall
-     *                         itself passing to it two location (l0, l2). Then call the Google API with the mean
-     *                         (in this case a sharing/public one, but at this level is not important) and follow
-     *                         the same behavior after the Google API call as described above.
+ *                         If this mean of transport is contained in the user private mean of transport and is available
+ *                         for the specific situation the Google API will be directly called. If the output of the
+ *                         google API cover all the trip between the two location with the desired mean the method
+ *                         has ended his task, in case not the algorithm call itself with the starting location, as where
+ *                         the Google API indicates that the desired mean of transport will not be used, and with ending
+ *                         location the same ending location which was initially passed to the algorithm (l1).
+ *                         Then he consider as the google solution only for the subroute where the desired mean
+ *                         is used. In case the mean of transport desired to use is a public or a sharing one the
+ *                         specific External API will be called and a location is returned (of a bus stop or of the
+ *                         nearest car to be reserved) and used as a location l2. First of all the algorithm recall
+ *                         itself passing to it two location (l0, l2). Then call the Google API with the mean
+ *                         (in this case a sharing/public one, but at this level is not important) and follow
+     * @param meansOfTransport
+     * @param transportSegments
      */
-    private void calculateSegmentFromArrival(Coordinates startingLocation, Coordinates endingLocation, Timestamp startingTime, Timestamp arrivalTime, List<MeanOfTransportLogic> meansOfTransport) throws NoMeanAvailableExpection, CannotArriveInTimeException {
+    private void calculateSegment(Coordinates startingLocation, Coordinates endingLocation, Timestamp startingTime, Timestamp arrivalTime, List<MeanOfTransportLogic> meansOfTransport, List<TransportSegmentLogic> transportSegments) throws NoMeanAvailableExpection, CannotArriveInTimeException {
         GoogleResponseMappedObject googleResponseMappedObject;
+        List<TransportSegmentLogic> transportSegmentRecursiveList = new ArrayList<>();
+
         if (meansOfTransport.size() == 0)
             throw new NoMeanAvailableExpection();
         try {
             if (isMeanAvailablePrivately(meansOfTransport.get(0))) {
                 //This mean is private and the user can use it by the previous movements
-                googleResponseMappedObject = callGoogleAPI(startingLocation, endingLocation, meansOfTransport.get(0), arrivalTime);
+                googleResponseMappedObject = callGoogleAPI(startingLocation, endingLocation, meansOfTransport.get(0), getTime(startingTime,arrivalTime));
             } else {
                 //The mean is not a private mean, so the user must reach a medium location to use it
                 Coordinates mediumLocation;
@@ -86,109 +89,56 @@ public class TransportSolutionCalculator {
 
                 //If it's a mean of the public transport (Bus, Metro, Tram etc) this is handled by the google API
                 if (meansOfTransport.get(0).getTypeOfTransport() == MeanType.BUS) {
-                    googleResponseMappedObject = callGoogleAPI(startingLocation, endingLocation, meansOfTransport.get(0), arrivalTime);
+                    googleResponseMappedObject = callGoogleAPI(startingLocation, endingLocation, meansOfTransport.get(0), getTime(startingTime,arrivalTime));
                     googleResponseMappedObject.searchPublicLine(arrivalTime);
                     mediumLocation = googleResponseMappedObject.getStartingLocation();
                 }
                 else {
                     //Else the medium location is obtained by the position of a private sharing services (MoBike, Enjoy etc)
-                    mediumLocation = getLocationByExternalAPI(meansOfTransport.get(0), startingLocation, endingLocation, arrivalTime);
-                    googleResponseMappedObject = callGoogleAPI(mediumLocation, endingLocation, meansOfTransport.get(0), arrivalTime);
+                    mediumLocation = getLocationByExternalAPI(meansOfTransport.get(0), startingLocation, endingLocation, getTime(startingTime,arrivalTime));
+                    googleResponseMappedObject = callGoogleAPI(mediumLocation, endingLocation, meansOfTransport.get(0), getTime(startingTime,arrivalTime));
                 }
                 if (googleResponseMappedObject.getDepartingTime().compareTo(startingTime) < 0)
-                    throw new EarlyStartException();
-                calculateSegmentFromArrival(startingLocation, mediumLocation, startingTime, googleResponseMappedObject.getDepartingTime(), meansOfTransport.subList(1, meansOfTransport.size()));
+                    throw new TimeViolationException();
+                calculateSegment(startingLocation, mediumLocation, startingTime, googleResponseMappedObject.getDepartingTime(), meansOfTransport.subList(1, meansOfTransport.size()), transportSegmentRecursiveList );
             }
 
             //the calculated segment is inserted
-            insertTransportSegments(googleResponseMappedObject, meansOfTransport.get(0));
+            transportSegments.addAll(transportSegmentRecursiveList);
+            insertTransportSegments(googleResponseMappedObject, meansOfTransport.get(0), transportSegments);
+
             if (googleResponseMappedObject.isPartialSolution()) {
                 //If google make you change your mean, we recalculate by the preferences of the user
                 List<MeanOfTransportLogic> meanOfTransportLogics = new ArrayList<>();
                 meanOfTransportLogics.addAll(this.meansOfTransport);
-                meanOfTransportLogics.remove(meansOfTransport.get(0));
                 for(MeanOfTransportLogic meanOfTransportLogic: this.meansOfTransport)
-                    if(!isMeanAvailablePrivately( meanOfTransportLogic))
+                    if(meanOfTransportLogic.isPrivate() && !isMeanAvailablePrivately( meanOfTransportLogic))
                         meanOfTransportLogics.remove(meanOfTransportLogic);
-                calculateSegmentFromArrival(googleResponseMappedObject.getEndingLocation(), endingLocation, googleResponseMappedObject.getArrivalTime(), arrivalTime, meanOfTransportLogics);
+                transportSegmentRecursiveList.clear();
+                calculateSegment(googleResponseMappedObject.getEndingLocation(), endingLocation, googleResponseMappedObject.getArrivalTime(), arrivalTime, meanOfTransportLogics, transportSegmentRecursiveList);
+                transportSegments.addAll(transportSegmentRecursiveList);
             }
         } catch (MeanNotAvailableException e) {
             //In case the mean is not available
             if (meansOfTransport.size() != 0)
-                calculateSegmentFromArrival(startingLocation, endingLocation, startingTime, arrivalTime, meansOfTransport.subList(1, meansOfTransport.size()));
+                calculateSegment(startingLocation, endingLocation, startingTime, arrivalTime, meansOfTransport.subList(1, meansOfTransport.size()), transportSegments);
             else
                 //In case there's no more mean to be used for the solution
                 throw new NoMeanAvailableExpection();
-        } catch (EarlyStartException e) {
+        } catch (TimeViolationException e) {
             //In case the user must leave the event before the end of the antecedent event
             if (meansOfTransport.size() != 0)
-                calculateSegmentFromArrival(startingLocation, endingLocation, startingTime, arrivalTime, meansOfTransport.subList(1, meansOfTransport.size()));
+                calculateSegment(startingLocation, endingLocation, startingTime, arrivalTime, meansOfTransport.subList(1, meansOfTransport.size()), transportSegments);
             else
                 //In case there's no more mean to be used for the solution
                 throw new CannotArriveInTimeException();
         }
     }
 
-    private void calculateSegmentFromDeparture(Coordinates startingLocation, Coordinates endingLocation, Timestamp startingTime, Timestamp arrivalTime, List<MeanOfTransportLogic> meansOfTransport) throws NoMeanAvailableExpection, CannotArriveInTimeException {
-        //TODO compact
-        GoogleResponseMappedObject googleResponseMappedObject;
-        if (meansOfTransport.size() == 0)
-            throw new NoMeanAvailableExpection();
-        try {
-            if (isMeanAvailablePrivately(meansOfTransport.get(0))) {
-                //This mean is private and the user can use it by the previous movements
-                googleResponseMappedObject = callGoogleAPI(startingLocation, endingLocation, meansOfTransport.get(0), arrivalTime);
-            } else {
-                //The mean is not a private mean, so the user must reach a medium location to use it
-                Coordinates mediumLocation;
 
 
-                //If it's a mean of the public transport (Bus, Metro, Tram etc) this is handled by the google API
-                if (meansOfTransport.get(0).getTypeOfTransport() == MeanType.BUS) {
-                    googleResponseMappedObject = callGoogleAPI(startingLocation, endingLocation, meansOfTransport.get(0), arrivalTime);
-                    googleResponseMappedObject.searchPublicLine(arrivalTime);
-                    mediumLocation = googleResponseMappedObject.getStartingLocation();
-                }
-                else {
-                    //Else the medium location is obtained by the position of a private sharing services (MoBike, Enjoy etc)
-                    mediumLocation = getLocationByExternalAPI(meansOfTransport.get(0), startingLocation, endingLocation, arrivalTime);
-                    googleResponseMappedObject = callGoogleAPI(mediumLocation, endingLocation, meansOfTransport.get(0), arrivalTime);
-                }
-                if (googleResponseMappedObject.getArrivalTime().compareTo(startingTime) > 0)
-                    throw new LateArriveException();
-                calculateSegmentFromDeparture(startingLocation, mediumLocation, startingTime, googleResponseMappedObject.getDepartingTime(), meansOfTransport.subList(1, meansOfTransport.size()));
-            }
 
-            //the calculated segment is inserted
-            insertTransportSegments(googleResponseMappedObject, meansOfTransport.get(0));
-            if (googleResponseMappedObject.isPartialSolution()) {
-                //If google make you change your mean, we recalculate by the preferences of the user
-                List<MeanOfTransportLogic> meanOfTransportLogics = new ArrayList<>();
-                meanOfTransportLogics.addAll(this.meansOfTransport);
-                meanOfTransportLogics.remove(meansOfTransport.get(0));
-                for(MeanOfTransportLogic meanOfTransportLogic: this.meansOfTransport)
-                    if(!isMeanAvailablePrivately( meanOfTransportLogic))
-                        meanOfTransportLogics.remove(meanOfTransportLogic);
-                calculateSegmentFromDeparture(googleResponseMappedObject.getEndingLocation(), endingLocation, googleResponseMappedObject.getArrivalTime(), arrivalTime, meanOfTransportLogics);
-            }
-        } catch (MeanNotAvailableException e) {
-            //In case the mean is not available
-            if (meansOfTransport.size() != 0)
-                calculateSegmentFromDeparture(startingLocation, endingLocation, startingTime, arrivalTime, meansOfTransport.subList(1, meansOfTransport.size()));
-            else
-                //In case there's no more mean to be used for the solution
-                throw new NoMeanAvailableExpection();
-        } catch (LateArriveException e) {
-            //In case the user must leave the event before the end of the antecedent event
-            if (meansOfTransport.size() != 0)
-                calculateSegmentFromDeparture(startingLocation, endingLocation, startingTime, arrivalTime, meansOfTransport.subList(1, meansOfTransport.size()));
-            else
-                //In case there's no more mean to be used for the solution
-                throw new CannotArriveInTimeException();
-        }
-    }
-
-    private void insertTransportSegments(GoogleResponseMappedObject googleResponseMappedObject, MeanOfTransportLogic meanOfTransport) {
+    private void insertTransportSegments(GoogleResponseMappedObject googleResponseMappedObject, MeanOfTransportLogic meanOfTransport, List<TransportSegmentLogic> transportSegments) {
         TransportSegmentLogic transportSegment = new TransportSegment();
 
         transportSegment.setMeanOfTransport(meanOfTransport);
@@ -200,12 +150,7 @@ public class TransportSolutionCalculator {
 
         int i = 0;
 
-        for (TransportSegmentLogic transportSegment1 : transportSegments) {
-            if (transportSegment1.isAdiacent(googleResponseMappedObject.getStartingLocation())) {
-                break;
-            }
-            i++;
-        }
+
 
         transportSegments.add(transportSegment);
     }
@@ -249,7 +194,6 @@ public class TransportSolutionCalculator {
 
     @NotNull
     private Coordinates getLocationByExternalAPI(MeanOfTransportLogic meanOfTransport, Coordinates startingLocation, Coordinates endingLocation, Timestamp arrivalTime) throws MeanNotAvailableException {
-
         throw new MeanNotAvailableException();
     }
 
@@ -264,7 +208,7 @@ public class TransportSolutionCalculator {
     private GoogleResponseMappedObject callGoogleAPI(Coordinates startingLocation, Coordinates endingLocation, MeanOfTransportLogic meanOfTransport, Timestamp arrivalTime) throws  MeanNotAvailableException {
         GoogleResponseMappedObject googleResponseMappedObject;
 
-        googleResponseMappedObject = GoogleAPIHandler.askGoogle(startingLocation, endingLocation, meanOfTransport, typeOfMoment, arrivalTime);
+        googleResponseMappedObject = GoogleAPIHandler.askGoogle(startingLocation, endingLocation, meanOfTransport, typeOfMoment.toHttpsFormat(), arrivalTime);
         googleResponseMappedObject.checkCompleteness(meanOfTransport.getTypeOfTransport().toHttpsFormat(), arrivalTime);
 
         return googleResponseMappedObject;
@@ -281,4 +225,11 @@ public class TransportSolutionCalculator {
         //TODO throw exception in case the mean cannot be used
         return true;
     }
+
+    private Timestamp getTime(Timestamp departureTime, Timestamp arrivalTime){
+        if(typeOfMoment == TimeRequest.DEPARTURE)
+            return departureTime;
+        return  arrivalTime;
+    }
+
 }

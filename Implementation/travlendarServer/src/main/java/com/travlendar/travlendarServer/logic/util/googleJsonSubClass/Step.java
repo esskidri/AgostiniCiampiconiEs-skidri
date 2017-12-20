@@ -8,7 +8,9 @@ public class Step {
     String maneuver;
     Polyline polyline;
     Coordinates start_location;
+    TransitDetails transit_details;
     String travel_mode;
+
 
     public Step(InfoPair distance, InfoPair duration, Coordinates end_location, String html_instructions, String maneuver, Polyline polyline, Coordinates start_location, String travel_mode) {
         this.distance = distance;
@@ -88,5 +90,13 @@ public class Step {
 
     public void setTravel_mode(String travel_mode) {
         this.travel_mode = travel_mode;
+    }
+
+    public TransitDetails getTransit_details() {
+        return transit_details;
+    }
+
+    public void setTransit_details(TransitDetails transit_details) {
+        this.transit_details = transit_details;
     }
 }

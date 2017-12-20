@@ -1,6 +1,6 @@
 package com.travlendar.travlendarServer.model.clientModel;
 
-import com.travlendar.travlendarServer.model.MeanType;
+import com.travlendar.travlendarServer.model.enumModel.MeanType;
 
 import java.io.Serializable;
 

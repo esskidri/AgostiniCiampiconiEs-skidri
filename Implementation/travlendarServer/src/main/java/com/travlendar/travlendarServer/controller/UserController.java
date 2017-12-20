@@ -6,7 +6,7 @@ import com.travlendar.travlendarServer.extra.Tools;
 import com.travlendar.travlendarServer.logic.MainLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLogic;
-import com.travlendar.travlendarServer.model.Policy;
+import com.travlendar.travlendarServer.model.enumModel.Policy;
 import com.travlendar.travlendarServer.model.dao.*;
 import com.travlendar.travlendarServer.model.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;

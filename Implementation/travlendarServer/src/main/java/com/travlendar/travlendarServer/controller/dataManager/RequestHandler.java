@@ -5,8 +5,9 @@ package com.travlendar.travlendarServer.controller.dataManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.travlendar.travlendarServer.controller.Exception.DataEntryException;
-import com.travlendar.travlendarServer.model.MeanType;
+import com.travlendar.travlendarServer.model.enumModel.MeanType;
 import com.travlendar.travlendarServer.model.clientModel.EventClient;
+import com.travlendar.travlendarServer.model.clientModel.FreeTimeClient;
 import com.travlendar.travlendarServer.model.clientModel.UserClient;
 import com.travlendar.travlendarServer.model.dao.*;
 import com.travlendar.travlendarServer.model.domain.*;
@@ -46,6 +47,24 @@ public class RequestHandler {
     private GreenDao greenDao;
 
 
+
+    @RequestMapping("/get-free-time")
+    @ResponseBody
+    public String getFreeTime(@RequestParam("user_id") Long userId) {
+        Response r=new Response("ok");
+        try{
+            User u=userDao.findOne(userId);
+            ArrayList<FreeTimeClient> freeTimeClients = new ArrayList<>();
+            for(FreeTime freeTime: u.getFreeTimes()) freeTimeClients.add(freeTime.getFreeTimeClient());
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String jsonInString = gson.toJson(freeTimeClients);
+            return jsonInString;
+
+        }catch(Exception e2){
+            r.setMessage("fail: "+e2.getMessage());
+        }
+        return "fail";
+    }
 
     @RequestMapping("/get-user")
     @ResponseBody

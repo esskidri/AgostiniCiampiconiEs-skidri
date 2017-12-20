@@ -1,6 +1,8 @@
 package com.travlendar.travlendarServer.model.clientModel;
 
-public class UserPublicTransportClient {
+import java.io.Serializable;
+
+public class UserPublicTransportClient implements Serializable{
     private String username;
     private PublicTransportClient publicTransportclient;
 

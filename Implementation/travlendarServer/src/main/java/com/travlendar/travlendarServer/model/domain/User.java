@@ -4,9 +4,8 @@ package com.travlendar.travlendarServer.model.domain;
 import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
-import com.travlendar.travlendarServer.model.Policy;
+import com.travlendar.travlendarServer.model.enumModel.Policy;
 import com.travlendar.travlendarServer.model.clientModel.PrivateTransportClient;
-import com.travlendar.travlendarServer.model.clientModel.PublicTransportClient;
 import com.travlendar.travlendarServer.model.clientModel.UserClient;
 import com.travlendar.travlendarServer.model.clientModel.UserPublicTransportClient;
 

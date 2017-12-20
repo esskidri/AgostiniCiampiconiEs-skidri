@@ -1,4 +1,4 @@
-package com.travlendar.travlendarServer.model;
+package com.travlendar.travlendarServer.model.enumModel;
 
 import com.travlendar.travlendarServer.logic.CalculatorCore;
 import com.travlendar.travlendarServer.logic.CheapestCore;

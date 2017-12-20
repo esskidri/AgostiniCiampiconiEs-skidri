@@ -40,8 +40,8 @@ public class GoogleAPIHandler {
 
     public static void main(String[] args) {
         //TODO Remove main()
-        System.out.println(constructHttpsUrl("Rome","Milan", "transit", ARRIVALTIME,"1513162800000"));
-        System.out.println(httpsRequest(constructHttpsUrl("Rome","Milan", "transit", ARRIVALTIME, "1513162800000")));
+        System.out.println(constructHttpsUrl("Rome","Milan", "transit", ARRIVALTIME,"1513162800"));
+        System.out.println(httpsRequest(constructHttpsUrl("Rome","Milan", "transit", DEPARTURETIME, "1513162800")));
 
         //Testing https request and Google JSON to POJO mapping
         GoogleResponseMappedObject googleResponseMappedObject;
@@ -75,7 +75,7 @@ public class GoogleAPIHandler {
      * @return
      */
     public static GoogleResponseMappedObject askGoogle(Coordinates origin, Coordinates destination, String typeOfTransport, String type, Timestamp arrivalTime){
-        return fromJsonToObject(httpsRequest(constructHttpsUrl(origin.toHttpsFormat(), destination.toHttpsFormat(), typeOfTransport, type,Tools.getSecondsFromTimeStamp(arrivalTime))));
+        return fromJsonToObject(httpsRequest(constructHttpsUrl(origin.toHttpsFormat(), destination.toHttpsFormat(), typeOfTransport, type, Tools.getSecondsFromTimeStamp(arrivalTime))));
     }
 
     private static GoogleResponseMappedObject fromJsonToObject(String jsonString){

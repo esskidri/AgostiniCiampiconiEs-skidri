@@ -4,8 +4,7 @@ import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.logic.util.EventGraph;
-import com.travlendar.travlendarServer.model.Policy;
-import com.travlendar.travlendarServer.model.domain.Event;
+import com.travlendar.travlendarServer.logic.util.TimeRequest;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -33,18 +32,18 @@ public class MainLogic {
             for(EventLogic inGoing: eventGraph.edges().get(outGoing)) {
                 if(inGoing.atHome()){
                     if(eventGraph.edges().get(inGoing).size() != 0);
-                        //EventLogic eventAfter = eventGraph.edges().get(inGoing).get(0);
-                    transportSolutionLogic = (new TransportSolutionCalculator(user.getPolicy().getCore(), "departure_time")).calculateSolution(outGoing.getCoordinates(), inGoing.getCoordinates(), outGoing.getEndDate(), inGoing.getStartDate(), user);
+                        EventLogic eventAfter = eventGraph.edges().get(inGoing).get(0);
+                    transportSolutionLogic = (new TransportSolutionCalculator(user.getPolicy().getCore(), TimeRequest.DEPARTURE)).calculateSolution(outGoing.getCoordinates(), inGoing.getCoordinates(), outGoing.getEndDate(), eventAfter.getStartDate(), user);
                     arrivalAtHome = transportSolutionLogic.getArrivalTime();
                 }
                 if(outGoing.atHome()) {
                     //I assume that this algorithm is never asked to calculate solution from a home event when before
                     //it didn't calculate solution to reach home, this is granted by the structure and the behave of
                     // event connector
-                    transportSolutionLogic = (new TransportSolutionCalculator(user.getPolicy().getCore(), "arrival_time")).calculateSolution(outGoing.getCoordinates(), inGoing.getCoordinates(), arrivalAtHome, inGoing.getStartDate(), user);
+                    transportSolutionLogic = (new TransportSolutionCalculator(user.getPolicy().getCore(), TimeRequest.ARRIVAL)).calculateSolution(outGoing.getCoordinates(), inGoing.getCoordinates(), arrivalAtHome, inGoing.getStartDate(), user);
                 }
                 else{
-                    transportSolutionLogic = (new TransportSolutionCalculator(user.getPolicy().getCore(), "arrival_time")).calculateSolution(outGoing.getCoordinates(), inGoing.getCoordinates(), outGoing.getEndDate(), inGoing.getStartDate(), user);
+                    transportSolutionLogic = (new TransportSolutionCalculator(user.getPolicy().getCore(), TimeRequest.ARRIVAL)).calculateSolution(outGoing.getCoordinates(), inGoing.getCoordinates(), outGoing.getEndDate(), inGoing.getStartDate(), user);
                 }
                 transportSolutionLogic.setStartEvent(outGoing);
                 transportSolutionLogic.setEndEvent(inGoing);

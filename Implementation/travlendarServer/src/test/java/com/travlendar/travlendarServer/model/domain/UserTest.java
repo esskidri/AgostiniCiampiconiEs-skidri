@@ -1,8 +1,9 @@
 package com.travlendar.travlendarServer.model.domain;
 
-import com.travlendar.travlendarServer.model.EnumGreenLevel;
-import com.travlendar.travlendarServer.model.MeanType;
-import com.travlendar.travlendarServer.model.Policy;
+
+import com.travlendar.travlendarServer.model.enumModel.EnumGreenLevel;
+import com.travlendar.travlendarServer.model.enumModel.MeanType;
+import com.travlendar.travlendarServer.model.enumModel.Policy;
 import org.junit.Test;
 
 import java.util.ArrayList;
