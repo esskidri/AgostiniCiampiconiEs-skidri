@@ -197,8 +197,15 @@ public class Event implements Serializable,  EventLogic {
 
     @Override
     public boolean overlapping(EventLogic e){
+        if(this.getEndDate() == null || this.getStartDate() == null || e.getEndDate() == null || e.getStartDate() == null )
+            return false;
         if(this.compareTo(e) < 0 && e.getStartDate().compareTo(this.endDate) < 0)
             return true;
+        return false;
+    }
+
+    @Override
+    public boolean atHome() {
         return false;
     }
 
@@ -209,6 +216,12 @@ public class Event implements Serializable,  EventLogic {
         coordinates.setLng(posY);
 
         return coordinates;
+    }
+
+    @Override
+    public Coordinates getCurrentHome() {
+        //this method is created to be extended extra functionalities (like set a temporary home, f.e. when you are in hotel)
+        return user.getHomeCoordinates();
     }
 
 
@@ -226,10 +239,5 @@ public class Event implements Serializable,  EventLogic {
                                                     this.description,this.name,this.endEvent);
         return eventClient;
     }
-
-
-
-
-
 
 }

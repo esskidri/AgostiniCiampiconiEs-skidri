@@ -7,6 +7,7 @@ import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLog
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,5 +99,10 @@ public class TransportSolution extends AbstractEntity implements Serializable, T
     @Override
     public void setEndEvent(EventLogic event) {
         event2 = (Event) event;
+    }
+
+    @Override
+    public Timestamp getArrivalTime(){
+        return transportSegments.get(transportSegments.size()).getArrivalTime();
     }
 }

@@ -6,7 +6,7 @@ import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates
 
 import javax.persistence.*;
 import java.io.Serializable;
-
+import java.sql.Timestamp;
 
 
 @Entity
@@ -59,6 +59,11 @@ public class TransportSegment extends AbstractEntity implements Serializable,Tra
     //duration in seconds
     @Column(name="duration")
     private int duration;
+
+    //TODO add to DB
+    private Timestamp departureTime;
+
+    private Timestamp arrivalTime;
 
     public TransportSegment(){
 
@@ -213,7 +218,19 @@ public class TransportSegment extends AbstractEntity implements Serializable,Tra
         return coordinates.getLat() == positionBX && coordinates.getLng() == positionBY;
     }
 
+    public Timestamp getDepartureTime() {
+        return departureTime;
+    }
 
+    public void setDepartureTime(Timestamp departureTime) {
+        this.departureTime = departureTime;
+    }
 
+    public Timestamp getArrivalTime() {
+        return arrivalTime;
+    }
 
+    public void setArrivalTime(Timestamp arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
 }

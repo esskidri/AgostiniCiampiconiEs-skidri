@@ -3,6 +3,7 @@ package com.travlendar.travlendarServer.model.domain;
 
 import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
+import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
 import com.travlendar.travlendarServer.model.Policy;
 import com.travlendar.travlendarServer.model.clientModel.PrivateTransportClient;
 import com.travlendar.travlendarServer.model.clientModel.PublicTransportClient;
@@ -59,6 +60,10 @@ public class User extends AbstractEntity implements UserLogic {
 
     @OneToMany(mappedBy = "user")
     private List<Event> events;
+
+    //TODO add coordinates field in the domain to save user preferences for Home
+    private float homeX;
+    private float homeY;
 
 
     public User() { }
@@ -134,6 +139,11 @@ public class User extends AbstractEntity implements UserLogic {
         return policy;
     }
 
+    @Override
+    public Coordinates getHomeCoordinates() {
+        return new Coordinates(homeX,homeY);
+    }
+
     public void setPolicy(Policy policy) {
         this.policy = policy;
     }
@@ -186,6 +196,21 @@ public class User extends AbstractEntity implements UserLogic {
         this.events = events;
     }
 
+    public float getHomeX() {
+        return homeX;
+    }
+
+    public void setHomeX(float homeX) {
+        this.homeX = homeX;
+    }
+
+    public float getHomeY() {
+        return homeY;
+    }
+
+    public void setHomeY(float homeY) {
+        this.homeY = homeY;
+    }
 
     @Override
     public List<MeanOfTransportLogic> getMeanPreferences() {

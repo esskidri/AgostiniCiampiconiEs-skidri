@@ -14,10 +14,10 @@ import static org.junit.Assert.*;
 public class GoogleResponseMappedObjectTest extends GoogleResponseMappedObject {
 
 
-    public GoogleResponseMappedObject createDefault(Coordinates origin, Coordinates destination, String meanOfTransport, Timestamp arrivalTime  ){
+   /* public GoogleResponseMappedObject createDefault(Coordinates origin, Coordinates destination, String meanOfTransport, Timestamp arrivalTime  ){
         GoogleResponseMappedObject googleResponseMappedObject = GoogleAPIHandler.askGoogle(origin, destination,meanOfTransport, arrivalTime);
         return  googleResponseMappedObject;
-    }
+    }*/
 
 
     /*
