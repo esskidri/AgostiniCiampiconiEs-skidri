@@ -3,7 +3,6 @@ package com.example.ago.travlendarandroidclient;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -22,7 +21,6 @@ import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 import com.example.ago.travlendarandroidclient.viewInterfaces.DateCardinality;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class NavigationDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,8 +40,10 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            //            .setAction("Action", null).show();
+               Intent intent=new Intent(getApplicationContext(),FloatingLabels.class);
+               startActivity(intent);
             }
         });
 
