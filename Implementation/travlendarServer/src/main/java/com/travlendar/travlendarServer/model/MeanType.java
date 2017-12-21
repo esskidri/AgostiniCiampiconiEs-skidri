@@ -2,6 +2,7 @@ package com.travlendar.travlendarServer.model;
 
 import com.travlendar.travlendarServer.model.domain.Event;
 import com.travlendar.travlendarServer.model.domain.Green;
+import com.travlendar.travlendarServer.model.enumModel.EnumGreenLevel;
 
 public enum MeanType {
 

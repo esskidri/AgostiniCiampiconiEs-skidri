@@ -62,6 +62,8 @@ public class EventConnector {
     private static void insertHomeEvent(EventGraph eventGraph, EventLogic endEvent, List<EventLogic> eventWithHome){
         Event homeEvent = new HomeEvent();
         homeEvent.setEndEvent(false);
+
+        //TODO CORRECT
         homeEvent.setPosX(endEvent.getCoordinates().getLat());
         homeEvent.setPosY(endEvent.getCoordinates().getLng());
 
