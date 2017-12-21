@@ -24,7 +24,7 @@ import java.util.concurrent.ExecutionException;
  */
 
 public class ServerConnection {
-    private final static String serverUrl = "http://192.168.1.4:8080";
+    private final static String serverUrl = "http://192.168.1.6:8080";
     //Instantiate new instance of our class
 
     //Perform the doInBackground method, passing in our url

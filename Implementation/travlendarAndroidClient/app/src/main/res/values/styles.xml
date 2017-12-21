@@ -24,10 +24,15 @@
     <style name="AppTheme.DialogTheme" parent="Theme.AppCompat.Light.Dialog">
 
         <!-- Put the two options, colorAccent and android:colorAccent. -->
-        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorPrimary">@color/colorPrimary</item>
         <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:colorAccent">@color/colorPrimary</item>
+        <item name="android:colorAccent">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="MyEditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/holo_gray_light</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
     </style>
 
 </resources>
