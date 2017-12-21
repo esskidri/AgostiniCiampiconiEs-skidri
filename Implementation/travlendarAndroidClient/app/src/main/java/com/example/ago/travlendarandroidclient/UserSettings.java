@@ -2,19 +2,15 @@ package com.example.ago.travlendarandroidclient;
 
 import com.alamkanak.weekview.WeekViewEvent;
 import com.example.ago.travlendarandroidclient.model.EventClient;
-import com.example.ago.travlendarandroidclient.modelB.Event;
+import com.example.ago.travlendarandroidclient.model.UserClient;
 import com.example.ago.travlendarandroidclient.viewInterfaces.DateCardinality;
 
-
 import java.sql.Date;
-import java.sql.SQLData;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import static com.example.ago.travlendarandroidclient.Extra.toCalendar;
-
-import com.example.ago.travlendarandroidclient.model.UserClient;
 
 /**
  * Created by ago on 15/12/2017.
@@ -75,9 +71,9 @@ public class UserSettings {
             if(!isPresent(d,calendars.get(i).getTime())) {
                 d.add(new DateCardinality(calendars.get(i), 1));
                 for (int k = i + 1; k < calendars.size(); k++) {
-                    if (calendars.get(i).getTime().getDay() == (calendars.get(k).getTime().getDay()) &&
-                            calendars.get(i).getTime().getMonth() == (calendars.get(k).getTime().getMonth()) &&
-                            calendars.get(i).getTime().getYear() == (calendars.get(k).getTime().getYear())) {
+                    if (calendars.get(i).get(Calendar.DAY_OF_MONTH) == (calendars.get(k).get(Calendar.DAY_OF_MONTH)) &&
+                            calendars.get(i).get(Calendar.MONTH) == (calendars.get(k).get(Calendar.MONTH)) &&
+                            calendars.get(i).get(Calendar.YEAR) == (calendars.get(k).get(Calendar.YEAR))) {
                         d.get(d.size() - 1).incCardinality();
                     }
                 }
@@ -95,9 +91,11 @@ public class UserSettings {
     }
 
     private static Boolean isPresent(List<DateCardinality> dateCardinalities, java.util.Date date){
+
         for(DateCardinality d:dateCardinalities){
-            if(d.getCalendar().getTime().getDay()==date.getDay() && d.getCalendar().getTime().getYear()==date.getYear() &&
-                    d.getCalendar().getTime().getMonth()==date.getMonth()){
+            if(d.getCalendar().get(Calendar.DAY_OF_MONTH)==date.getDay() &&
+                    d.getCalendar().get(Calendar.YEAR)==date.getYear() &&
+                    d.getCalendar().get(Calendar.MONTH)==date.getMonth()){
                 return true;
             }
         }

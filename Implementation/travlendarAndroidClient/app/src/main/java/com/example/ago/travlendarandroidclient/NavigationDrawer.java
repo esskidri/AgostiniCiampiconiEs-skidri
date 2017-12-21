@@ -83,13 +83,15 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
     private void loadEvents() {
         for(DateCardinality d: UserSettings.getDateCardinality()){
              switch(d.getCardinality()){
-                case 2:mEventDays.add(new EventDay(d.getCalendar(),R.drawable.kic_dot_two_b));
-                    break;
-                case 3:mEventDays.add(new EventDay(d.getCalendar(),R.drawable.ic_dot_three_blue_big));
-                    break;
-                default:mEventDays.add(new EventDay(d.getCalendar(),R.drawable.kic_dot_one_a));
 
-            }
+                 case 1:mEventDays.add(new EventDay(d.getCalendar(),R.drawable.kic_dot_one_a));
+                    break;
+                 case 2:mEventDays.add(new EventDay(d.getCalendar(),R.drawable.kic_dot_two_b));
+                    break;
+             }
+             if(d.getCardinality()>=3){
+                 mEventDays.add(new EventDay(d.getCalendar(),R.drawable.kic_dot_three_blue));
+             }
         }
         mCalendarView.setEvents(mEventDays);
     }

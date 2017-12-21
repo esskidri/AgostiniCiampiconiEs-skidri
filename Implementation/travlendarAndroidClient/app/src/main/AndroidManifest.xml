@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -27,7 +28,12 @@
         <activity android:name=".TransportSolutionView" />
         <activity android:name=".MaterialCalendarActivity" />
         <activity android:name=".addEventActivity" />
-        <activity android:name=".FloatingLabels"></activity>
+        <activity android:name=".FloatingLabels"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+        </activity>
+
+
     </application>
 
 </manifest> <!-- android:theme="@style/AppTheme" -->

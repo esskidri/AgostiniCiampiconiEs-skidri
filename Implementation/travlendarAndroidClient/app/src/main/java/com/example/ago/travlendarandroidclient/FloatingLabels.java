@@ -2,6 +2,7 @@ package com.example.ago.travlendarandroidclient;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,17 +14,23 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.ago.travlendarandroidclient.model.EventClient;
+
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 public class FloatingLabels extends AppCompatActivity implements View.OnClickListener {
     private EditText eStartDate,eEndDate,eStartHour,eEndHour,eName,eDescription,eLocation;
+    private CheckBox cEndEvent;
     private int anno,mese,giorno,ora,minuto;
     private int startYear,startMonth,startDay,startHour,startMinute,endYear,endMonth,endDay,endHour,
                 endMinute;
@@ -53,11 +60,12 @@ public class FloatingLabels extends AppCompatActivity implements View.OnClickLis
         eName=findViewById(R.id.input_name);
         eDescription=findViewById(R.id.input_email);
         eLocation=findViewById(R.id.input_location);
+        cEndEvent=findViewById(R.id.checkBox2);
 
         init(eStartDate,eEndDate,eStartHour,eEndHour);
 
 
-        /**grsphic status bar configuration**/
+        /**graphic status bar configuration**/
         Window window = this.getWindow();
         // clear FLAG_TRANSLUCENT_STATUS flag:
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -111,11 +119,26 @@ public class FloatingLabels extends AppCompatActivity implements View.OnClickLis
 
         }
     }
-
+    //todo integrare con chiamata al server
     private void saveEvent() {
         String name= eName.getText().toString();
         String location= eLocation.getText().toString();
         String description= eDescription.getText().toString();
+        Calendar calendar= Calendar.getInstance();
+        calendar.set(startYear,startMonth,startDay,startHour,startMinute);
+        Timestamp startDate=new Timestamp(calendar.getTimeInMillis());
+        Calendar calendar2= Calendar.getInstance();
+        calendar2.set(endYear,endMonth,endDay,endHour,endMinute);
+        Timestamp endDate=new Timestamp(calendar2.getTimeInMillis());
+        int posX=Extra.getPosX(location);
+        int posY=Extra.getPosY(location);
+
+        EventClient newEvent=new EventClient(startDate,endDate,Extra.getPosX(location),
+                                Extra.getPosY(location),description,name,cEndEvent.isChecked());
+        UserSettings.getEvents().add(newEvent);
+        Intent intent = new Intent(this, NavigationDrawer.class);
+        startActivity(intent);
+        //onBackPressed();
     }
 
     private void init(EditText sd,EditText ed,EditText sh, EditText eh){
@@ -128,7 +151,7 @@ public class FloatingLabels extends AppCompatActivity implements View.OnClickLis
         startHour=calendar.get(Calendar.HOUR_OF_DAY);
         startMonth=calendar.get(Calendar.MONTH);
         startYear=calendar.get(Calendar.YEAR);
-        startMinute=calendar.get(Calendar.MINUTE);
+        startMinute=0;
         sd.setText(weekDay+"   "+startDay+"/"+(startMonth+1)+"/"+startYear);
         sh.setText(""+Extra.fromCalendarTo24Hour(calendar));
         /**configurazione end time**/
@@ -138,7 +161,7 @@ public class FloatingLabels extends AppCompatActivity implements View.OnClickLis
         endHour=calendar.get(Calendar.HOUR_OF_DAY);
         endMonth=calendar.get(Calendar.MONTH);
         endYear=calendar.get(Calendar.YEAR);
-        endMinute=calendar.get(Calendar.MINUTE);
+        endMinute=0;
         ed.setText(weekDay+"   "+endDay+"/"+(endMonth+1)+"/"+endYear);
         eh.setText(""+Extra.fromCalendarTo24Hour(calendar));
     }

@@ -78,4 +78,6 @@ public class EventClient implements Serializable{
     public void setEndEvent(boolean endEvent) {
         this.endEvent = endEvent;
     }
+
+
 }

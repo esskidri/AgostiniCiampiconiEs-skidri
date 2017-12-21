@@ -30,4 +30,15 @@ public class Extra {
             return (c.get(Calendar.HOUR_OF_DAY))+":00";
         }
     }
+
+    //toDO costruire convertitore e validatore da stringa a cordinate
+    public static int getPosX(String location) {
+        return 0;
+    }
+
+    public static int getPosY(String location) {
+        return 0;
+    }
+
+
 }
