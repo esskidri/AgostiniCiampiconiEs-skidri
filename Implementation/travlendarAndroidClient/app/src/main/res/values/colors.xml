@@ -25,4 +25,5 @@
     <color name="toolbar_text">#efefef</color>
     <color name="black">#8f000000</color>
     <color name="accent">#2789e4</color>
+    <color name="lineText">#7a7b7d</color>
 </resources>

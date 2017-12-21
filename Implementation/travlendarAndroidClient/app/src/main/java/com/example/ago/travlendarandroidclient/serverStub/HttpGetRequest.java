@@ -43,7 +43,7 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
 
             //Create a new InputStreamReader
             InputStreamReader streamReader = new
-                    InputStreamReader(connection.getInputStream());
+            InputStreamReader(connection.getInputStream());
 
             //Create a new buffered reader and String Builder
             BufferedReader reader = new BufferedReader(streamReader);

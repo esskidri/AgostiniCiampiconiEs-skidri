@@ -1,0 +1,237 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:layout="http://schemas.android.com/tools">
+
+<android.support.design.widget.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    <android.support.v7.widget.Toolbar
+
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimaryDark"
+
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+    </android.support.v7.widget.Toolbar>
+
+
+</android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/MyEditText"
+            android:paddingTop="14dp">
+
+            <EditText
+
+                android:id="@+id/input_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:hint="Name"
+                android:paddingTop="25dp"
+                android:singleLine="true"
+                android:textColorLink="@color/colorPrimaryDark"
+                android:textSize="15sp" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/MyEditText"
+            android:paddingTop="12dp">
+
+            <EditText
+                android:id="@+id/input_email"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:hint="Description"
+                android:inputType="textEmailAddress"
+                android:textSize="15sp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:theme="@style/MyEditText"
+            android:id="@+id/input_layout_location"
+            android:layout_width="match_parent"
+            android:layout_height="97dp"
+            android:paddingTop="12dp">
+
+            <EditText
+                android:id="@+id/input_location"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:layout_above="@+id/editText5"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="47dp"
+                android:hint="Location"
+                android:singleLine="true"
+                android:textSize="15sp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <CheckedTextView
+                android:theme="@style/MyEditText"
+                android:id="@+id/checkedTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingBottom="12dp"
+                android:text=" Start date"
+                android:textColor="@color/material_grey_500"
+                android:textSize="11sp" />
+            <!-- Stop auto focussing the EditText -->
+
+
+            <EditText
+                android:theme="@style/MyEditText"
+                android:id="@+id/editText4"
+                android:clickable="true"
+                android:focusable="false"
+                android:editable="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:ems="10"
+                android:hint="date"
+                android:inputType="date"
+                android:paddingTop="28dp"
+                android:text="21/12/17"
+                android:textSize="15sp" />
+
+            <EditText
+                android:theme="@style/MyEditText"
+                android:id="@+id/editText25"
+                android:clickable="true"
+                android:focusable="false"
+                android:editable="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/checkedTextView3"
+                android:ems="10"
+                android:hint="date"
+                android:inputType="date"
+                android:paddingTop="28dp"
+                android:text="15:00"
+                android:textSize="15sp" />
+
+            <CheckedTextView
+                android:theme="@style/MyEditText"
+                android:id="@+id/checkedTextView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="28dp"
+                android:layout_toEndOf="@+id/editText4"
+                android:layout_weight="1"
+                android:paddingBottom="12dp"
+                android:text=" Start time"
+                android:textColor="@color/material_grey_500"
+                android:textSize="11sp" />
+
+            <EditText
+                android:clickable="true"
+                android:focusable="false"
+                android:editable="false"
+                android:theme="@style/MyEditText"
+                android:id="@+id/editText5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/editText4"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/editText4"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="zzz"
+                android:inputType="phone"
+                android:paddingTop="28dp"
+                android:text="22/12/17"
+                android:textSize="15sp" />
+
+            <EditText
+                android:clickable="true"
+                android:focusable="false"
+                android:editable="false"
+                android:theme="@style/MyEditText"
+                android:id="@+id/editText26"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/editText5"
+                android:layout_alignBottom="@+id/editText5"
+                android:layout_alignParentEnd="true"
+                android:layout_alignStart="@+id/editText25"
+                android:ems="10"
+                android:hint="zzz"
+                android:inputType="phone"
+                android:paddingTop="28dp"
+                android:text="16:00"
+                android:textSize="15sp" />
+
+            <CheckBox
+                android:theme="@style/MyEditText"
+                android:id="@+id/checkBox2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/editText5"
+                android:layout_marginTop="18dp"
+                android:text="End Event" />
+
+            <CheckedTextView
+                android:id="@+id/checkedTextView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/editText26"
+                android:layout_alignTop="@+id/editText26"
+                android:paddingBottom="12dp"
+                android:text=" End time"
+                android:textColor="@color/material_grey_500"
+                android:textSize="11sp" />
+
+            <CheckedTextView
+                android:id="@+id/checkedTextView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/checkedTextView"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/editText5"
+                android:paddingBottom="12dp"
+                android:text=" End date"
+                android:textColor="@color/material_grey_500"
+                android:textSize="11sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>
