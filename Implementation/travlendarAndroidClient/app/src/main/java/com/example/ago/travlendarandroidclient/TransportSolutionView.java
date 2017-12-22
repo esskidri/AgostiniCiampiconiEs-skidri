@@ -17,7 +17,7 @@ import android.view.WindowManager;
 import com.example.ago.travlendarandroidclient.Fragment.VerticalStepperAdapterDemoFragment;
 import com.example.ago.travlendarandroidclient.Fragment.VerticalStepperDemoFragment;
 
-public class TransportSolutionView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class TransportSolutionView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
@@ -38,7 +38,7 @@ public class TransportSolutionView extends AppCompatActivity implements Navigati
         // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         // finally change the color
-        window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorStatusBar));
+        window.setStatusBarColor(ContextCompat.getColor(this,R.color.colorStatusBar));
 
         /**graphic toolbar configuration**/
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -87,6 +87,8 @@ public class TransportSolutionView extends AppCompatActivity implements Navigati
         }
         return true;
     }
+
+
 
 
 }

@@ -1,9 +1,11 @@
-package com.example.ago.travlendarandroidclient.model;
+package model;
+
+
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class EventClient implements Serializable{
+public class EventClient implements Serializable {
 
     private Timestamp startDate;
     private Timestamp endDate;
@@ -11,7 +13,7 @@ public class EventClient implements Serializable{
     private float posY;
     private String description;
     private String name;
-    private  boolean endEvent;
+    private boolean endEvent;
 
     public EventClient(Timestamp startDate, Timestamp endDate, float posX, float posY, String description, String name, boolean endEvent) {
         this.startDate = startDate;

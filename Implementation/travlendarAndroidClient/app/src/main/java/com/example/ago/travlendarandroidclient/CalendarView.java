@@ -2,15 +2,12 @@ package com.example.ago.travlendarandroidclient;
 
 import android.graphics.Color;
 import android.graphics.RectF;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 
@@ -29,9 +26,9 @@ import java.util.List;
 import java.util.Locale;
 
 public class CalendarView extends AppCompatActivity implements WeekView.EventClickListener,
-        MonthLoader.MonthChangeListener,
-        WeekView.EventLongPressListener,
-        WeekView.EmptyViewLongPressListener {
+                                                                 MonthLoader.MonthChangeListener,
+                                                                 WeekView.EventLongPressListener,
+                                                                 WeekView.EmptyViewLongPressListener {
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 5;
     private static final int TYPE_WEEK_VIEW = 3;
@@ -66,10 +63,7 @@ public class CalendarView extends AppCompatActivity implements WeekView.EventCli
         // Set long press listener for empty view
         mWeekView.setEmptyViewLongPressListener(this);
 
-        mWeekView.setNumberOfVisibleDays(1);
-        mWeekView.setDefaultEventColor(R.color.colorAccent);
-
-
+        mWeekView.setNumberOfVisibleDays(4);
 
         /**
          * ToolBar Configuration
@@ -80,16 +74,8 @@ public class CalendarView extends AppCompatActivity implements WeekView.EventCli
         myToolbar.setTitleTextColor(getResources().getColor(R.color.toolbar_text));
         myToolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
 
-        /**grsphic status bar configuration**/
-        Window window = this.getWindow();
-        // clear FLAG_TRANSLUCENT_STATUS flag:
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        // finally change the color
-        window.setStatusBarColor(ContextCompat.getColor(this,R.color.colorStatusBar));
-
     }
+
 
 
     private void createEvents() {
@@ -97,15 +83,57 @@ public class CalendarView extends AppCompatActivity implements WeekView.EventCli
     }
 
 
-
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
-        events=UserSettings.fromEventsToWeekViewEvents();
-        return events;
+
+        // Populate the week view with some events.
+        List<WeekViewEvent> Nevents = new ArrayList<WeekViewEvent>();
+
+        Calendar startTime = Calendar.getInstance();
+        startTime.set(Calendar.HOUR_OF_DAY, 3);
+        startTime.set(Calendar.MINUTE, 0);
+        startTime.set(Calendar.MONTH, newMonth-1);
+        startTime.set(Calendar.YEAR, newYear);
+        Calendar endTime = (Calendar) startTime.clone();
+        endTime.add(Calendar.HOUR, 1);
+        endTime.set(Calendar.MONTH, newMonth-1);
+        WeekViewEvent event = new WeekViewEvent(1, "mia5o", startTime, endTime);
+        event.setColor(getResources().getColor(R.color.event_color_01));
+        Nevents.add(event);
+
+        startTime = Calendar.getInstance();
+        startTime.set(Calendar.HOUR_OF_DAY, 3);
+        startTime.set(Calendar.MINUTE, 30);
+        startTime.set(Calendar.MONTH, newMonth-1);
+        startTime.set(Calendar.YEAR, newYear);
+        endTime = (Calendar) startTime.clone();
+        endTime.set(Calendar.HOUR_OF_DAY, 4);
+        endTime.set(Calendar.MINUTE, 30);
+        endTime.set(Calendar.MONTH, newMonth-1);
+        event = new WeekViewEvent(10, "bau", startTime, endTime);
+        event.setColor(getResources().getColor(R.color.event_color_02));
+        Nevents.add(event);
+
+
+        startTime = Calendar.getInstance();
+        startTime.set(Calendar.HOUR_OF_DAY, 0);
+        startTime.set(Calendar.MINUTE, 45);
+        startTime.set(Calendar.MONTH, newMonth-1);
+        startTime.set(Calendar.YEAR, newYear);
+        startTime.set(Calendar.DAY_OF_WEEK,7);
+        endTime = (Calendar) startTime.clone();
+        endTime.set(Calendar.HOUR_OF_DAY, 1);
+        endTime.set(Calendar.MINUTE, 30);
+        endTime.set(Calendar.MONTH, newMonth-1);
+        startTime.set(Calendar.DAY_OF_WEEK,7);
+        event = new WeekViewEvent(10, "bravo cola", startTime, endTime);
+        event.setColor(getResources().getColor(R.color.event_color_03));
+        Nevents.add(event);
+
+        Nevents.addAll(this.events);
+        return  Nevents;
+
     }
-
-
-
 
     @Override
     public void onEmptyViewLongPress(Calendar time) {

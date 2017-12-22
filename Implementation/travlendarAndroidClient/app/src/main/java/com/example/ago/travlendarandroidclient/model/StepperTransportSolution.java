@@ -1,4 +1,4 @@
-package com.example.ago.travlendarandroidclient.modelB;
+package com.example.ago.travlendarandroidclient.model;
 
 import java.util.List;
 

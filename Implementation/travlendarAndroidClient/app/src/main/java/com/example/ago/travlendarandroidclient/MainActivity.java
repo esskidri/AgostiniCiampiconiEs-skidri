@@ -10,8 +10,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import com.example.ago.travlendarandroidclient.serverStub.ServerConnection;
-
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -19,7 +17,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //caricare info utente.
-        //->
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -27,9 +25,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button.setOnClickListener(MainActivity.this);
         final Button request = findViewById(R.id.request);
         request.setOnClickListener(MainActivity.this);
-        final Button transportSolution = findViewById(R.id.button3);
+        final Button transportSolution = findViewById(R.id.transport);
         request.setOnClickListener(MainActivity.this);
-
 
         /**graphic button configuration**/
         button.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -45,21 +42,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         // finally change the color
-        window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorStatusBar));
+        window.setStatusBarColor(ContextCompat.getColor(this,R.color.colorStatusBar));
     }
 
     @Override
     public void onClick(View v) {
-        Intent intentc = new Intent(this, NavigationDrawer.class);
+
         switch (v.getId()) {
-            case R.id.button3:
-                Intent intent = new Intent(this, CalendarView.class);
-                startActivity(intent);
+            case R.id.button:
+                    Intent intent=new Intent(this,CalendarView.class);
+                    startActivity(intent);
                 break;
             case R.id.request:
-                ServerConnection.userInit((long)6,getApplicationContext());
+                Intent intentb=new Intent(this,TransportSolutionView.class);
+                startActivity(intentb);
                 break;
-            case R.id.button:
+            case R.id.transport:
+                Intent intentc=new Intent(this,NavigationDrawer.class);
                 startActivity(intentc);
                 break;
             default:

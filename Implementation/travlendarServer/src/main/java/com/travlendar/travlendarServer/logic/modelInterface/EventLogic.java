@@ -6,8 +6,11 @@ import java.sql.Timestamp;
 
 public interface EventLogic extends Comparable<EventLogic> {
     Coordinates getCoordinates();
+    Coordinates getCurrentHome();
     boolean isEndEvent();
     Timestamp getStartDate();
     Timestamp getEndDate();
     boolean overlapping(EventLogic e);
+    boolean atHome();
+
 }

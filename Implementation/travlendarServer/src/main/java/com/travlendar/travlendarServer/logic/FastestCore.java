@@ -40,7 +40,7 @@ public class FastestCore implements CalculatorCore {
         }
 
         for(String string: meanTypes){
-            googleResponseMappedObjects.add(GoogleAPIHandler.askGoogle(startingLocation, endingLocation, string, arrivalTime));
+            googleResponseMappedObjects.add(GoogleAPIHandler.askGoogle(startingLocation, endingLocation, string, "arrival_time",arrivalTime));
         }
 
 

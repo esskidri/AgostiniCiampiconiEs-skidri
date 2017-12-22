@@ -1,4 +1,4 @@
-package com.example.ago.travlendarandroidclient.modelB;
+package com.example.ago.travlendarandroidclient.model;
 
 import java.sql.Timestamp;
 
@@ -9,4 +9,7 @@ import java.sql.Timestamp;
 public class Event {
     Timestamp startDate;
     Timestamp endDate;
+
+
+
 }

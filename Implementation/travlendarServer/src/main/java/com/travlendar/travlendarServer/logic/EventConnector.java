@@ -19,21 +19,27 @@ public class EventConnector {
     }
 
     public static EventGraph findConnection(List<EventLogic> events){
+        List<EventLogic> eventsWithHome = new ArrayList<>();
         EventGraph eventGraph = new EventGraph(events, new HashMap<>());
+        eventsWithHome.addAll(events);
         for(EventLogic event: events)
             eventGraph.edges().put(event, new ArrayList<>());
 
         int i = 0;
 
         for(EventLogic event: eventGraph.nodes()){
-            if(event.isEndEvent()){
-                insertHomeEvent(eventGraph,event);
+            if(event.isEndEvent() && i != eventGraph.nodes().size() -1){
+                insertHomeEvent(eventGraph, event, eventsWithHome);
             }
             else if(i < eventGraph.nodes().size() - 1)
                 if(event.compareTo(eventGraph.nodes().get(i + 1)) != 0)
                     eventGraph.connect(event, eventGraph.nodes().get(i + 1));
             i++;
         }
+
+        eventGraph.nodes().clear();
+        eventGraph.nodes().addAll(eventsWithHome);
+
 
         for(EventLogic event: eventGraph.nodes()){
             for(EventGraph.Edge edge: eventGraph.edgesFrom(event)){
@@ -47,18 +53,25 @@ public class EventConnector {
         return eventGraph;
     }
 
-    private static void insertHomeEvent(EventGraph eventGraph, EventLogic endEvent){
-        //TODO
+    private static class HomeEvent extends Event{
+        public boolean atHome(){
+            return true;
+        }
     }
 
-    class Home extends Event {
-        //TODO
-        /*@Override
-        public int compareTo(Event e) {
-            if(this.getStartDate().compareTo(e.getStartDate())!= 0)
-                return this.startTime.compareTo(e.startTime);
-            else
-                return this.endTime.compareTo(endTime);
-        }*/
+    private static void insertHomeEvent(EventGraph eventGraph, EventLogic endEvent, List<EventLogic> eventWithHome){
+        Event homeEvent = new HomeEvent();
+        homeEvent.setEndEvent(false);
+
+        //TODO CORRECT
+        homeEvent.setPosX(endEvent.getCoordinates().getLat());
+        homeEvent.setPosY(endEvent.getCoordinates().getLng());
+
+        eventWithHome.add(eventWithHome.indexOf(endEvent) ,homeEvent);
+        eventGraph.edges().put(homeEvent, new ArrayList<>());
+        eventGraph.connect(endEvent, homeEvent);
+        eventGraph.connect(homeEvent, eventWithHome.get(eventWithHome.indexOf(homeEvent) + 1));
+
     }
+
 }

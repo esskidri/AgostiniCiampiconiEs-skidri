@@ -2,6 +2,7 @@ package com.travlendar.travlendarServer.logic;
 
 import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
 import com.travlendar.travlendarServer.logic.util.GoogleResponseMappedObject;
+import com.travlendar.travlendarServer.logic.util.TimeRequest;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
 import org.junit.Test;
 
@@ -14,13 +15,13 @@ import static org.junit.Assert.*;
 
 public class TransportSolutionCalculatorTest extends TransportSolutionCalculator {
     public TransportSolutionCalculatorTest(CalculatorCore calculatorCore) {
-        super(calculatorCore);
+        super(calculatorCore, TimeRequest.ARRIVAL);
     }
 
     @Test
     public void calculateSolution() throws Exception {
         //TODO create UserLogic usable for the test
-        TransportSolutionCalculator transportSolutionCalculator = new TransportSolutionCalculator(new EcologistCore());
+        TransportSolutionCalculator transportSolutionCalculator = new TransportSolutionCalculator(new EcologistCore(), TimeRequest.ARRIVAL);
 
         Class targeClass = TransportSolutionCalculator.class;
         Method methodOrderSegments = targeClass.getDeclaredMethod("orderSegments") ;

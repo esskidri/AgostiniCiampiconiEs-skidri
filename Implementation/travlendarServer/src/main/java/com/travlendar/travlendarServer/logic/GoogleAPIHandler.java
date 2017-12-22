@@ -33,20 +33,19 @@ public class GoogleAPIHandler {
     private static final String ORIGIN = "origin";
     private static final String DESTINATION = "destination";
     private static final String MEANOFTRANSPORT = "mode";
+    private static final String DEPARTURETIME = "departure_time";
     private static final String ARRIVALTIME = "arrival_time";
     private static final String KEY = "key";
     private static final String API_KEY = "AIzaSyClU3xiXoQgD3E_VrESZB8s3nxxm0gecVc";
 
     public static void main(String[] args) {
         //TODO Remove main()
-        System.out.println(constructHttpsUrl("45.5983,8.91425","45.4642,9.18998", "driving", "1513162800"));
-        System.out.println(httpsRequest(constructHttpsUrl("45.5983,8.91425","45.4642,9.18998", "driving", "1513162800")));
+        System.out.println(constructHttpsUrl("Rome","Milan", "transit", ARRIVALTIME,"1513162800"));
+        System.out.println(httpsRequest(constructHttpsUrl("Rome","Milan", "transit", DEPARTURETIME, "1513162800")));
 
         //Testing https request and Google JSON to POJO mapping
         GoogleResponseMappedObject googleResponseMappedObject;
-        googleResponseMappedObject = fromJsonToObject(httpsRequest(constructHttpsUrl("45.5983,8.91425","45.4642,9.18998", "driving", "1513162800")));
-
-        int i = 0;
+        googleResponseMappedObject = fromJsonToObject(httpsRequest(constructHttpsUrl("Via+Celeste+Clericetti,+32,+20133+Milano+MI","Via+delle+Rimembranze,+20068+Peschiera+Borromeo+MI", "transit", ARRIVALTIME,"1513342800000")));
 
     }
 
@@ -57,11 +56,11 @@ public class GoogleAPIHandler {
      * @param origin
      * @param destination
      * @param meanOfTransport
-     * @param arrivalTime
+     * @param time
      * @return
      */
-    public static GoogleResponseMappedObject askGoogle(Coordinates origin, Coordinates destination, MeanOfTransportLogic meanOfTransport, Timestamp arrivalTime){
-        return fromJsonToObject(httpsRequest(constructHttpsUrl(origin.toHttpsFormat(), destination.toHttpsFormat(), meanOfTransport.getTypeOfTransport().toHttpsFormat(), Tools.getSecondsFromTimeStamp(arrivalTime))));
+    public static GoogleResponseMappedObject askGoogle(Coordinates origin, Coordinates destination, MeanOfTransportLogic meanOfTransport, String type, Timestamp time){
+        return fromJsonToObject(httpsRequest(constructHttpsUrl(origin.toHttpsFormat(), destination.toHttpsFormat(), meanOfTransport.getTypeOfTransport().toHttpsFormat(), type,Tools.getSecondsFromTimeStamp(time))));
     }
 
 
@@ -75,8 +74,8 @@ public class GoogleAPIHandler {
      * @param arrivalTime
      * @return
      */
-    public static GoogleResponseMappedObject askGoogle(Coordinates origin, Coordinates destination, String typeOfTransport, Timestamp arrivalTime){
-        return fromJsonToObject(httpsRequest(constructHttpsUrl(origin.toHttpsFormat(), destination.toHttpsFormat(), typeOfTransport, Tools.getSecondsFromTimeStamp(arrivalTime))));
+    public static GoogleResponseMappedObject askGoogle(Coordinates origin, Coordinates destination, String typeOfTransport, String type, Timestamp arrivalTime){
+        return fromJsonToObject(httpsRequest(constructHttpsUrl(origin.toHttpsFormat(), destination.toHttpsFormat(), typeOfTransport, type, Tools.getSecondsFromTimeStamp(arrivalTime))));
     }
 
     private static GoogleResponseMappedObject fromJsonToObject(String jsonString){
@@ -132,11 +131,11 @@ public class GoogleAPIHandler {
      * @param arrivalTime
      * @return
      */
-    private static String constructHttpsUrl(String origin, String destination, String meanOfTransport, String arrivalTime){
+    private static String constructHttpsUrl(String origin, String destination, String meanOfTransport, String time, String arrivalTime){
         return PROTOCOL + GOOGLE_URL + RESPONSE_TYPE +
                 "?" + ORIGIN + EQUAL + origin + SEPARATOR + DESTINATION
                 + EQUAL + destination + SEPARATOR + MEANOFTRANSPORT + EQUAL +
-                meanOfTransport + SEPARATOR + ARRIVALTIME + EQUAL + arrivalTime +
+                meanOfTransport + SEPARATOR + time + EQUAL + arrivalTime +
                 SEPARATOR + KEY + EQUAL + API_KEY;
     }
 }

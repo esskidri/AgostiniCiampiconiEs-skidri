@@ -1,4 +1,7 @@
-package com.example.ago.travlendarandroidclient.modelB;
+package com.example.ago.travlendarandroidclient.model;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ago on 16/12/2017.
@@ -26,6 +29,7 @@ public class TransportSegmentClient implements StepperTransportSegment {
     public void setAdressA(String adressA) {
         AdressA = adressA;
     }
+
 
 
     public void setAdressB(String adressB) {
@@ -70,7 +74,6 @@ public class TransportSegmentClient implements StepperTransportSegment {
     public String getAdressA() {
         return this.AdressA;
     }
-
     @Override
     public String getAdressB() {
         return this.AdressB;
@@ -96,7 +99,7 @@ public class TransportSegmentClient implements StepperTransportSegment {
         return this.duration;
     }
 
-    public TransportSegmentClient(int num, String name, String adressA, String adressB, String distance, String cost, String mean, int Duration) {
+    public TransportSegmentClient(int num, String name, String adressA, String adressB, String distance, String cost, String mean,int Duration) {
         this.num = num;
         this.name = name;
         AdressA = adressA;
@@ -104,6 +107,6 @@ public class TransportSegmentClient implements StepperTransportSegment {
         this.distance = distance;
         this.cost = cost;
         this.mean = mean;
-        this.duration = Duration;
+        this.duration=Duration;
     }
 }
