@@ -60,9 +60,9 @@ public class TransportSegment extends AbstractEntity implements Serializable,Tra
     @Column(name="duration")
     private long duration;
 
-    //TODO add to DB
+    @Column(name = "departure_time")
     private Timestamp departureTime;
-
+    @Column(name = "arrival_time")
     private Timestamp arrivalTime;
 
     public TransportSegment(){
@@ -233,4 +233,6 @@ public class TransportSegment extends AbstractEntity implements Serializable,Tra
     public void setArrivalTime(Timestamp arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
+
+
 }

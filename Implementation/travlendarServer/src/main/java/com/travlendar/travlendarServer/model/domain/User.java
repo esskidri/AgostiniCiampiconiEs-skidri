@@ -60,9 +60,11 @@ public class User extends AbstractEntity implements UserLogic {
     @OneToMany(mappedBy = "user")
     private List<Event> events;
 
-    //TODO add coordinates field in the domain to save user preferences for Home
-    private float homeX;
-    private float homeY;
+    @Column(name="home_x")
+    private Float homeX;
+
+    @Column(name="home_y")
+    private Float homeY;
 
 
     public User() { }
@@ -195,19 +197,19 @@ public class User extends AbstractEntity implements UserLogic {
         this.events = events;
     }
 
-    public float getHomeX() {
+    public Float getHomeX() {
         return homeX;
     }
 
-    public void setHomeX(float homeX) {
+    public void setHomeX(Float homeX) {
         this.homeX = homeX;
     }
 
-    public float getHomeY() {
+    public Float getHomeY() {
         return homeY;
     }
 
-    public void setHomeY(float homeY) {
+    public void setHomeY(Float homeY) {
         this.homeY = homeY;
     }
 
@@ -261,5 +263,7 @@ public class User extends AbstractEntity implements UserLogic {
                 privateTransportsClient, userpublicTransportsClient);
         return userClient;
     }
+
+
 
 }
