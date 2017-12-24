@@ -5,6 +5,11 @@ package com.travlendar.travlendarServer.controller.dataManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.travlendar.travlendarServer.controller.Exception.DataEntryException;
+import com.travlendar.travlendarServer.logic.MainLogic;
+import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
+import com.travlendar.travlendarServer.logic.modelInterface.TransportSegmentLogic;
+import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLogic;
+import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.model.enumModel.MeanType;
 import com.travlendar.travlendarServer.model.clientModel.EventClient;
 import com.travlendar.travlendarServer.model.clientModel.FreeTimeClient;
@@ -21,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Request Handler is responsible to manage and process the external request,for each request mapping we return a
@@ -45,6 +51,8 @@ public class RequestHandler {
     private EventDao eventDao;
     @Autowired
     private GreenDao greenDao;
+    @Autowired
+    private TransportSolutionDao transportSolutionDao;
 
 
 
@@ -95,6 +103,19 @@ public class RequestHandler {
             //create the event
             Event e=new Event(u,startDate,endDate,posX,posY,description,name,endEvent);
             eventDao.customSave(e);
+            ArrayList<EventLogic> listEventLogic = new ArrayList<>();
+            //Oracle engineer don't know how to do that
+            listEventLogic.addAll(u.getEvents());
+            //get the transport solution
+            List<TransportSolutionLogic> ouputSol = MainLogic.calculateTransportSolutions(listEventLogic,u);
+            Event startEvent= eventDao.findOne((long) 78);
+            ArrayList<TransportSolution> ts = new ArrayList<>();
+            for (TransportSolutionLogic tl: ouputSol) {
+                ts.add((TransportSolution)tl);
+            }
+            startEvent.setTransportSolutions(ts);
+            eventDao.save(startEvent);
+            r.setMessage("success");
         }catch(DataEntryException e1){
             r.setMessage(e1.getMessage());
         }catch(Exception e2){
@@ -102,6 +123,34 @@ public class RequestHandler {
         }
         return r;
     }
+
+    @RequestMapping("/replan")
+    @ResponseBody
+    public Response replan(@RequestParam("user_id") Long userId) {
+        Response r=new Response("ok");
+        try{
+            //fetch the user
+            User u=userDao.findOne(userId);
+            ArrayList<EventLogic> listEventLogic = new ArrayList<>();
+            //Oracle engineer don't know how to do that
+            listEventLogic.addAll(u.getEvents());
+            //get the transport solution
+            List<TransportSolutionLogic> ouputSol = MainLogic.calculateTransportSolutions(listEventLogic,u);
+            //ArrayList<TransportSolution> ts = new ArrayList<>();
+            for (TransportSolutionLogic tl: ouputSol) {
+               TransportSolution transportSolution =(TransportSolution) tl;
+               transportSolutionDao.save(transportSolution);
+            }
+
+
+            r.setMessage("success");
+        }catch(Exception e2){
+            r.setMessage("fail: "+e2.getMessage());
+        }
+        return r;
+    }
+
+
 
 
     @RequestMapping("/delete-event")

@@ -22,7 +22,7 @@ public class MainLogic {
      * @param user User interface that have the event in the calendar, this parameter is useful to query the user preferences
      * @return
      */
-    public List<TransportSolutionLogic> calculateTransportSolutions(List<EventLogic> events, UserLogic user){
+    public static List<TransportSolutionLogic> calculateTransportSolutions(List<EventLogic> events, UserLogic user){
         EventGraph eventGraph = EventConnector.findConnection(events);
         List<TransportSolutionLogic> transportSolutions = new ArrayList<>();
         TransportSolutionLogic transportSolutionLogic;
