@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acb37b11-ae1f-4a3c-9498-6dca6782a699" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/travlendar/travlendarServer/logic/EventConnector.class" afterPath="$PROJECT_DIR$/target/classes/com/travlendar/travlendarServer/logic/EventConnector.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/EventConnector.java" afterPath="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/EventConnector.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/TransportSolutionCalculator.java" afterPath="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/TransportSolutionCalculator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/modelInterface/TransportSegmentLogic.java" afterPath="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/modelInterface/TransportSegmentLogic.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/domain/TransportSegment.java" afterPath="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/domain/TransportSegment.java" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="C:\Users\Lorenzo\Documents\GitHub\AgostiniCiampiconiEs-skidri\Implementation\travlendarServer\.idea\shelf/" />
@@ -154,44 +155,27 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TransportSolutionCalculator.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TransportSolutionCalculator.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/TransportSolutionCalculator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1261">
-              <caret line="94" column="17" lean-forward="false" selection-start-line="94" selection-start-column="17" selection-end-line="94" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TransportSegment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/domain/TransportSegment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="840">
-              <caret line="29" column="5" lean-forward="true" selection-start-line="29" selection-start-column="5" selection-end-line="29" selection-end-column="5" />
+            <state relative-caret-position="6760">
+              <caret line="237" column="0" lean-forward="false" selection-start-line="237" selection-start-column="0" selection-end-line="237" selection-end-column="0" />
               <folding>
-                <element signature="e#6103#6104#0" expanded="true" />
-                <element signature="e#6139#6140#0" expanded="true" />
+                <element signature="method#orderSegments#0;class#TransportSolutionCalculator#0" expanded="false" />
+                <element signature="method#getLocationByExternalAPI#0;class#TransportSolutionCalculator#0" expanded="false" />
+                <element signature="method#callGoogleAPI#0;class#TransportSolutionCalculator#0" expanded="false" />
+                <element signature="method#isMeanAvailablePrivately#0;class#TransportSolutionCalculator#0" expanded="false" />
+                <element signature="method#getTime#0;class#TransportSolutionCalculator#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="560">
-              <caret line="14" column="59" lean-forward="true" selection-start-line="14" selection-start-column="59" selection-end-line="14" selection-end-column="59" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EventConnector.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="EventConnector.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/EventConnector.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
-              <caret line="63" column="37" lean-forward="false" selection-start-line="63" selection-start-column="37" selection-end-line="63" selection-end-column="37" />
+            <state relative-caret-position="480">
+              <caret line="28" column="0" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -300,7 +284,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/TypeOfTransport.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/TypeOfTransport.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/modelInterface/MeanOfTransportLogic.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/modelInterface/TransportSegmentLogic.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/googleJsonSubClass/Bounds.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/googleJsonSubClass/GeocodedWaypoint.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/util/googleJsonSubClass/InfoPair.java" />
@@ -326,7 +309,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/modelInterface/EventLogic.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/domain/Event.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/controller/UserController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/domain/TransportSegment.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/domain/TransportSolution.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/modelInterface/TransportSolutionLogic.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/exceptions/LateArriveException.java" />
@@ -341,8 +323,10 @@
         <option value="$PROJECT_DIR$/src/test/java/com/travlendar/travlendarServer/logic/util/GoogleResponseMappedObjectTest.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/MeanType.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/TransportSolutionCalculator.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/EventConnector.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/modelInterface/TransportSegmentLogic.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/domain/TransportSegment.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/TransportSolutionCalculator.java" />
       </list>
     </option>
   </component>
@@ -1253,7 +1237,7 @@
       <workItem from="1513879875626" duration="125000" />
       <workItem from="1513883853354" duration="589000" />
       <workItem from="1513884635985" duration="513000" />
-      <workItem from="1513940726917" duration="3060000" />
+      <workItem from="1513940726917" duration="4134000" />
     </task>
     <task id="LOCAL-00001" summary="First connection between Logic and Data modules try">
       <created>1512749678214</created>
@@ -1381,7 +1365,14 @@
       <option name="project" value="LOCAL" />
       <updated>1513520914783</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Correct home position">
+      <created>1514141349641</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1514141349641</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1417,7 +1408,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="178621000" />
+    <option name="totallyTimeSpent" value="179695000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1540,7 +1531,8 @@
     <MESSAGE value="Local correction" />
     <MESSAGE value="Return eventClient.Json to client" />
     <MESSAGE value="Correction to tests, Extending google interrogation with departure time" />
-    <option name="LAST_COMMIT_MESSAGE" value="Correction to tests, Extending google interrogation with departure time" />
+    <MESSAGE value="Correct home position" />
+    <option name="LAST_COMMIT_MESSAGE" value="Correct home position" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1586,13 +1578,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/CheapestCore.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="11" column="182" lean-forward="false" selection-start-line="11" selection-start-column="182" selection-end-line="11" selection-end-column="182" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/EcologistCore.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
@@ -2058,17 +2043,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/domain/TransportSegment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="29" column="5" lean-forward="true" selection-start-line="29" selection-start-column="5" selection-end-line="29" selection-end-column="5" />
-          <folding>
-            <element signature="e#6103#6104#0" expanded="true" />
-            <element signature="e#6139#6140#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="560">
@@ -2093,14 +2067,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/TransportSolutionCalculator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1261">
-          <caret line="94" column="17" lean-forward="false" selection-start-line="94" selection-start-column="17" selection-end-line="94" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/MainLogic.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1120">
@@ -2111,9 +2077,44 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/EventConnector.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="63" column="37" lean-forward="false" selection-start-line="63" selection-start-column="37" selection-end-line="63" selection-end-column="37" />
+        <state relative-caret-position="480">
+          <caret line="28" column="0" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/model/domain/TransportSegment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="161" column="27" lean-forward="false" selection-start-line="161" selection-start-column="27" selection-end-line="161" selection-end-column="27" />
+          <folding>
+            <element signature="e#4519#4520#0" expanded="true" />
+            <element signature="e#4563#4564#0" expanded="true" />
+            <element signature="e#6203#6204#0" expanded="true" />
+            <element signature="e#6239#6240#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/modelInterface/TransportSegmentLogic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="560">
+          <caret line="14" column="30" lean-forward="false" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/travlendar/travlendarServer/logic/TransportSolutionCalculator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6760">
+          <caret line="237" column="0" lean-forward="false" selection-start-line="237" selection-start-column="0" selection-end-line="237" selection-end-column="0" />
+          <folding>
+            <element signature="method#orderSegments#0;class#TransportSolutionCalculator#0" expanded="false" />
+            <element signature="method#getLocationByExternalAPI#0;class#TransportSolutionCalculator#0" expanded="false" />
+            <element signature="method#callGoogleAPI#0;class#TransportSolutionCalculator#0" expanded="false" />
+            <element signature="method#isMeanAvailablePrivately#0;class#TransportSolutionCalculator#0" expanded="false" />
+            <element signature="method#getTime#0;class#TransportSolutionCalculator#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
