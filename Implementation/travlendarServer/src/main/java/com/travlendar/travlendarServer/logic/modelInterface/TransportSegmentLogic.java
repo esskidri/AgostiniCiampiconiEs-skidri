@@ -12,4 +12,5 @@ public interface TransportSegmentLogic {
     void setDescription(String description);
     void setDuration(long duration);
     void setDistance(long distance);
+    void setOrder(int numOrder);
 }

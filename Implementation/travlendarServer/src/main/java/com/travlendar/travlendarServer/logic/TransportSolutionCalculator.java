@@ -45,7 +45,7 @@ public class TransportSolutionCalculator {
 
         TransportSolutionLogic transportSolution = new TransportSolution();
 
-        //orderSegments();
+        orderSegments();
 
         transportSolution.setTransportSegmentsByLogic(transportSegments);
 
@@ -159,7 +159,16 @@ public class TransportSolutionCalculator {
      * Reorder the transport solution's segments making them adiacent
      */
     private void orderSegments() {
+        //insert numOrder for the db
         int i = 0;
+        for(TransportSegmentLogic transportSegment: transportSegments){
+            transportSegment.setOrder(i);
+            i++;
+        }
+
+
+
+        /*int i = 0;
         int j = 1;
 
 
@@ -187,7 +196,7 @@ public class TransportSolutionCalculator {
                 j = transportSegments.size();
             }
             j--;
-        }
+        } */
     }
 
 

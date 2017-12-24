@@ -157,6 +157,11 @@ public class TransportSegment extends AbstractEntity implements Serializable,Tra
         this.distance = distance;
     }
 
+    @Override
+    public void setOrder(int numOrder) {
+        setNumOrder((long) numOrder);
+    }
+
     public String getDescription() {
         return description;
     }
