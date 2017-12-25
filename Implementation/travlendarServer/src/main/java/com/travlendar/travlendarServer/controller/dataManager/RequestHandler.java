@@ -53,6 +53,8 @@ public class RequestHandler {
     private GreenDao greenDao;
     @Autowired
     private TransportSolutionDao transportSolutionDao;
+    @Autowired
+    private TransportSegmentDao transportSegmentDao;
 
 
 
@@ -92,7 +94,7 @@ public class RequestHandler {
     }
     @RequestMapping("/add-event")
     @ResponseBody
-    public Response addEvent(@RequestParam("user_id") Long userId, @RequestParam("start_date") Timestamp startDate,
+    public String addEvent(@RequestParam("user_id") Long userId, @RequestParam("start_date") Timestamp startDate,
                              @RequestParam("end_date")Timestamp endDate,@RequestParam("pos_x") Float posX,
                              @RequestParam("pos_y") Float posY,@RequestParam("description") String description,
                              @RequestParam("name") String name,@RequestParam("end_event")Boolean endEvent) {
@@ -103,25 +105,14 @@ public class RequestHandler {
             //create the event
             Event e=new Event(u,startDate,endDate,posX,posY,description,name,endEvent);
             eventDao.customSave(e);
-            ArrayList<EventLogic> listEventLogic = new ArrayList<>();
-            //Oracle engineer don't know how to do that
-            listEventLogic.addAll(u.getEvents());
-            //get the transport solution
-            List<TransportSolutionLogic> ouputSol = MainLogic.calculateTransportSolutions(listEventLogic,u);
-            Event startEvent= eventDao.findOne((long) 78);
-            ArrayList<TransportSolution> ts = new ArrayList<>();
-            for (TransportSolutionLogic tl: ouputSol) {
-                ts.add((TransportSolution)tl);
-            }
-            startEvent.setTransportSolutions(ts);
-            eventDao.save(startEvent);
-            r.setMessage("success");
+            r.setMessage("event added into DB");
+            //replan(u.getId());
         }catch(DataEntryException e1){
-            r.setMessage(e1.getMessage());
+            r.setMessage("fail: "+e1.getMessage());
         }catch(Exception e2){
             r.setMessage("fail: "+e2.getMessage());
         }
-        return r;
+        return r.getMessage();
     }
 
     @RequestMapping("/replan")
@@ -135,19 +126,38 @@ public class RequestHandler {
             //Oracle engineer don't know how to do that
             listEventLogic.addAll(u.getEvents());
             //get the transport solution
-            List<TransportSolutionLogic> ouputSol = MainLogic.calculateTransportSolutions(listEventLogic,u);
-            //ArrayList<TransportSolution> ts = new ArrayList<>();
-            for (TransportSolutionLogic tl: ouputSol) {
-               TransportSolution transportSolution =(TransportSolution) tl;
-               transportSolutionDao.save(transportSolution);
-            }
-
-
-            r.setMessage("success");
+            List<TransportSolutionLogic> outputSol = MainLogic.calculateTransportSolutions(listEventLogic,u);
+            saveTransportSolutionLogic(outputSol);
+             r.setMessage("success");
         }catch(Exception e2){
             r.setMessage("fail: "+e2.getMessage());
         }
         return r;
+    }
+
+    private void saveTransportSolutionLogic(List<TransportSolutionLogic> tsl){
+        List<TransportSolution> transportSolutions=new ArrayList<>();
+        int i=0;
+        //compose and save transport solutions
+        for (TransportSolutionLogic x:tsl){
+            transportSolutions.add((TransportSolution)x);
+            TransportSolutionId tsID=new TransportSolutionId(transportSolutions.get(i).getEvent1().getId(),
+                    transportSolutions.get(i).getEvent2().getId());
+            transportSolutions.get(i).setTransportSolutionId(tsID);
+            i++;
+        }
+        transportSolutionDao.save(transportSolutions);
+        //compose and save transport segments
+        for(TransportSolution t:transportSolutions) {
+            int segmentOrder=0;
+            for(TransportSegment transportSegment:t.getTransportSegments()){
+                TransportSegmentId transportSegmentId=new TransportSegmentId(segmentOrder,t.getEvent1().getId(),
+                        t.getEvent2().getId());
+                transportSegment.setTransportSegmentId(transportSegmentId);
+                transportSegmentDao.save(transportSegment);
+                segmentOrder++;
+            }
+        }
     }
 
 
