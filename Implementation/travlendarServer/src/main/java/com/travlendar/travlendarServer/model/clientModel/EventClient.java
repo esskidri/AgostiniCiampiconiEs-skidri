@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 
 public class EventClient implements Serializable{
 
+    private long id;
     private Timestamp startDate;
     private Timestamp endDate;
     private float posX;
@@ -12,6 +13,17 @@ public class EventClient implements Serializable{
     private String description;
     private String name;
     private  boolean endEvent;
+
+    public EventClient(long id, Timestamp startDate, Timestamp endDate, float posX, float posY, String description, String name, boolean endEvent) {
+        this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.posX = posX;
+        this.posY = posY;
+        this.description = description;
+        this.name = name;
+        this.endEvent = endEvent;
+    }
 
     public EventClient(Timestamp startDate, Timestamp endDate, float posX, float posY, String description, String name, boolean endEvent) {
         this.startDate = startDate;
@@ -21,6 +33,14 @@ public class EventClient implements Serializable{
         this.description = description;
         this.name = name;
         this.endEvent = endEvent;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Timestamp getStartDate() {
