@@ -3,6 +3,7 @@ package com.travlendar.travlendarServer.logic;
 import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.logic.util.GoogleResponseMappedObject;
+import com.travlendar.travlendarServer.logic.util.TimeRequest;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
 
 import java.sql.Timestamp;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class FastestCore implements CalculatorCore {
     private List<String> meanTypes = new ArrayList<>();
-    private List<MeanOfTransportLogic> meanOfTransportLogics;
+    private List<MeanOfTransportLogic> meanOfTransportLogics = new ArrayList<>();
 
     /**
      *
@@ -21,7 +22,7 @@ public class FastestCore implements CalculatorCore {
      * The list of google response is re-ordered by time duration
      * Then the mean of transport are ordered by the travel mode list obtained by Google
      *
-     * @param userLogic user interface from which query the user preferences
+     * @param meansOfTransport
      * @param startingLocation Coordinates of the starting location
      * @param endingLocation Coordinates of the ending location
      * @param startingTime TimeStamp of the starting time
@@ -29,18 +30,19 @@ public class FastestCore implements CalculatorCore {
      * @return
      */
     @Override
-    public List<MeanOfTransportLogic> getMeanOfTransports(UserLogic userLogic, Coordinates startingLocation, Coordinates endingLocation, Timestamp startingTime, Timestamp arrivalTime) {
+    public List<MeanOfTransportLogic> getMeanOfTransports(List<MeanOfTransportLogic> meansOfTransport, Coordinates startingLocation, Coordinates endingLocation, Timestamp startingTime, Timestamp arrivalTime, TimeRequest timeRequest) {
         List<GoogleResponseMappedObject> googleResponseMappedObjects = new ArrayList<>();
-        meanOfTransportLogics = userLogic.getMeanPreferences();
+        meanOfTransportLogics.addAll(meansOfTransport);
 
-        for(MeanOfTransportLogic meanOfTransportLogic: userLogic.getMeanPreferences()){
+        for(MeanOfTransportLogic meanOfTransportLogic: meansOfTransport){
             if(!meanTypes.contains(meanOfTransportLogic.getTypeOfTransport().toHttpsFormat())){
                 meanTypes.add(meanOfTransportLogic.getTypeOfTransport().toHttpsFormat());
             }
         }
 
         for(String string: meanTypes){
-            googleResponseMappedObjects.add(GoogleAPIHandler.askGoogle(startingLocation, endingLocation, string, "arrival_time",arrivalTime));
+            //TODO get arrival or departure time
+            googleResponseMappedObjects.add(GoogleAPIHandler.askGoogle(startingLocation, endingLocation, string, timeRequest.toHttpsFormat() ,arrivalTime));
         }
 
 

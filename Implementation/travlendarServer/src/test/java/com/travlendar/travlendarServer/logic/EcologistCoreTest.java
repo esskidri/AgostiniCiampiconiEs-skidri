@@ -17,7 +17,7 @@ public class EcologistCoreTest {
         UserLogic userLogic = UserTest.createUser();
         List<MeanOfTransportLogic> userOrder = userLogic.getMeanPreferences();
 
-        List<MeanOfTransportLogic> meanOfTransportLogics = ecologistCore.getMeanOfTransports(userLogic, null, null, null, null);
+        List<MeanOfTransportLogic> meanOfTransportLogics = ecologistCore.getMeanOfTransports(userOrder, null, null, null, null, null);
 
         int i = 0;
         for(MeanOfTransportLogic meanOfTransportLogic: meanOfTransportLogics){

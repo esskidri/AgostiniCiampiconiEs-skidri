@@ -1,6 +1,7 @@
 package com.travlendar.travlendarServer.logic;
 
 import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
+import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.logic.util.EventGraph;
@@ -27,29 +28,49 @@ public class MainLogic {
         List<TransportSolutionLogic> transportSolutions = new ArrayList<>();
         TransportSolutionLogic transportSolutionLogic;
         Timestamp arrivalAtHome = null;
+        List<MeanOfTransportLogic> meansOfTransport = user.getMeanPreferences();
+        List<MeanOfTransportLogic> meansOfTransportForSolution;
 
         for(EventLogic outGoing: events){
             for(EventLogic inGoing: eventGraph.edges().get(outGoing)) {
                 if(inGoing.atHome()){
                     if(eventGraph.edges().get(inGoing).size() != 0);
+                    //TODO correct
                         EventLogic eventAfter = eventGraph.edges().get(inGoing).get(0);
-                    transportSolutionLogic = (new TransportSolutionCalculator(user.getPolicy().getCore(), TimeRequest.DEPARTURE)).calculateSolution(outGoing.getCoordinates(), inGoing.getCoordinates(), outGoing.getEndDate(), eventAfter.getStartDate(), user);
+                    meansOfTransportForSolution = user.getPolicy().getCore().getMeanOfTransports(meansOfTransport, outGoing.getCoordinates(), inGoing.getCoordinates(), outGoing.getEndDate(), eventAfter.getStartDate(), TimeRequest.DEPARTURE);
+                    transportSolutionLogic = (new TransportSolutionCalculator(TimeRequest.DEPARTURE)).calculateSolution(outGoing.getCoordinates(), inGoing.getCoordinates(), outGoing.getEndDate(), eventAfter.getStartDate(), meansOfTransportForSolution);
                     arrivalAtHome = transportSolutionLogic.getArrivalTime();
                 }
                 if(outGoing.atHome()) {
                     //I assume that this algorithm is never asked to calculate solution from a home event when before
                     //it didn't calculate solution to reach home, this is granted by the structure and the behave of
                     // event connector
-                    transportSolutionLogic = (new TransportSolutionCalculator(user.getPolicy().getCore(), TimeRequest.ARRIVAL)).calculateSolution(outGoing.getCoordinates(), inGoing.getCoordinates(), arrivalAtHome, inGoing.getStartDate(), user);
+                    meansOfTransportForSolution = user.getPolicy().getCore().getMeanOfTransports(meansOfTransport, outGoing.getCoordinates(), inGoing.getCoordinates(), arrivalAtHome, inGoing.getStartDate(), TimeRequest.ARRIVAL);
+                    transportSolutionLogic = (new TransportSolutionCalculator(TimeRequest.ARRIVAL)).calculateSolution(outGoing.getCoordinates(), inGoing.getCoordinates(), arrivalAtHome, inGoing.getStartDate(), meansOfTransportForSolution);
                 }
                 else{
-                    transportSolutionLogic = (new TransportSolutionCalculator(user.getPolicy().getCore(), TimeRequest.ARRIVAL)).calculateSolution(outGoing.getCoordinates(), inGoing.getCoordinates(), outGoing.getEndDate(), inGoing.getStartDate(), user);
+                    meansOfTransportForSolution = user.getPolicy().getCore().getMeanOfTransports(meansOfTransport, outGoing.getCoordinates(), inGoing.getCoordinates(), outGoing.getEndDate(), inGoing.getStartDate(), TimeRequest.ARRIVAL);
+                    transportSolutionLogic = (new TransportSolutionCalculator(TimeRequest.ARRIVAL)).calculateSolution(outGoing.getCoordinates(), inGoing.getCoordinates(), outGoing.getEndDate(), inGoing.getStartDate(), meansOfTransportForSolution);
                 }
                 transportSolutionLogic.setStartEvent(outGoing);
                 transportSolutionLogic.setEndEvent(inGoing);
+                setMeansOfTransport(transportSolutionLogic, meansOfTransport, user);
                 transportSolutions.add(transportSolutionLogic);
             }
         }
         return transportSolutions;
+    }
+
+    private void setMeansOfTransport(TransportSolutionLogic transportSolutionLogic, List<MeanOfTransportLogic> meansOfTransport, UserLogic user) {
+        List<MeanOfTransportLogic> readList = new ArrayList<>();
+        readList.addAll(meansOfTransport);
+
+        if(transportSolutionLogic.getEndEvent().atHome())
+            meansOfTransport = user.getMeanPreferences();
+        else{
+            for(MeanOfTransportLogic meanOfTransportLogic: readList)
+                if(meanOfTransportLogic.isPrivate() && !transportSolutionLogic.getPrivateMeansUsed().contains(meanOfTransportLogic))
+                    meansOfTransport.remove(meanOfTransportLogic);
+        }
     }
 }

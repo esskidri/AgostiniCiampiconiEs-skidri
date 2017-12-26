@@ -2,6 +2,7 @@ package com.travlendar.travlendarServer.model.domain;
 
 
 import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
+import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.TransportSegmentLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLogic;
 
@@ -102,7 +103,28 @@ public class TransportSolution extends AbstractEntity implements Serializable, T
     }
 
     @Override
+    public EventLogic getStartEvent() {
+        return event1;
+    }
+
+    @Override
+    public EventLogic getEndEvent() {
+        return event2;
+    }
+
+    @Override
     public Timestamp getArrivalTime(){
         return transportSegments.get(transportSegments.size()).getArrivalTime();
+    }
+
+    @Override
+    public List<MeanOfTransportLogic> getPrivateMeansUsed() {
+        List<MeanOfTransportLogic> meansOfTransportUsed = new ArrayList<>();
+        for(TransportSegment transportSegment: transportSegments){
+            if(transportSegment.getPrivateTransport() != null && !meansOfTransportUsed.contains(transportSegment.getPrivateTransport()))
+                meansOfTransportUsed.add(transportSegment.getPrivateTransport());
+        }
+
+        return meansOfTransportUsed;
     }
 }

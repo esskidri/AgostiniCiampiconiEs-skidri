@@ -173,10 +173,12 @@ public class UserController {
        MainLogic mainLogic=new MainLogic();
        List<EventLogic> eventLogics=new ArrayList<>();
 
-       Event e1=eventDao.findOne((long)31);
-       Event e2=eventDao.findOne((long)32);
+       Event e1=eventDao.findOne((long)78);
+       Event e2=eventDao.findOne((long)79);
+       Event e3=eventDao.findOne((long)80);
        eventLogics.add(e1);
        eventLogics.add(e2);
+       eventLogics.add(e3);
        //computation
        List<TransportSolutionLogic> tsl=mainLogic.calculateTransportSolutions(eventLogics,user);
        //save

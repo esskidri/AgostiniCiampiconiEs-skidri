@@ -15,13 +15,13 @@ import static org.junit.Assert.*;
 
 public class TransportSolutionCalculatorTest extends TransportSolutionCalculator {
     public TransportSolutionCalculatorTest(CalculatorCore calculatorCore) {
-        super(calculatorCore, TimeRequest.ARRIVAL);
+        super(TimeRequest.ARRIVAL);
     }
 
     @Test
     public void calculateSolution() throws Exception {
         //TODO create UserLogic usable for the test
-        TransportSolutionCalculator transportSolutionCalculator = new TransportSolutionCalculator(new EcologistCore(), TimeRequest.ARRIVAL);
+        TransportSolutionCalculator transportSolutionCalculator = new TransportSolutionCalculator(TimeRequest.ARRIVAL);
 
         Class targeClass = TransportSolutionCalculator.class;
         Method methodOrderSegments = targeClass.getDeclaredMethod("orderSegments") ;

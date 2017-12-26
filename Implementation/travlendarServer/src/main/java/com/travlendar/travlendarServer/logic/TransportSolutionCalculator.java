@@ -18,18 +18,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransportSolutionCalculator {
-    private CalculatorCore calculatorCore;
     private List<TransportSegmentLogic> transportSegments = new ArrayList<>();
     private List<MeanOfTransportLogic> meansOfTransport;
     private TimeRequest typeOfMoment;
 
-    public TransportSolutionCalculator(CalculatorCore calculatorCore, TimeRequest moment) {
-        this.calculatorCore = calculatorCore;
+    public TransportSolutionCalculator(TimeRequest moment) {
         typeOfMoment = moment;
     }
 
-    public TransportSolutionLogic calculateSolution(Coordinates startingLocation, Coordinates endingLocation, Timestamp startingTime, Timestamp arrivalTime, UserLogic userLogic) {
-        this.meansOfTransport = calculatorCore.getMeanOfTransports(userLogic, startingLocation, endingLocation, startingTime, arrivalTime);
+    public TransportSolutionLogic calculateSolution(Coordinates startingLocation, Coordinates endingLocation, Timestamp startingTime, Timestamp arrivalTime, List<MeanOfTransportLogic> meansOfTransport ) {
+        this.meansOfTransport = meansOfTransport;
 
         try {
             calculateSegment(startingLocation, endingLocation, startingTime, arrivalTime, meansOfTransport, transportSegments);

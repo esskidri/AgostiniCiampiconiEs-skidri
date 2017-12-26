@@ -7,5 +7,8 @@ public interface TransportSolutionLogic {
     void setTransportSegmentsByLogic(List<TransportSegmentLogic> transportSegmentsLogic);
     void setStartEvent(EventLogic event);
     void setEndEvent(EventLogic event);
+    EventLogic getStartEvent();
+    EventLogic getEndEvent();
     Timestamp getArrivalTime();
+    List<MeanOfTransportLogic> getPrivateMeansUsed();
 }
