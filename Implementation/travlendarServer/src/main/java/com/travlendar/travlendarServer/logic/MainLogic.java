@@ -61,7 +61,7 @@ public class MainLogic {
         return transportSolutions;
     }
 
-    private void setMeansOfTransport(TransportSolutionLogic transportSolutionLogic, List<MeanOfTransportLogic> meansOfTransport, UserLogic user) {
+    private static void setMeansOfTransport(TransportSolutionLogic transportSolutionLogic, List<MeanOfTransportLogic> meansOfTransport, UserLogic user) {
         List<MeanOfTransportLogic> readList = new ArrayList<>();
         readList.addAll(meansOfTransport);
 

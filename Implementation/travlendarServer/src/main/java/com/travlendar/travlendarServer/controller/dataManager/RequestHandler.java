@@ -7,9 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.travlendar.travlendarServer.controller.Exception.DataEntryException;
 import com.travlendar.travlendarServer.logic.MainLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
-import com.travlendar.travlendarServer.logic.modelInterface.TransportSegmentLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLogic;
-import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.model.enumModel.MeanType;
 import com.travlendar.travlendarServer.model.clientModel.EventClient;
 import com.travlendar.travlendarServer.model.clientModel.FreeTimeClient;
@@ -78,10 +76,10 @@ public class RequestHandler {
 
     @RequestMapping("/get-user")
     @ResponseBody
-    public String getEvent(@RequestParam("user_id") Long userId) {
+    public String getEvent(@RequestParam("email") String email) {
         Response r=new Response("ok");
         try{
-            User u=userDao.findOne(userId);
+            User u=userDao.findByEmail(email);
             UserClient userClient= u.getUserClient();
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String jsonInString = gson.toJson(userClient);
@@ -106,7 +104,7 @@ public class RequestHandler {
             Event e=new Event(u,startDate,endDate,posX,posY,description,name,endEvent);
             eventDao.customSave(e);
             r.setMessage("event added into DB");
-            //replan(u.getId());
+            replan(u.getId());
         }catch(DataEntryException e1){
             r.setMessage("fail: "+e1.getMessage());
         }catch(Exception e2){
@@ -128,7 +126,7 @@ public class RequestHandler {
             //get the transport solution
             List<TransportSolutionLogic> outputSol = MainLogic.calculateTransportSolutions(listEventLogic,u);
             saveTransportSolutionLogic(outputSol);
-             r.setMessage("success");
+            r.setMessage("success");
         }catch(Exception e2){
             r.setMessage("fail: "+e2.getMessage());
         }
@@ -165,24 +163,25 @@ public class RequestHandler {
 
     @RequestMapping("/delete-event")
     @ResponseBody
-    public Response deleteEvent(@RequestParam("user_id")Long userId,@RequestParam("event_id")Long eventId) {
+    public String deleteEvent(@RequestParam("user_id")Long userId,@RequestParam("event_id")Long eventId) {
         Response r=new Response("ok");
         try{
             User u=userDao.findOne(userId);
             Event e=eventDao.findOne(eventId);
             eventDao.customDelete(e,u);
+            r.setMessage("event deleted");
         }catch(DataEntryException e1){
             r.setMessage(e1.getMessage());
         }catch(Exception e2){
             r.setMessage("fail: "+e2.getMessage());
         }
-        return r;
+        return r.getMessage();
     }
 
 
     @RequestMapping("/update-event")
     @ResponseBody
-    public Response updateEvent(@RequestParam("user_id") Long userId,@RequestParam("event_id")Long eventId,
+    public String updateEvent(@RequestParam("user_id") Long userId,@RequestParam("event_id")Long eventId,
                                 @RequestParam("start_date") Timestamp startDate,
                                 @RequestParam("end_date")Timestamp endDate,@RequestParam("pos_x") Float posX,
                                 @RequestParam("pos_y") Float posY,@RequestParam("description") String description,
@@ -193,12 +192,13 @@ public class RequestHandler {
             Event e=eventDao.findOne(eventId);
             e.completeSet(u,startDate,endDate,posX,posY,description,name,endDate);
             eventDao.customUpdate(e,u);
+            r.setMessage("event updated");
         }catch(DataEntryException e1){
             r.setMessage(e1.getMessage());
         }catch(Exception e2){
             r.setMessage("fail: "+e2.getMessage());
         }
-        return r;
+        return r.getMessage();
     }
 
 
