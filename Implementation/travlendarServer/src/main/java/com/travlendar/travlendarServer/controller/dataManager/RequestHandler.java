@@ -6,8 +6,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.travlendar.travlendarServer.controller.Exception.DataEntryException;
 import com.travlendar.travlendarServer.logic.MainLogic;
-import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
-import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLogic;
 import com.travlendar.travlendarServer.model.enumModel.MeanType;
 import com.travlendar.travlendarServer.model.clientModel.EventClient;
 import com.travlendar.travlendarServer.model.clientModel.FreeTimeClient;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Request Handler is responsible to manage and process the external request,for each request mapping we return a
@@ -49,10 +46,6 @@ public class RequestHandler {
     private EventDao eventDao;
     @Autowired
     private GreenDao greenDao;
-    @Autowired
-    private TransportSolutionDao transportSolutionDao;
-    @Autowired
-    private TransportSegmentDao transportSegmentDao;
 
 
 
@@ -76,10 +69,10 @@ public class RequestHandler {
 
     @RequestMapping("/get-user")
     @ResponseBody
-    public String getEvent(@RequestParam("email") String email) {
+    public String getEvent(@RequestParam("user_id") Long userId) {
         Response r=new Response("ok");
         try{
-            User u=userDao.findByEmail(email);
+            User u=userDao.findOne(userId);
             UserClient userClient= u.getUserClient();
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String jsonInString = gson.toJson(userClient);
@@ -92,7 +85,7 @@ public class RequestHandler {
     }
     @RequestMapping("/add-event")
     @ResponseBody
-    public String addEvent(@RequestParam("user_id") Long userId, @RequestParam("start_date") Timestamp startDate,
+    public Response addEvent(@RequestParam("user_id") Long userId, @RequestParam("start_date") Timestamp startDate,
                              @RequestParam("end_date")Timestamp endDate,@RequestParam("pos_x") Float posX,
                              @RequestParam("pos_y") Float posY,@RequestParam("description") String description,
                              @RequestParam("name") String name,@RequestParam("end_event")Boolean endEvent) {
@@ -103,85 +96,35 @@ public class RequestHandler {
             //create the event
             Event e=new Event(u,startDate,endDate,posX,posY,description,name,endEvent);
             eventDao.customSave(e);
-            r.setMessage("event added into DB");
-            replan(u.getId());
         }catch(DataEntryException e1){
-            r.setMessage("fail: "+e1.getMessage());
-        }catch(Exception e2){
-            r.setMessage("fail: "+e2.getMessage());
-        }
-        return r.getMessage();
-    }
-
-    @RequestMapping("/replan")
-    @ResponseBody
-    public Response replan(@RequestParam("user_id") Long userId) {
-        Response r=new Response("ok");
-        try{
-            //fetch the user
-            User u=userDao.findOne(userId);
-            ArrayList<EventLogic> listEventLogic = new ArrayList<>();
-            //Oracle engineer don't know how to do that
-            listEventLogic.addAll(u.getEvents());
-            //get the transport solution
-            List<TransportSolutionLogic> outputSol = MainLogic.calculateTransportSolutions(listEventLogic,u);
-            saveTransportSolutionLogic(outputSol);
-            r.setMessage("success");
+            r.setMessage(e1.getMessage());
         }catch(Exception e2){
             r.setMessage("fail: "+e2.getMessage());
         }
         return r;
     }
 
-    private void saveTransportSolutionLogic(List<TransportSolutionLogic> tsl){
-        List<TransportSolution> transportSolutions=new ArrayList<>();
-        int i=0;
-        //compose and save transport solutions
-        for (TransportSolutionLogic x:tsl){
-            transportSolutions.add((TransportSolution)x);
-            TransportSolutionId tsID=new TransportSolutionId(transportSolutions.get(i).getEvent1().getId(),
-                    transportSolutions.get(i).getEvent2().getId());
-            transportSolutions.get(i).setTransportSolutionId(tsID);
-            i++;
-        }
-        transportSolutionDao.save(transportSolutions);
-        //compose and save transport segments
-        for(TransportSolution t:transportSolutions) {
-            int segmentOrder=0;
-            for(TransportSegment transportSegment:t.getTransportSegments()){
-                TransportSegmentId transportSegmentId=new TransportSegmentId(segmentOrder,t.getEvent1().getId(),
-                        t.getEvent2().getId());
-                transportSegment.setTransportSegmentId(transportSegmentId);
-                transportSegmentDao.save(transportSegment);
-                segmentOrder++;
-            }
-        }
-    }
-
-
-
 
     @RequestMapping("/delete-event")
     @ResponseBody
-    public String deleteEvent(@RequestParam("user_id")Long userId,@RequestParam("event_id")Long eventId) {
+    public Response deleteEvent(@RequestParam("user_id")Long userId,@RequestParam("event_id")Long eventId) {
         Response r=new Response("ok");
         try{
             User u=userDao.findOne(userId);
             Event e=eventDao.findOne(eventId);
             eventDao.customDelete(e,u);
-            r.setMessage("event deleted");
         }catch(DataEntryException e1){
             r.setMessage(e1.getMessage());
         }catch(Exception e2){
             r.setMessage("fail: "+e2.getMessage());
         }
-        return r.getMessage();
+        return r;
     }
 
 
     @RequestMapping("/update-event")
     @ResponseBody
-    public String updateEvent(@RequestParam("user_id") Long userId,@RequestParam("event_id")Long eventId,
+    public Response updateEvent(@RequestParam("user_id") Long userId,@RequestParam("event_id")Long eventId,
                                 @RequestParam("start_date") Timestamp startDate,
                                 @RequestParam("end_date")Timestamp endDate,@RequestParam("pos_x") Float posX,
                                 @RequestParam("pos_y") Float posY,@RequestParam("description") String description,
@@ -192,13 +135,12 @@ public class RequestHandler {
             Event e=eventDao.findOne(eventId);
             e.completeSet(u,startDate,endDate,posX,posY,description,name,endDate);
             eventDao.customUpdate(e,u);
-            r.setMessage("event updated");
         }catch(DataEntryException e1){
             r.setMessage(e1.getMessage());
         }catch(Exception e2){
             r.setMessage("fail: "+e2.getMessage());
         }
-        return r.getMessage();
+        return r;
     }
 
 
@@ -221,7 +163,7 @@ public class RequestHandler {
 
     @RequestMapping("/add-private-transport")
     @ResponseBody
-    public String addPrivateTransport(@RequestParam("user_id") Long userId,@RequestParam("name") String name,
+    public Response addPrivateTransport(@RequestParam("user_id") Long userId,@RequestParam("name") String name,
                                         @RequestParam ("type")String type,@RequestParam("displacement")int displacement,
                                         @RequestParam("license_plate") String license){
         Response r=new Response("ok");
@@ -237,14 +179,15 @@ public class RequestHandler {
             PrivateTransport p = new PrivateTransport(u, name, meanType, displacement, license, green);
             //save
             privateTransportDao.customSave(p);
-            addOrder(u.getId(),p.getId(),p.isPrivate(),u.getUserOrders().size()+1);
-            r.setMessage("mean added ");
+            MainLogic m=new MainLogic();
+           
+            //todo aggiungere l' user order
         }catch (DataEntryException e) {
             r.setMessage(e.getMessage());
         }catch(Exception e){
             r.setMessage("fail: "+e.getMessage());
         }
-        return r.getMessage();
+        return r;
     }
 
     @RequestMapping("/add-order")
@@ -258,7 +201,7 @@ public class RequestHandler {
             //fetch the user
             User u = userDao.findOne(userId);
             UserOrder ur;
-            if(!type){
+            if(type){
                 ur = new UserOrder(numOrder,u, null,u.getPrivateTransportById(transportId));
             }else{
                 ur = new UserOrder(numOrder,u,publicTransportDao.findOne(transportId),null);
