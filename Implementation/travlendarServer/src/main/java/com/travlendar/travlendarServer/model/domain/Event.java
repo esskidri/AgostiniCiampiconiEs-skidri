@@ -235,7 +235,7 @@ public class Event implements Serializable,  EventLogic {
 
 
     public EventClient getEventClient(){
-        EventClient eventClient = new EventClient(this.startDate,this.endDate,this.posX,this.posY,
+        EventClient eventClient = new EventClient(this.id,this.startDate,this.endDate,this.posX,this.posY,
                                                     this.description,this.name,this.endEvent);
         return eventClient;
     }

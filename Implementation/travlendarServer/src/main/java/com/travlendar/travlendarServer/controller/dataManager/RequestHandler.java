@@ -5,6 +5,11 @@ package com.travlendar.travlendarServer.controller.dataManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.travlendar.travlendarServer.controller.Exception.DataEntryException;
+import com.travlendar.travlendarServer.logic.MainLogic;
+import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
+import com.travlendar.travlendarServer.logic.modelInterface.TransportSegmentLogic;
+import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLogic;
+import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.model.enumModel.MeanType;
 import com.travlendar.travlendarServer.model.clientModel.EventClient;
 import com.travlendar.travlendarServer.model.clientModel.FreeTimeClient;
@@ -21,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Request Handler is responsible to manage and process the external request,for each request mapping we return a
@@ -45,6 +51,10 @@ public class RequestHandler {
     private EventDao eventDao;
     @Autowired
     private GreenDao greenDao;
+    @Autowired
+    private TransportSolutionDao transportSolutionDao;
+    @Autowired
+    private TransportSegmentDao transportSegmentDao;
 
 
 
@@ -84,7 +94,7 @@ public class RequestHandler {
     }
     @RequestMapping("/add-event")
     @ResponseBody
-    public Response addEvent(@RequestParam("user_id") Long userId, @RequestParam("start_date") Timestamp startDate,
+    public String addEvent(@RequestParam("user_id") Long userId, @RequestParam("start_date") Timestamp startDate,
                              @RequestParam("end_date")Timestamp endDate,@RequestParam("pos_x") Float posX,
                              @RequestParam("pos_y") Float posY,@RequestParam("description") String description,
                              @RequestParam("name") String name,@RequestParam("end_event")Boolean endEvent) {
@@ -95,13 +105,62 @@ public class RequestHandler {
             //create the event
             Event e=new Event(u,startDate,endDate,posX,posY,description,name,endEvent);
             eventDao.customSave(e);
+            r.setMessage("event added into DB");
+            //replan(u.getId());
         }catch(DataEntryException e1){
-            r.setMessage(e1.getMessage());
+            r.setMessage("fail: "+e1.getMessage());
+        }catch(Exception e2){
+            r.setMessage("fail: "+e2.getMessage());
+        }
+        return r.getMessage();
+    }
+
+    @RequestMapping("/replan")
+    @ResponseBody
+    public Response replan(@RequestParam("user_id") Long userId) {
+        Response r=new Response("ok");
+        try{
+            //fetch the user
+            User u=userDao.findOne(userId);
+            ArrayList<EventLogic> listEventLogic = new ArrayList<>();
+            //Oracle engineer don't know how to do that
+            listEventLogic.addAll(u.getEvents());
+            //get the transport solution
+            List<TransportSolutionLogic> outputSol = MainLogic.calculateTransportSolutions(listEventLogic,u);
+            saveTransportSolutionLogic(outputSol);
+             r.setMessage("success");
         }catch(Exception e2){
             r.setMessage("fail: "+e2.getMessage());
         }
         return r;
     }
+
+    private void saveTransportSolutionLogic(List<TransportSolutionLogic> tsl){
+        List<TransportSolution> transportSolutions=new ArrayList<>();
+        int i=0;
+        //compose and save transport solutions
+        for (TransportSolutionLogic x:tsl){
+            transportSolutions.add((TransportSolution)x);
+            TransportSolutionId tsID=new TransportSolutionId(transportSolutions.get(i).getEvent1().getId(),
+                    transportSolutions.get(i).getEvent2().getId());
+            transportSolutions.get(i).setTransportSolutionId(tsID);
+            i++;
+        }
+        transportSolutionDao.save(transportSolutions);
+        //compose and save transport segments
+        for(TransportSolution t:transportSolutions) {
+            int segmentOrder=0;
+            for(TransportSegment transportSegment:t.getTransportSegments()){
+                TransportSegmentId transportSegmentId=new TransportSegmentId(segmentOrder,t.getEvent1().getId(),
+                        t.getEvent2().getId());
+                transportSegment.setTransportSegmentId(transportSegmentId);
+                transportSegmentDao.save(transportSegment);
+                segmentOrder++;
+            }
+        }
+    }
+
+
 
 
     @RequestMapping("/delete-event")
