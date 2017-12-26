@@ -221,7 +221,7 @@ public class RequestHandler {
 
     @RequestMapping("/add-private-transport")
     @ResponseBody
-    public Response addPrivateTransport(@RequestParam("user_id") Long userId,@RequestParam("name") String name,
+    public String addPrivateTransport(@RequestParam("user_id") Long userId,@RequestParam("name") String name,
                                         @RequestParam ("type")String type,@RequestParam("displacement")int displacement,
                                         @RequestParam("license_plate") String license){
         Response r=new Response("ok");
@@ -237,13 +237,14 @@ public class RequestHandler {
             PrivateTransport p = new PrivateTransport(u, name, meanType, displacement, license, green);
             //save
             privateTransportDao.customSave(p);
-            //todo aggiungere l' user order
+            addOrder(u.getId(),p.getId(),p.isPrivate(),u.getUserOrders().size()+1);
+            r.setMessage("mean added ");
         }catch (DataEntryException e) {
             r.setMessage(e.getMessage());
         }catch(Exception e){
             r.setMessage("fail: "+e.getMessage());
         }
-        return r;
+        return r.getMessage();
     }
 
     @RequestMapping("/add-order")
@@ -257,7 +258,7 @@ public class RequestHandler {
             //fetch the user
             User u = userDao.findOne(userId);
             UserOrder ur;
-            if(type){
+            if(!type){
                 ur = new UserOrder(numOrder,u, null,u.getPrivateTransportById(transportId));
             }else{
                 ur = new UserOrder(numOrder,u,publicTransportDao.findOne(transportId),null);
