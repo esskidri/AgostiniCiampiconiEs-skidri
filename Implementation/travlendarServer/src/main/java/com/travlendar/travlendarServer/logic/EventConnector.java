@@ -65,7 +65,7 @@ public class EventConnector {
         homeEvent.setPosX(endEvent.getCurrentHome().getLat());
         homeEvent.setPosY(endEvent.getCurrentHome().getLng());
 
-        eventWithHome.add(eventWithHome.indexOf(endEvent) ,homeEvent);
+        eventWithHome.add(eventWithHome.indexOf(endEvent) +1,homeEvent);
         eventGraph.edges().put(homeEvent, new ArrayList<>());
         eventGraph.connect(endEvent, homeEvent);
         eventGraph.connect(homeEvent, eventWithHome.get(eventWithHome.indexOf(homeEvent) + 1));

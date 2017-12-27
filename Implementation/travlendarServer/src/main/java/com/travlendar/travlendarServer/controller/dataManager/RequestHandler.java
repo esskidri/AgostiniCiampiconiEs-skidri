@@ -14,6 +14,7 @@ import com.travlendar.travlendarServer.model.clientModel.FreeTimeClient;
 import com.travlendar.travlendarServer.model.clientModel.UserClient;
 import com.travlendar.travlendarServer.model.dao.*;
 import com.travlendar.travlendarServer.model.domain.*;
+import com.travlendar.travlendarServer.model.enumModel.Policy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,6 +56,16 @@ public class RequestHandler {
     private TransportSegmentDao transportSegmentDao;
 
 
+    @RequestMapping("/create-user")
+    @ResponseBody
+    public String create(@RequestParam("email") String email, @RequestParam("fn") String f_name,
+                         @RequestParam("ln") String l_name, @RequestParam("age") int age,
+                         @RequestParam("sex") String sex) throws Exception {
+
+        User user = new User(f_name,l_name,email,age,sex,null,Policy.GREEN);
+        userDao.save(user);
+        return "User succesfully created";
+    }
 
     @RequestMapping("/get-free-time")
     @ResponseBody
@@ -115,7 +126,7 @@ public class RequestHandler {
 
     @RequestMapping("/replan")
     @ResponseBody
-    public Response replan(@RequestParam("user_id") Long userId) {
+    public String replan(@RequestParam("user_id") Long userId) {
         Response r=new Response("ok");
         try{
             //fetch the user
@@ -130,7 +141,7 @@ public class RequestHandler {
         }catch(Exception e2){
             r.setMessage("fail: "+e2.getMessage());
         }
-        return r;
+        return r.getMessage();
     }
 
     private void saveTransportSolutionLogic(List<TransportSolutionLogic> tsl){
@@ -252,7 +263,7 @@ public class RequestHandler {
 
     @RequestMapping("/add-order")
     @ResponseBody
-    public Response addOrder(@RequestParam("user_id") Long userId,
+    public String addOrder(@RequestParam("user_id") Long userId,
                              @RequestParam("transport_id") Long transportId,
                              @RequestParam("type_transport") boolean type,
                              @RequestParam("num_order") int numOrder){
@@ -270,12 +281,12 @@ public class RequestHandler {
         }catch(Exception e2){
             r.setMessage("fail"+e2.getMessage());
         }
-        return r;
+        return r.getMessage();
     }
 
     @RequestMapping("/add-free-time")
     @ResponseBody
-    public Response addFreeTime(@RequestParam("user_id") Long userId,
+    public String addFreeTime(@RequestParam("user_id") Long userId,
                                 @RequestParam("start_date") Timestamp startDate,
                                 @RequestParam("end_date") Timestamp endDate,
                                 @RequestParam("duration") int duration){
@@ -288,16 +299,7 @@ public class RequestHandler {
         }catch(Exception e){
             r.setMessage("fail"+e.getMessage());
         }
-        return r;
+        return r.getMessage();
     }
-
-
-
-
-
-
-
-
-
 
 }
