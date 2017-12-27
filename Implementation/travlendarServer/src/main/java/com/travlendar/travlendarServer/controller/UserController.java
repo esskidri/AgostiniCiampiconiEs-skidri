@@ -25,18 +25,7 @@ public class UserController {
     private UserDao userDao;
 
 
-    @RequestMapping("/createUser")
-    @ResponseBody
-    public String create(@RequestParam("email") String email, @RequestParam("fn") String f_name,
-                         @RequestParam("ln") String l_name, @RequestParam("age") int age,
-                         @RequestParam("sex") String sex,@RequestParam("policy")Policy policy) throws Exception {
 
-          //validator.request
-        
-          User user = new User(f_name,l_name,email,age,sex,null,policy);
-          userDao.save(user);
-          return "User succesfully created";
-    }
 
 
 

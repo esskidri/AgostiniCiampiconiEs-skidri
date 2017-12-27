@@ -92,4 +92,6 @@ public enum MeanType {
     public abstract String toHttpsFormat();
 
     public abstract EnumGreenLevel getGreenEnum();
+
+
 }
