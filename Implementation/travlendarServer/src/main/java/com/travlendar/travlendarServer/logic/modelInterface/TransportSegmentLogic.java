@@ -17,4 +17,6 @@ public interface TransportSegmentLogic {
     void setOrder(int numOrder);
     void setDepartureTime(Timestamp departingTime);
     void setArrivalTime(Timestamp arrivalTime);
+    long getDuration();
+    long getDistance();
 }

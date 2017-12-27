@@ -72,7 +72,33 @@ public class MainLogic {
                 transportSolutions.add(transportSolutionLogic);
             }
         }
+
+        events = eventGraph.nodes();
+        for(EventLogic eventLogic: events)
+            if(eventLogic.atHome()){
+                eventLogic.setUser(user);
+            }
         return transportSolutions;
+    }
+
+    public static List<EventLogic> getDailyEventsForReplan(List<EventLogic> events, Timestamp startingDate, Timestamp endingDate){
+        boolean foundedDay = false;
+        EventLogic firstEndEvent = events.get(0);
+        EventLogic secondEndEvent = null;
+
+        for(EventLogic eventLogic: events){
+            if(eventLogic.isEndEvent() && eventLogic.getEndDate().compareTo(startingDate) <= 0)
+                firstEndEvent = eventLogic;
+            if(eventLogic.isEndEvent() && eventLogic.getStartDate().compareTo(endingDate) >= 0){
+                foundedDay = true;
+                secondEndEvent = eventLogic;
+                break;
+            }
+        }
+        if(foundedDay)
+            return events.subList(events.indexOf(firstEndEvent), events.indexOf(secondEndEvent) +1);
+        else
+            return events.subList(events.indexOf(firstEndEvent), events.size());
     }
 
     private static void setMeansOfTransport(TransportSolutionLogic transportSolutionLogic,
