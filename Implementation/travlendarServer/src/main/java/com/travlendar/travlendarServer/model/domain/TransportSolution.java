@@ -114,7 +114,7 @@ public class TransportSolution extends AbstractEntity implements Serializable, T
 
     @Override
     public Timestamp getArrivalTime(){
-        return transportSegments.get(transportSegments.size()).getArrivalTime();
+        return transportSegments.get(transportSegments.size() -1).getArrivalTime();
     }
 
     @Override
