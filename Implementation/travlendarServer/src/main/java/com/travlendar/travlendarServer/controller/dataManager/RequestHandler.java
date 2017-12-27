@@ -122,6 +122,10 @@ public class RequestHandler {
             for(EventLogic eventLogic: eventLogics1)
                 events.add((Event) eventLogic);
             clearTransportSolution(events);
+            if(e.isEndEvent()) {
+                eventDao.delete((Event) eventLogics1.get(eventLogics1.indexOf(e) + 1));
+                eventLogics1.remove(eventLogics1.get(eventLogics1.indexOf(e) + 1));
+            }
             saveTransportSolutionLogic(MainLogic.calculateTransportSolutions(eventLogics1, u));
 
             r.setMessage("event added into DB");
@@ -136,7 +140,7 @@ public class RequestHandler {
 
     @RequestMapping("/replan")
     @ResponseBody
-    public Response replan(@RequestParam("user_id") Long userId) {
+    public String replan(@RequestParam("user_id") Long userId) {
         Response r = new Response("ok");
         try {
             //fetch the user
@@ -223,6 +227,10 @@ public class RequestHandler {
             for(EventLogic eventLogic: eventLogics1)
                 events.add((Event) eventLogic);
             clearTransportSolution(events);
+            if(e.isEndEvent()) {
+                eventDao.delete((Event) eventLogics1.get(eventLogics1.indexOf(e) + 1));
+                eventLogics1.remove(eventLogics1.get(eventLogics1.indexOf(e) + 1));
+            }
             saveTransportSolutionLogic(MainLogic.calculateTransportSolutions(eventLogics1, u));
 
             if(!eventLogics2.equals(eventLogics1)){
