@@ -2,6 +2,7 @@ package com.travlendar.travlendarServer.model.clientModel;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 
 public class EventClient implements Serializable{
 
@@ -12,7 +13,9 @@ public class EventClient implements Serializable{
     private float posY;
     private String description;
     private String name;
-    private  boolean endEvent;
+    private boolean endEvent;
+    private List<TransportSolutionClient> transportSolutionClientListA;
+    private List<TransportSolutionClient> transportSolutionClientListB;
 
     public EventClient(long id, Timestamp startDate, Timestamp endDate, float posX, float posY, String description, String name, boolean endEvent) {
         this.id = id;
@@ -33,6 +36,21 @@ public class EventClient implements Serializable{
         this.description = description;
         this.name = name;
         this.endEvent = endEvent;
+    }
+
+    public EventClient(long id, Timestamp startDate, Timestamp endDate, float posX, float posY, String description,
+                       String name, boolean endEvent, List<TransportSolutionClient> transportSolutionClientListA,
+                       List<TransportSolutionClient> transportSolutionClientListB) {
+        this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.posX = posX;
+        this.posY = posY;
+        this.description = description;
+        this.name = name;
+        this.endEvent = endEvent;
+        this.transportSolutionClientListA = transportSolutionClientListA;
+        this.transportSolutionClientListB =transportSolutionClientListB;
     }
 
     public long getId() {
@@ -98,4 +116,21 @@ public class EventClient implements Serializable{
     public void setEndEvent(boolean endEvent) {
         this.endEvent = endEvent;
     }
+
+    public List<TransportSolutionClient> getTransportSolutionClientListA() {
+        return transportSolutionClientListA;
+    }
+
+    public void setTransportSolutionClientListA(List<TransportSolutionClient> transportSolutionClientListA) {
+        this.transportSolutionClientListA = transportSolutionClientListA;
+    }
+
+    public List<TransportSolutionClient> getTransportSolutionClientListB() {
+        return transportSolutionClientListB;
+    }
+
+    public void setTransportSolutionClientListB(List<TransportSolutionClient> transportSolutionClientListB) {
+        this.transportSolutionClientListB = transportSolutionClientListB;
+    }
 }
+

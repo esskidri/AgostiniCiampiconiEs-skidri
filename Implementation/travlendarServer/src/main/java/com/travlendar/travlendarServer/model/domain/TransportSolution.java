@@ -5,6 +5,8 @@ import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.TransportSegmentLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLogic;
+import com.travlendar.travlendarServer.model.clientModel.TransportSegmentClient;
+import com.travlendar.travlendarServer.model.clientModel.TransportSolutionClient;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -126,5 +128,12 @@ public class TransportSolution extends AbstractEntity implements Serializable, T
         }
 
         return meansOfTransportUsed;
+    }
+    public TransportSolutionClient getTransportSolutionClient(){
+        List<TransportSegmentClient> transportSegmentClients=new ArrayList<>();
+        for(TransportSegment t:transportSegments){
+            transportSegmentClients.add(t.getTransportSegmentClient());
+        }
+        return new TransportSolutionClient(event1.getId(),event2.getId(),transportSegmentClients);
     }
 }

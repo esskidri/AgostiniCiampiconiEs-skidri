@@ -3,6 +3,7 @@ package com.travlendar.travlendarServer.model.domain;
 import com.travlendar.travlendarServer.logic.modelInterface.TransportSegmentLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
+import com.travlendar.travlendarServer.model.clientModel.TransportSegmentClient;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -237,6 +238,14 @@ public class TransportSegment extends AbstractEntity implements Serializable,Tra
 
     public void setArrivalTime(Timestamp arrivalTime) {
         this.arrivalTime = arrivalTime;
+    }
+
+    public TransportSegmentClient getTransportSegmentClient(){
+        TransportSegmentClient transportSegmentClient=new TransportSegmentClient(numOrder,
+                (privateTransport!=null)? privateTransport.getPrivateTransportClient():null,
+                (publicTransport!=null)?publicTransport.getPublicTransportClient():null,positionAX,positionAY,
+                positionBX,positionBY,distance,description,duration,departureTime,arrivalTime);
+        return transportSegmentClient;
     }
 
 

@@ -33,7 +33,7 @@ public class User extends AbstractEntity implements UserLogic {
     private String email;
 
     @Column(name="age")
-    private Integer age;
+    private int age;
 
     @Column(name="sex")
     private String sex;
@@ -69,7 +69,7 @@ public class User extends AbstractEntity implements UserLogic {
 
     public User() { }
 
-    public User(String first_name, String last_name, String email, Integer age, String sex, String fiscal_code, Policy policy) {
+    public User(String first_name, String last_name, String email, int age, String sex, String fiscal_code, Policy policy) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
@@ -111,11 +111,11 @@ public class User extends AbstractEntity implements UserLogic {
         this.email = email;
     }
 
-    public Integer getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(int age) {
         this.age = age;
     }
 

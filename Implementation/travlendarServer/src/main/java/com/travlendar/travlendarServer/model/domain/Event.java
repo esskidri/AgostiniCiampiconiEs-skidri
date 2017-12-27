@@ -4,6 +4,7 @@ import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
 import com.travlendar.travlendarServer.model.clientModel.EventClient;
+import com.travlendar.travlendarServer.model.clientModel.TransportSolutionClient;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Persistable;
 import org.springframework.transaction.annotation.Transactional;
@@ -209,7 +210,7 @@ public class Event implements Serializable,  EventLogic {
 
     @Override
     public boolean atHome() {
-        return atHome;
+        return false;
     }
 
     @Override
@@ -238,8 +239,19 @@ public class Event implements Serializable,  EventLogic {
 
 
     public EventClient getEventClient(){
+        List<TransportSolutionClient> transportSolutionClientsA=new ArrayList<>();
+        List<TransportSolutionClient> transportSolutionClientsB=new ArrayList<>();
+        if(transportSolutions!=null)
+        for(TransportSolution t:transportSolutions){
+            transportSolutionClientsA.add(t.getTransportSolutionClient());
+        }
+        if(transportSolutions2!=null)
+        for(TransportSolution t2:transportSolutions2){
+            transportSolutionClientsB.add(t2.getTransportSolutionClient());
+        }
+
         EventClient eventClient = new EventClient(this.id,this.startDate,this.endDate,this.posX,this.posY,
-                                                    this.description,this.name,this.endEvent);
+                                                    this.description,this.name,this.endEvent,transportSolutionClientsA,transportSolutionClientsB);
         return eventClient;
     }
 
