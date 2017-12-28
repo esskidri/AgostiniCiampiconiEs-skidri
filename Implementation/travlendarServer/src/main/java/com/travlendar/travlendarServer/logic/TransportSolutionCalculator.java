@@ -107,6 +107,7 @@ public class TransportSolutionCalculator {
 
             if (googleResponseMappedObject.isPartialSolution()) {
                 //If google make you change your mean, we recalculate by the preferences of the user
+                //TODO FIND PROBLEM OF WALKING and BUS combination
                 List<MeanOfTransportLogic> meanOfTransportLogics = new ArrayList<>();
                 meanOfTransportLogics.addAll(this.meansOfTransport);
                 for(MeanOfTransportLogic meanOfTransportLogic: this.meansOfTransport)
@@ -151,8 +152,8 @@ public class TransportSolutionCalculator {
         int i = 0;
 
 
-
-        transportSegments.add(transportSegment);
+        if(transportSegment.getDistance() != 0)
+            transportSegments.add(transportSegment);
     }
 
     /**

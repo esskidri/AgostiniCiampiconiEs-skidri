@@ -147,61 +147,73 @@ public class UserController {
     @RequestMapping("/event")
     @ResponseBody
     public String event() {
-       List<Event> events= (List<Event>) eventDao.findAll();
-       Event e=events.get(0);
-       e.setDescription("ciao");
-       return " Succes";
+        List<Event> events = (List<Event>) eventDao.findAll();
+        Event e = events.get(0);
+        e.setDescription("ciao");
+        return " Succes";
     }
-
 
 
     @RequestMapping("/fetch")
     @ResponseBody
     public String fetch() {
-       User user=userDao.findOne((long) 6);
-       MainLogic mainLogic=new MainLogic();
-       List<EventLogic> eventLogics=new ArrayList<>();
+        User user = userDao.findOne((long) 6);
+        List<EventLogic> eventLogics = new ArrayList<>();
 
-       Event e1=eventDao.findOne((long)78);
-       Event e2=eventDao.findOne((long)79);
-       Event e3=eventDao.findOne((long)80);
-       eventLogics.add(e1);
-       eventLogics.add(e2);
-       eventLogics.add(e3);
-       //computation
-       List<TransportSolutionLogic> tsl=mainLogic.calculateTransportSolutions(eventLogics,user);
-       //save
-      // saveTransportSolutionLogic(tsl);
+        Event e1 = eventDao.findOne((long) 78);
+        Event e2 = eventDao.findOne((long) 79);
+        Event e3 = eventDao.findOne((long) 80);
+        eventLogics.add(e1);
+        eventLogics.add(e2);
+        eventLogics.add(e3);
+        //computation
+        List<TransportSolutionLogic> tsl = MainLogic.calculateTransportSolutions(eventLogics, user);
+        List<Event> eventsToBeAdded = new ArrayList<>();
 
-       return "ok";
+        for (EventLogic event : eventLogics)
+            if (!user.getEvents().contains(event))
+                eventsToBeAdded.add((Event) event);
+
+        for (Event event : eventsToBeAdded) {
+            try {
+                eventDao.customSave(event);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        //save
+        saveTransportSolutionLogic(tsl);
+
+        return "ok";
 
     }
 
 
-   /* private void saveTransportSolutionLogic(List<TransportSolutionLogic> tsl){
-        List<TransportSolution> transportSolutions=new ArrayList<>();
-        int i=0;
+    private void saveTransportSolutionLogic(List<TransportSolutionLogic> tsl) {
+        List<TransportSolution> transportSolutions = new ArrayList<>();
+        int i = 0;
         //compose and save transport solutions
-        for (TransportSolutionLogic x:tsl){
-            transportSolutions.add((TransportSolution)x);
-            TransportSolutionId tsID=new TransportSolutionId(transportSolutions.get(i).getEvent1().getId(),
+        for (TransportSolutionLogic x : tsl) {
+            transportSolutions.add((TransportSolution) x);
+            TransportSolutionId tsID = new TransportSolutionId(transportSolutions.get(i).getEvent1().getId(),
                     transportSolutions.get(i).getEvent2().getId());
             transportSolutions.get(i).setTransportSolutionId(tsID);
             i++;
         }
         transportSolutionDao.save(transportSolutions);
         //compose and save transport segments
-        for(TransportSolution t:transportSolutions) {
-            int segmentOrder=0;
-            for(TransportSegment transportSegment:t.getTransportSegments()){
-                TransportSegmentId transportSegmentId=new TransportSegmentId(segmentOrder,t.getEvent1().getId(),
+        for (TransportSolution t : transportSolutions) {
+            int segmentOrder = 0;
+            for (TransportSegment transportSegment : t.getTransportSegments()) {
+                TransportSegmentId transportSegmentId = new TransportSegmentId(segmentOrder, t.getEvent1().getId(),
                         t.getEvent2().getId());
                 transportSegment.setTransportSegmentId(transportSegmentId);
                 transportSegmentDao.save(transportSegment);
                 segmentOrder++;
             }
         }
-    }*/
+    }
 
 
     //TODO re-add Fetch JSON
@@ -234,7 +246,7 @@ public class UserController {
         transportSolutionDao.save(transportSolution);
         String s = " " + e1.getId();
         return s;
-   }
+    }
 
 
 

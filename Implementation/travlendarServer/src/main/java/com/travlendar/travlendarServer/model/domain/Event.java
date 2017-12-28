@@ -1,6 +1,7 @@
 package com.travlendar.travlendarServer.model.domain;
 
 import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
+import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
 import com.travlendar.travlendarServer.model.clientModel.EventClient;
 import com.travlendar.travlendarServer.model.clientModel.TransportSolutionClient;
@@ -53,6 +54,9 @@ public class Event implements Serializable,  EventLogic {
     @OneToMany(cascade = CascadeType.ALL, mappedBy="event2")
     private List<TransportSolution> transportSolutions2;
 
+    @Transient
+    private boolean atHome = false;
+
     public Event(){}
 
     public Event(Timestamp startDate, Timestamp endDate, float posX, float posY, String description, String name, boolean endEvent) {
@@ -83,7 +87,6 @@ public class Event implements Serializable,  EventLogic {
     public Long getId() {
         return id;
     }
-
 
     public void setId(Long id) {
         this.id = id;
@@ -252,6 +255,14 @@ public class Event implements Serializable,  EventLogic {
         return eventClient;
     }
 
+    @Override
+    public void setUser(UserLogic user) {
+        this.user = (User) user;
+    }
 
+    @Override
+    public void setAtHome(boolean atHome) {
+        this.atHome = atHome;
+    }
 
 }

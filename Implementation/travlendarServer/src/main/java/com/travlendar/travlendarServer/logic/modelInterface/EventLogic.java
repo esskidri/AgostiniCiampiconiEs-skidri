@@ -12,5 +12,7 @@ public interface EventLogic extends Comparable<EventLogic> {
     Timestamp getEndDate();
     boolean overlapping(EventLogic e);
     boolean atHome();
+    void setUser(UserLogic user);
+    void setAtHome(boolean atHome);
 
 }

@@ -119,7 +119,6 @@ public class User extends AbstractEntity implements UserLogic {
         this.age = age;
     }
 
-
     public String getSex() {
         return sex;
     }

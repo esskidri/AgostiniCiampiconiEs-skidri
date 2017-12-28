@@ -28,7 +28,9 @@ public class EventConnector {
         int i = 0;
 
         for(EventLogic event: eventGraph.nodes()){
-            if(event.isEndEvent() && i != eventGraph.nodes().size() -1){
+            if(event.isEndEvent() &&
+                    i != eventGraph.nodes().size() -1 &&
+                    !eventGraph.nodes().get(i +1).atHome()){
                 insertHomeEvent(eventGraph, event, eventsWithHome);
             }
             else if(i < eventGraph.nodes().size() - 1)
@@ -53,17 +55,10 @@ public class EventConnector {
         return eventGraph;
     }
 
-    private static class HomeEvent extends Event{
-        public boolean atHome(){
-            return true;
-        }
-    }
 
     private static void insertHomeEvent(EventGraph eventGraph, EventLogic endEvent, List<EventLogic> eventWithHome){
-        Event homeEvent = new HomeEvent();
-        homeEvent.setEndEvent(false);
-        homeEvent.setPosX(endEvent.getCurrentHome().getLat());
-        homeEvent.setPosY(endEvent.getCurrentHome().getLng());
+        Event homeEvent = new Event(endEvent.getStartDate(),endEvent.getEndDate(),endEvent.getCurrentHome().getLat(),endEvent.getCurrentHome().getLng(),"CASA", "CASA", false);
+        homeEvent.setAtHome(true);
 
         eventWithHome.add(eventWithHome.indexOf(endEvent) +1,homeEvent);
         eventGraph.edges().put(homeEvent, new ArrayList<>());
