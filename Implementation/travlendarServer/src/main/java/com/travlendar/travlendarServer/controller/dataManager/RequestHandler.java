@@ -128,9 +128,8 @@ public class RequestHandler {
                 eventLogics1.remove(eventLogics1.get(eventLogics1.indexOf(e) + 1));
             }
             saveTransportSolutionLogic(MainLogic.calculateTransportSolutions(eventLogics1, u));
-
-            r.setMessage("event added into DB");
             replan(u.getId());
+            r.setMessage("event added into DB");
         } catch (DataEntryException e1) {
             r.setMessage("fail: " + e1.getMessage());
         } catch (Exception e2) {
@@ -372,11 +371,12 @@ public class RequestHandler {
 
     /*** Request Handler support methods ***/
 
-    private void clearTransportSolution(List<Event> events) {
+    private void clearTransportSolution(List<Event> events) throws Exception{
         List<TransportSolution> transportSolutions;
 
         for (Event event : events) {
             transportSolutions = new ArrayList<>();
+            if(event.getTransportSolutions()!=null) throw new Exception("cazzo ne so");
             transportSolutions.addAll(event.getTransportSolutions());
             for (TransportSolution transportSolution : transportSolutions) {
                 transportSegmentDao.delete(transportSolution.getTransportSegments());
@@ -384,6 +384,4 @@ public class RequestHandler {
             }
         }
     }
-
-
 }
