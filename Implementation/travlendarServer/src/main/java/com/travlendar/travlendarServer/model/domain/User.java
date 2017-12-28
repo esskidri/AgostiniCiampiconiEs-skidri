@@ -4,10 +4,10 @@ package com.travlendar.travlendarServer.model.domain;
 import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
+import com.travlendar.travlendarServer.model.clientModel.PublicTransportClient;
 import com.travlendar.travlendarServer.model.enumModel.Policy;
 import com.travlendar.travlendarServer.model.clientModel.PrivateTransportClient;
 import com.travlendar.travlendarServer.model.clientModel.UserClient;
-import com.travlendar.travlendarServer.model.clientModel.UserPublicTransportClient;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -51,8 +51,8 @@ public class User extends AbstractEntity implements UserLogic {
     @OneToMany(mappedBy = "user")
     private List<FreeTime> freeTimes;
 
-    @OneToMany(mappedBy = "user")
-    private List<UserPublicTransport> UserPublicTransports;
+    @ManyToMany(mappedBy = "users")
+    private List<PublicTransport> publicTransportList;
 
     @OneToMany(mappedBy = "user")
     private List<UserOrder> userOrders;
@@ -165,20 +165,20 @@ public class User extends AbstractEntity implements UserLogic {
         this.freeTimes = freeTimes;
     }
 
-    public List<UserPublicTransport> getUserpublicTransports() {
-        return UserPublicTransports;
+    public List<PublicTransport> getUserpublicTransports() {
+        return publicTransportList;
     }
 
-    public void setUserpublicTransports(List<UserPublicTransport> userpublicTransports) {
-        UserPublicTransports = userpublicTransports;
+    public void setUserpublicTransports(List<PublicTransport> userpublicTransports) {
+        publicTransportList = userpublicTransports;
     }
 
-    public List<UserPublicTransport> getUserPublicTransports() {
-        return UserPublicTransports;
+    public List<PublicTransport> getPublicTransportList() {
+        return publicTransportList;
     }
 
-    public void setUserPublicTransports(List<UserPublicTransport> userPublicTransports) {
-        UserPublicTransports = userPublicTransports;
+    public void setPublicTransportList(List<PublicTransport> publicTransportList) {
+        this.publicTransportList = publicTransportList;
     }
 
     public List<UserOrder> getUserOrders() {
@@ -238,8 +238,6 @@ public class User extends AbstractEntity implements UserLogic {
                 }
             }
         }
-
-
         return  means;
     }
 
@@ -255,12 +253,12 @@ public class User extends AbstractEntity implements UserLogic {
         for (PrivateTransport pt: this.getPrivateTransportList()) {
             privateTransportsClient.add(pt.getPrivateTransportClient());
         }
-        ArrayList<UserPublicTransportClient>  userpublicTransportsClient = new ArrayList<>();
-        for (UserPublicTransport pt: this.getUserPublicTransports()) {
-            userpublicTransportsClient.add(pt.getUserPublicTransportClient());
+        ArrayList<PublicTransportClient>  publicTransportsClient = new ArrayList<>();
+        for (PublicTransport pt: this.getPublicTransportList()) {
+            publicTransportsClient.add(pt.getPublicTransportClient());
         }
         UserClient userClient = new UserClient(id,first_name,last_name,email,age,sex,fiscal_code,policy,
-                privateTransportsClient, userpublicTransportsClient);
+                privateTransportsClient,publicTransportsClient);
         return userClient;
     }
 

@@ -6,7 +6,10 @@ import com.travlendar.travlendarServer.model.enumModel.MeanType;
 import com.travlendar.travlendarServer.model.clientModel.PublicTransportClient;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+
+import static javax.persistence.CascadeType.ALL;
 
 @Entity
 @Table(name = "public_transport")
@@ -20,19 +23,16 @@ public class PublicTransport extends AbstractEntity implements MeanOfTransportLo
     @Column(name="name")
     private String name;
 
-
-    @OneToMany(mappedBy = "publicTransport")
-    private List<UserPublicTransport> UserpublicTransports;
-
-
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = ALL)
     @JoinColumn(name = "green_id")
     private Green green;
 
+    @ManyToMany
+    @JoinTable(name="user_public_transport",
+            joinColumns={@JoinColumn(name="public_transport_id")},
+            inverseJoinColumns={@JoinColumn(name="user_id")})
+    private List<User> users;
 
-    @OneToMany(mappedBy = "publicTransport")
-    //TODO da rimuovere
-    private List<PublicTransport> publicTransport;
 
     @OneToMany(mappedBy = "publicTransport")
     private List<TransportSegment> transportSegments;
@@ -42,6 +42,17 @@ public class PublicTransport extends AbstractEntity implements MeanOfTransportLo
     private MeanType type;
 
     public PublicTransport(){}
+
+
+
+    public PublicTransport(User user, Green greenLevel) {
+        this.users=new ArrayList<>();
+        this.users.add(user);
+        this.type = MeanType.BUS;
+        this.green=greenLevel;
+        this.name="ATM BUS";
+    }
+
 
     public Long getId() {
         return id;
@@ -59,12 +70,12 @@ public class PublicTransport extends AbstractEntity implements MeanOfTransportLo
         this.name = name;
     }
 
-    public List<UserPublicTransport> getUserpublicTransports() {
-        return UserpublicTransports;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setUserpublicTransports(List<UserPublicTransport> userpublicTransports) {
-        UserpublicTransports = userpublicTransports;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     public Green getGreen() {
@@ -73,14 +84,6 @@ public class PublicTransport extends AbstractEntity implements MeanOfTransportLo
 
     public void setGreen(Green green) {
         this.green = green;
-    }
-
-    public List<PublicTransport> getPublicTransport() {
-        return publicTransport;
-    }
-
-    public void setPublicTransport(List<PublicTransport> publicTransport) {
-        this.publicTransport = publicTransport;
     }
 
     public List<TransportSegment> getTransportSegments() {
