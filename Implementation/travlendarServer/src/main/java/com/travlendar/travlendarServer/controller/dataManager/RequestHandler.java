@@ -348,14 +348,18 @@ public class RequestHandler {
 
     private void clearTransportSolution(List<Event> events) {
         List<TransportSolution> transportSolutions;
+        List<TransportSegment> transportSegments;
 
         for (Event event : events) {
             transportSolutions = new ArrayList<>();
-            transportSolutions.addAll(event.getTransportSolutions());
+            transportSegments= new ArrayList<>();
+            if(event.getTransportSolutions() != null)
+                transportSolutions.addAll(event.getTransportSolutions());
             for (TransportSolution transportSolution : transportSolutions) {
-                transportSegmentDao.delete(transportSolution.getTransportSegments());
-                transportSolutionDao.delete(transportSolution);
+                transportSegments.addAll(transportSolution.getTransportSegments());
             }
+            transportSolutionDao.delete(transportSolutions);
+            transportSegmentDao.delete(transportSegments);
         }
     }
 
