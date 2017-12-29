@@ -14,18 +14,12 @@ public interface UserOrderDao extends CrudRepository<UserOrder,Long> {
         /**
          * check if there is only one kind of transport in the relative order
          */
-        if((ur.getPrivateTransport()!= null && ur.getPublicTransport() !=null )
+        /*if((ur.getPrivateTransport()!= null && ur.getPublicTransport() !=null )
             || ur.getPrivateTransport()== null && ur.getPublicTransport() ==null) throw new DataEntryException("invalid order");
         /**
          * check if there order is continuous
          */
-        int last = u.getUserOrders().size() - 1;
-        if(u.getUserOrders().size() > 1) {
-            if (u.getUserOrders().get(last).getOrder() - 1 != ur.getOrder())
-                throw new DataEntryException("invalid sequence order");
-        }
-        save(ur);
-        return ur;
+        return save(ur);
     }
 
 }

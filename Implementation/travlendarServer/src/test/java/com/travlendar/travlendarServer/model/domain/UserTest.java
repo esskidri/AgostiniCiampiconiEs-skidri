@@ -12,6 +12,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class UserTest {
+    /*
     @Test
     public static User createUser(){
         List<User> users = new ArrayList<>();
@@ -50,7 +51,7 @@ public class UserTest {
         userPublicTransport.setPublicTransport(publicTransport);
         userPublicTransport.setUser(user);
         userPublicTransports.add(userPublicTransport);
-        publicTransport.setUserpublicTransports(userPublicTransports);
+        publicTransport.setPublicTransportList(userPublicTransports);
 
         privateTransports.add(privateTransport1);
         privateTransports.add(privateTransport2);
@@ -81,5 +82,5 @@ public class UserTest {
         user.setUserOrders(userOrders);
 
         return user;
-    }
+    }*/
 }

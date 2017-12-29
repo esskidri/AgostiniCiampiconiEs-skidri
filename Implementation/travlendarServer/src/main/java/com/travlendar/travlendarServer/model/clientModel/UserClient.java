@@ -16,11 +16,11 @@ public class UserClient implements Serializable{
     private String fiscal_code;
     private Policy policy;
     private ArrayList<PrivateTransportClient> privateTransportsClient;
-    private ArrayList<UserPublicTransportClient> userPublicTransportsClient;
+    private ArrayList<PublicTransportClient> publicTransportsClient;
 
     public UserClient(Long id, String first_name, String last_name, String email, Integer age, String sex,
                       String fiscal_code, Policy policy, ArrayList<PrivateTransportClient> privateTransportsClient,
-                      ArrayList<UserPublicTransportClient> userPublicTransportsClient) {
+                      ArrayList<PublicTransportClient> publicTransportsClient) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -30,16 +30,16 @@ public class UserClient implements Serializable{
         this.fiscal_code = fiscal_code;
         this.policy = policy;
         this.privateTransportsClient = privateTransportsClient;
-        this.userPublicTransportsClient = userPublicTransportsClient;
+        this.publicTransportsClient = publicTransportsClient;
 
     }
 
-    public ArrayList<UserPublicTransportClient> getUserPublicTransportsClient() {
-        return userPublicTransportsClient;
+    public ArrayList<PublicTransportClient> getPublicTransportsClient() {
+        return publicTransportsClient;
     }
 
-    public void setUserPublicTransportsClient(ArrayList<UserPublicTransportClient> userPublicTransportsClient) {
-        this.userPublicTransportsClient = userPublicTransportsClient;
+    public void setPublicTransportsClient(ArrayList<PublicTransportClient> publicTransportsClient) {
+        this.publicTransportsClient = publicTransportsClient;
     }
 
     public ArrayList<PrivateTransportClient> getPrivateTransportsClient() {

@@ -10,6 +10,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class EcologistCoreTest {
+    /*
     EcologistCore ecologistCore = new EcologistCore();
 
     @Test
@@ -28,5 +29,5 @@ public class EcologistCoreTest {
             i++;
         }
     }
-
+*/
 }

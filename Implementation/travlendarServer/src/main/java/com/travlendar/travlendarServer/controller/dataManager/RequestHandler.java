@@ -8,6 +8,7 @@ import com.travlendar.travlendarServer.controller.Exception.DataEntryException;
 import com.travlendar.travlendarServer.logic.MainLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLogic;
+import com.travlendar.travlendarServer.model.enumModel.EnumGreenLevel;
 import com.travlendar.travlendarServer.model.enumModel.MeanType;
 import com.travlendar.travlendarServer.model.clientModel.EventClient;
 import com.travlendar.travlendarServer.model.clientModel.FreeTimeClient;
@@ -127,9 +128,8 @@ public class RequestHandler {
                 eventLogics1.remove(eventLogics1.get(eventLogics1.indexOf(e) + 1));
             }
             saveTransportSolutionLogic(MainLogic.calculateTransportSolutions(eventLogics1, u));
-
-            r.setMessage("event added into DB");
             replan(u.getId());
+            r.setMessage("event added into DB");
         } catch (DataEntryException e1) {
             r.setMessage("fail: " + e1.getMessage());
         } catch (Exception e2) {
@@ -276,10 +276,10 @@ public class RequestHandler {
 
     @RequestMapping("/add-private-transport")
     @ResponseBody
-    public String addPrivateTransport(@RequestParam("user_id") Long userId, @RequestParam("name") String name,
-                                      @RequestParam("type") String type, @RequestParam("displacement") int displacement,
-                                      @RequestParam("license_plate") String license) {
-        Response r = new Response("ok");
+    public String addPrivateTransport(@RequestParam("user_id") Long userId,@RequestParam("name") String name,
+                                      @RequestParam ("type")String type,@RequestParam("displacement")int displacement,
+                                      @RequestParam("license_plate") String license){
+        Response r=new Response("ok");
         try {
             //convert type
             MeanType meanType = MeanType.valueOf(type);
@@ -291,8 +291,8 @@ public class RequestHandler {
             //create
             PrivateTransport p = new PrivateTransport(u, name, meanType, displacement, license, green);
             //save
-            privateTransportDao.customSave(p);
-            addOrder(u.getId(), p.getId(), p.isPrivate(), u.getUserOrders().size() + 1);
+            p=privateTransportDao.customSave(p);
+            addOrder(u.getId(),p.getId(),p.isPrivate());
             r.setMessage("mean added ");
         } catch (DataEntryException e) {
             r.setMessage(e.getMessage());
@@ -302,23 +302,48 @@ public class RequestHandler {
         return r.getMessage();
     }
 
+    @RequestMapping("/add-user-public-transport")
+    @ResponseBody
+    public String addUserPublicTransport(@RequestParam("user_id") Long userId){
+        Response r=new Response("ok");
+        try {
+
+            User u = userDao.findOne(userId);
+            if(u==null)throw new DataEntryException("user not found");
+            //create
+
+            PublicTransport publicTransport= new PublicTransport(u,greenDao.findByLevel(EnumGreenLevel.MEDIUM));
+            publicTransport = publicTransportDao.save(publicTransport);
+            userDao.save(u);
+            addOrder(u.getId(),publicTransport.getId(),publicTransport.isPrivate());
+            r.setMessage("mean added ");
+        }catch (DataEntryException e) {
+            r.setMessage(e.getMessage());
+        }catch(Exception e){
+            r.setMessage("fail: "+e.getMessage());
+        }
+        return r.getMessage();
+    }
+
+
+
     @RequestMapping("/add-order")
     @ResponseBody
     public String addOrder(@RequestParam("user_id") Long userId,
                              @RequestParam("transport_id") Long transportId,
-                             @RequestParam("type_transport") boolean type,
-                             @RequestParam("num_order") int numOrder){
+                             @RequestParam("type_transport") boolean type){
         Response r=new Response("ok");
         try{
             //fetch the user
             User u = userDao.findOne(userId);
             UserOrder ur;
-            if(!type){
-                ur = new UserOrder(numOrder,u, null,u.getPrivateTransportById(transportId));
+            if(type){
+                ur = new UserOrder(u.getUserOrders().size()+1,u, null,u.getPrivateTransportById(transportId));
             }else{
-                ur = new UserOrder(numOrder,u,publicTransportDao.findOne(transportId),null);
+                ur = new UserOrder(u.getUserOrders().size()+1,u,publicTransportDao.findOne(transportId),null);
             }
             userOrderDao.customSave(u,ur);
+            r.setMessage("mean added");
         }catch(Exception e2){
             r.setMessage("fail"+e2.getMessage());
         }
@@ -346,7 +371,7 @@ public class RequestHandler {
 
     /*** Request Handler support methods ***/
 
-    private void clearTransportSolution(List<Event> events) {
+    private void clearTransportSolution(List<Event> events) throws Exception{
         List<TransportSolution> transportSolutions;
         List<TransportSegment> transportSegments;
 
