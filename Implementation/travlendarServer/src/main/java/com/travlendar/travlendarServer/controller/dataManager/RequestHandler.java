@@ -132,8 +132,10 @@ public class RequestHandler {
             r.setMessage("event added into DB");
         } catch (DataEntryException e1) {
             r.setMessage("fail: " + e1.getMessage());
+            System.out.println(e1.getMessage());
         } catch (Exception e2) {
             r.setMessage("fail: " + e2.getMessage());
+            System.out.println(e2.getMessage());
         }
         return r.getMessage();
     }

@@ -210,7 +210,7 @@ public class Event implements Serializable,  EventLogic {
 
     @Override
     public boolean atHome() {
-        return false;
+        return atHome;
     }
 
     @Override

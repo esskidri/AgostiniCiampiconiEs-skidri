@@ -87,8 +87,11 @@ public class TransportSolutionCalculator {
 
                 //If it's a mean of the public transport (Bus, Metro, Tram etc) this is handled by the google API
                 if (meansOfTransport.get(0).getTypeOfTransport() == MeanType.BUS) {
-                    googleResponseMappedObject = callGoogleAPI(startingLocation, endingLocation, meansOfTransport.get(0), getTime(startingTime,arrivalTime));
-                    googleResponseMappedObject.searchPublicLine(arrivalTime);
+                    googleResponseMappedObject = callGoogleAPI(startingLocation,
+                            endingLocation,
+                            meansOfTransport.get(0),
+                            getTime(startingTime,arrivalTime));
+                    googleResponseMappedObject.searchPublicLine();
                     mediumLocation = googleResponseMappedObject.getStartingLocation();
                 }
                 else {
@@ -96,7 +99,7 @@ public class TransportSolutionCalculator {
                     mediumLocation = getLocationByExternalAPI(meansOfTransport.get(0), startingLocation, endingLocation, getTime(startingTime,arrivalTime));
                     googleResponseMappedObject = callGoogleAPI(mediumLocation, endingLocation, meansOfTransport.get(0), getTime(startingTime,arrivalTime));
                 }
-                if (googleResponseMappedObject.getDepartingTime().compareTo(startingTime) < 0)
+                if (googleResponseMappedObject.getDepartingTime().compareTo(startingTime) < 0 || googleResponseMappedObject.getArrivalTime().compareTo(arrivalTime) > 0)
                     throw new TimeViolationException();
                 calculateSegment(startingLocation, mediumLocation, startingTime, googleResponseMappedObject.getDepartingTime(), meansOfTransport.subList(1, meansOfTransport.size()), transportSegmentRecursiveList );
             }
@@ -211,15 +214,15 @@ public class TransportSolutionCalculator {
      * @param startingLocation
      * @param endingLocation
      * @param meanOfTransport
-     * @param arrivalTime
+     * @param time
      * @return This method call the google API to request the calculation of a route between two points
      * with a specific mean of transport
      */
-    private GoogleResponseMappedObject callGoogleAPI(Coordinates startingLocation, Coordinates endingLocation, MeanOfTransportLogic meanOfTransport, Timestamp arrivalTime) throws  MeanNotAvailableException {
+    private GoogleResponseMappedObject callGoogleAPI(Coordinates startingLocation, Coordinates endingLocation, MeanOfTransportLogic meanOfTransport, Timestamp time) throws  MeanNotAvailableException {
         GoogleResponseMappedObject googleResponseMappedObject;
 
-        googleResponseMappedObject = GoogleAPIHandler.askGoogle(startingLocation, endingLocation, meanOfTransport, typeOfMoment.toHttpsFormat(), arrivalTime);
-        googleResponseMappedObject.checkCompleteness(meanOfTransport.getTypeOfTransport().toHttpsFormat(), arrivalTime);
+        googleResponseMappedObject = GoogleAPIHandler.askGoogle(startingLocation, endingLocation, meanOfTransport, typeOfMoment.toHttpsFormat(), time);
+        googleResponseMappedObject.checkCompleteness(meanOfTransport.getTypeOfTransport().toHttpsFormat(), time);
 
         return googleResponseMappedObject;
     }

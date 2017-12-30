@@ -127,16 +127,18 @@ public class GoogleResponseMappedObject implements Serializable {
 
     public void checkCompleteness(String meanOfTransport, Timestamp arrivalTime) throws MeanNotAvailableException {
         boolean isPartial = false;
-        if(this.getLeg().getArrival_time() != null)
-            setArrivalTime(new Timestamp(this.getLeg().getArrival_time().getValue()*1000));
-        else {
-            setArrivalTime(arrivalTime);
-            InfoPair arrival_time = new InfoPair();
-            arrival_time.setValue(arrivalTime.getTime()/1000);
-            this.getLeg().setArrival_time(arrival_time);
-        }
+
         boolean meanFounded = false;
         if(status == null || status.equals("OK")) {
+            if(this.getLeg().getArrival_time() != null)
+                setArrivalTime(new Timestamp(this.getLeg().getArrival_time().getValue()*1000));
+            else {
+                setArrivalTime(arrivalTime);
+                InfoPair arrival_time = new InfoPair();
+                arrival_time.setValue(arrivalTime.getTime()/1000);
+                this.getLeg().setArrival_time(arrival_time);
+            }
+
             int i = 0;
             for (Step step : getSteps()) {
                 if(step.getTravel_mode().equals(meanOfTransport.toUpperCase()))
@@ -148,7 +150,7 @@ public class GoogleResponseMappedObject implements Serializable {
                 i++;
             }
             if(isPartial)
-                cutWay(i, getSteps().size(), this.arrivalTime);
+                cutWay(i, getSteps().size());
 
             setDepartingTime(new Timestamp((((this.getLeg().getArrival_time().getValue() - getDuration())*1000))));
 
@@ -161,7 +163,7 @@ public class GoogleResponseMappedObject implements Serializable {
 
     }
 
-    public void searchPublicLine(Timestamp arrivalTime){
+    public void searchPublicLine(){
         int i = 0;
 
 
@@ -173,7 +175,7 @@ public class GoogleResponseMappedObject implements Serializable {
             i++;
         }
         if(i != 0)
-            cutWay(0, i, arrivalTime);
+            cutWay(0, i);
     }
 
     /**
@@ -183,7 +185,7 @@ public class GoogleResponseMappedObject implements Serializable {
      *
      * @param i index from which the google response must be cut
      */
-    private void cutWay(int i, int j, Timestamp arrivalTime) {
+    private void cutWay(int i, int j) {
         if(i != 0)
             partialSolution = true;
         long dateTime;
