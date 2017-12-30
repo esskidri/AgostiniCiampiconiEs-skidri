@@ -1,6 +1,9 @@
 package com.travlendar.travlendarServer.model.domain;
 
 
+import com.travlendar.travlendarServer.model.clientModel.UserClient;
+import com.travlendar.travlendarServer.model.clientModel.UserOrderClient;
+
 import javax.persistence.*;
 
 
@@ -77,6 +80,18 @@ public class UserOrder extends AbstractEntity{
 
     public void setPrivateTransport(PrivateTransport privateTransport) {
         this.privateTransport = privateTransport;
+    }
+
+    public UserOrderClient getUserOrderClient(){
+        UserOrderClient userOrderClient;
+        if(publicTransport != null) {
+           userOrderClient = new UserOrderClient(id, order, publicTransport.getPublicTransportClient()
+                    , null);
+        }else{
+           userOrderClient = new UserOrderClient(id, order, null
+                    , privateTransport.getPrivateTransportClient());
+        }
+        return userOrderClient;
     }
 
 

@@ -5,6 +5,7 @@ import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic
 import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
 import com.travlendar.travlendarServer.model.clientModel.PublicTransportClient;
+import com.travlendar.travlendarServer.model.clientModel.UserOrderClient;
 import com.travlendar.travlendarServer.model.enumModel.Policy;
 import com.travlendar.travlendarServer.model.clientModel.PrivateTransportClient;
 import com.travlendar.travlendarServer.model.clientModel.UserClient;
@@ -256,8 +257,14 @@ public class User extends AbstractEntity implements UserLogic {
         for (PublicTransport pt: this.getPublicTransportList()) {
             publicTransportsClient.add(pt.getPublicTransportClient());
         }
+        ArrayList<UserOrderClient> userOrderClients = new ArrayList<>();
+        for (UserOrder userOrder: this.getUserOrders()) {
+            userOrderClients.add(userOrder.getUserOrderClient());
+        }
+
+
         UserClient userClient = new UserClient(id,first_name,last_name,email,age,sex,fiscal_code,policy,
-                privateTransportsClient,publicTransportsClient);
+                privateTransportsClient,publicTransportsClient,userOrderClients);
         return userClient;
     }
 
