@@ -25,7 +25,7 @@ public class MainLogic {
     public static List<TransportSolutionLogic> calculateTransportSolutions(List<EventLogic> events, UserLogic user) {
         EventGraph eventGraph = EventConnector.findConnection(events);
         List<TransportSolutionLogic> transportSolutions = new ArrayList<>();
-        TransportSolutionLogic transportSolutionLogic;
+        TransportSolutionLogic transportSolutionLogic = null;
         Timestamp arrivalAtHome = null;
         List<MeanOfTransportLogic> meansOfTransport = user.getMeanPreferences();
         List<MeanOfTransportLogic> meansOfTransportForSolution;
@@ -33,43 +33,69 @@ public class MainLogic {
         for (EventLogic outGoing : events) {
             for (EventLogic inGoing : eventGraph.edges().get(outGoing)) {
                 if (inGoing.atHome()) {
-                    EventLogic eventAfter;
-                    eventAfter = eventGraph.edges().get(inGoing).get(0);
-                    meansOfTransportForSolution = user.getPolicy().getCore().getMeanOfTransports(meansOfTransport,
-                            outGoing.getCoordinates(),
-                            inGoing.getCoordinates(),
-                            outGoing.getEndDate(),
-                            eventAfter.getStartDate(),
-                            TimeRequest.DEPARTURE);
-                    transportSolutionLogic = (new TransportSolutionCalculator(TimeRequest.DEPARTURE)).calculateSolution(outGoing.getCoordinates(),
-                            inGoing.getCoordinates(),
-                            outGoing.getEndDate(),
-                            eventAfter.getStartDate(),
-                            meansOfTransportForSolution);
-                    arrivalAtHome = transportSolutionLogic.getArrivalTime();
+                    for(EventLogic eventAfter: eventGraph.edges().get(inGoing)) {
+                        if(!outGoing.overlapping(eventAfter)) {
+                            meansOfTransportForSolution = user.getPolicy().getCore().getMeanOfTransports(meansOfTransport,
+                                    outGoing.getCoordinates(),
+                                    inGoing.getCoordinates(),
+                                    outGoing.getEndDate(),
+                                    eventAfter.getStartDate(),
+                                    TimeRequest.DEPARTURE);
+                            transportSolutionLogic = (new TransportSolutionCalculator(TimeRequest.DEPARTURE)).calculateSolution(outGoing.getCoordinates(),
+                                    inGoing.getCoordinates(),
+                                    outGoing.getEndDate(),
+                                    eventAfter.getStartDate(),
+                                    meansOfTransportForSolution);
+                            arrivalAtHome = transportSolutionLogic.getArrivalTime();
+                            break;
+                        }
+                    }
                 } else if (outGoing.atHome()) {
                     //I assume that this algorithm is never asked to calculate solution from a home event when before
                     //it didn't calculate solution to reach home, this is granted by the structure and the behave of
                     // event connector
-                    meansOfTransportForSolution = user.getPolicy().getCore().getMeanOfTransports(meansOfTransport, outGoing.getCoordinates(), inGoing.getCoordinates(), arrivalAtHome, inGoing.getStartDate(), TimeRequest.ARRIVAL);
-                    transportSolutionLogic = (new TransportSolutionCalculator(TimeRequest.ARRIVAL)).calculateSolution(outGoing.getCoordinates(), inGoing.getCoordinates(), arrivalAtHome, inGoing.getStartDate(), meansOfTransportForSolution);
+                    if(arrivalAtHome != null) {
+                        meansOfTransportForSolution = user.getPolicy().getCore().getMeanOfTransports(meansOfTransport, outGoing.getCoordinates(), inGoing.getCoordinates(), arrivalAtHome, inGoing.getStartDate(), TimeRequest.ARRIVAL);
+                        transportSolutionLogic = (new TransportSolutionCalculator(TimeRequest.ARRIVAL)).calculateSolution(outGoing.getCoordinates(), inGoing.getCoordinates(), arrivalAtHome, inGoing.getStartDate(), meansOfTransportForSolution);
+                    }
+                    else{
+                        //notificare l'impossibilità di arrivare a casa
+                    }
                 } else {
-                    meansOfTransportForSolution = user.getPolicy().getCore().getMeanOfTransports(meansOfTransport,
-                            outGoing.getCoordinates(),
-                            inGoing.getCoordinates(),
-                            outGoing.getEndDate(),
-                            inGoing.getStartDate(),
-                            TimeRequest.ARRIVAL);
-                    transportSolutionLogic = (new TransportSolutionCalculator(TimeRequest.ARRIVAL)).calculateSolution(outGoing.getCoordinates(),
-                            inGoing.getCoordinates(),
-                            outGoing.getEndDate(),
-                            inGoing.getStartDate(),
-                            meansOfTransportForSolution);
+                    if (outGoing.overlapping(inGoing)) {
+                        meansOfTransportForSolution = user.getPolicy().getCore().getMeanOfTransports(meansOfTransport,
+                                outGoing.getCoordinates(),
+                                inGoing.getCoordinates(),
+                                outGoing.getStartDate(),
+                                inGoing.getStartDate(),
+                                TimeRequest.ARRIVAL);
+                        transportSolutionLogic = (new TransportSolutionCalculator(TimeRequest.ARRIVAL)).calculateSolution(outGoing.getCoordinates(),
+                                inGoing.getCoordinates(),
+                                outGoing.getStartDate(),
+                                inGoing.getStartDate(),
+                                meansOfTransportForSolution);
+                    }
+                    else {
+                        meansOfTransportForSolution = user.getPolicy().getCore().getMeanOfTransports(meansOfTransport,
+                                outGoing.getCoordinates(),
+                                inGoing.getCoordinates(),
+                                outGoing.getEndDate(),
+                                inGoing.getStartDate(),
+                                TimeRequest.ARRIVAL);
+                        transportSolutionLogic = (new TransportSolutionCalculator(TimeRequest.ARRIVAL)).calculateSolution(outGoing.getCoordinates(),
+                                inGoing.getCoordinates(),
+                                outGoing.getEndDate(),
+                                inGoing.getStartDate(),
+                                meansOfTransportForSolution);
+                    }
                 }
-                transportSolutionLogic.setStartEvent(outGoing);
-                transportSolutionLogic.setEndEvent(inGoing);
-                setMeansOfTransport(transportSolutionLogic, meansOfTransport, user);
-                transportSolutions.add(transportSolutionLogic);
+                if(transportSolutionLogic != null) {
+                    transportSolutionLogic.setStartEvent(outGoing);
+                    transportSolutionLogic.setEndEvent(inGoing);
+                    setMeansOfTransport(transportSolutionLogic, meansOfTransport, user);
+                    transportSolutions.add(transportSolutionLogic);
+                    transportSolutionLogic = null;
+                }
             }
         }
 
@@ -115,4 +141,6 @@ public class MainLogic {
                     meansOfTransport.remove(meanOfTransportLogic);
         }
     }
+
+
 }

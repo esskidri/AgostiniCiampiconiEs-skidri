@@ -115,20 +115,36 @@ public class RequestHandler {
             Event e = new Event(u, startDate, endDate, posX, posY, description, name, endEvent);
             eventDao.customSave(e);
 
+            List<Event> eventList = u.getEvents();
+            orderEvents(eventList);
+
             List<EventLogic> userEvents = new ArrayList<>();
-            userEvents.addAll(u.getEvents());
+            userEvents.addAll(eventList);
             List<EventLogic> eventLogics1 = MainLogic.getDailyEventsForReplan(userEvents, e.getStartDate(), e.getEndDate());
 
             List<Event> events = new ArrayList<>();
             for(EventLogic eventLogic: eventLogics1)
                 events.add((Event) eventLogic);
             clearTransportSolution(events);
-            if(e.isEndEvent()) {
-                eventDao.delete((Event) eventLogics1.get(eventLogics1.indexOf(e) + 1));
-                eventLogics1.remove(eventLogics1.get(eventLogics1.indexOf(e) + 1));
+            //computation
+            List<TransportSolutionLogic> tsl = MainLogic.calculateTransportSolutions(eventLogics1, u);
+            List<Event> eventsToBeAdded = new ArrayList<>();
+
+            for (EventLogic event : eventLogics1)
+                if (!u.getEvents().contains(event)) {
+                    eventsToBeAdded.add((Event) event);
+                }
+
+            for (Event event : eventsToBeAdded) {
+                try {
+                    eventDao.customSave(event);
+                } catch (Exception e3) {
+                    e3.printStackTrace();
+                }
             }
-            saveTransportSolutionLogic(MainLogic.calculateTransportSolutions(eventLogics1, u));
-            replan(u.getId());
+
+            //save
+            saveTransportSolutionLogic(tsl);
             r.setMessage("event added into DB");
         } catch (DataEntryException e1) {
             r.setMessage("fail: " + e1.getMessage());
@@ -388,6 +404,26 @@ public class RequestHandler {
             transportSolutionDao.delete(transportSolutions);
             transportSegmentDao.delete(transportSegments);
         }
+    }
+
+    private void orderEvents(List<Event> events){
+        for(int i = 0; i < events.size() -1; i++){
+            for(int j = i +1; j < events.size(); j++){
+                if(events.get(i).compareTo(events.get(j)) > 0)
+                    swapEvents(events, i, j);
+            }
+        }
+    }
+
+    private void swapEvents(List<Event> events, int i, int j) {
+        Event event1 = events.get(i);
+        Event event2 = events.get(j);
+
+        events.remove(i);
+        events.remove(j -1);
+
+        events.add(i, event2);
+        events.add(j, event1);
     }
 
 

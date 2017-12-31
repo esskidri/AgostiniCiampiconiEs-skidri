@@ -45,9 +45,9 @@ public class EventConnector {
 
         for(EventLogic event: eventGraph.nodes()){
             for(EventGraph.Edge edge: eventGraph.edgesFrom(event)){
-                if(event.overlapping(edge.getE())){
+                if(event.overlapping(edge.getE()) && !edge.getE().atHome() && !event.atHome()){
                     for(EventGraph.Edge edge1: eventGraph.edgesFrom(edge.getS()))
-                        eventGraph.connect(event, edge1.getS());
+                        eventGraph.connect(event, edge1.getE());
                 }
             }
         }
