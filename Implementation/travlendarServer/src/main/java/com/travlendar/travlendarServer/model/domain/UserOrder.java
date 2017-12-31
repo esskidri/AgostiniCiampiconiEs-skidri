@@ -19,17 +19,17 @@ public class UserOrder extends AbstractEntity{
     @Column(name = "num_order")
     private int order;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="user_id")
     private User user;
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "public_transport_id")
     private PublicTransport publicTransport;
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "private_transport_id")
     private PrivateTransport privateTransport;
 

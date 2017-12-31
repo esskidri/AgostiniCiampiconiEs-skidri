@@ -326,6 +326,20 @@ public class RequestHandler {
     }
 
 
+    @RequestMapping("/delete-all-order")
+    @ResponseBody
+    public String addOrder(@RequestParam("user_id") Long userId){
+        Response r=new Response("ok");
+        try{
+            User u = userDao.findOne(userId);
+            userOrderDao.delete(u.getUserOrders());
+            userDao.save(u);
+            r.setMessage("order deleted");
+        }catch(Exception e2){
+            r.setMessage("fail"+e2.getMessage());
+        }
+        return r.getMessage();
+    }
 
     @RequestMapping("/add-order")
     @ResponseBody

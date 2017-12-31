@@ -183,14 +183,14 @@ public class UserController {
         }
 
         //save
-        saveTransportSolutionLogic(tsl);
+        //saveTransportSolutionLogic(tsl);
 
         return "ok";
 
     }
 
 
-    private void saveTransportSolutionLogic(List<TransportSolutionLogic> tsl) {
+    /*private void saveTransportSolutionLogic(List<TransportSolutionLogic> tsl) {
         List<TransportSolution> transportSolutions = new ArrayList<>();
         int i = 0;
         //compose and save transport solutions
@@ -213,7 +213,7 @@ public class UserController {
                 segmentOrder++;
             }
         }
-    }
+    }*/
 
 
     //TODO re-add Fetch JSON
