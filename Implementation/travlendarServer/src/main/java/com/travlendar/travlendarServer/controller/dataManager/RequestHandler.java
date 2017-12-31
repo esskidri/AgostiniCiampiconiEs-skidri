@@ -344,6 +344,20 @@ public class RequestHandler {
     }
 
 
+    @RequestMapping("/delete-all-order")
+    @ResponseBody
+    public String addOrder(@RequestParam("user_id") Long userId){
+        Response r=new Response("ok");
+        try{
+            User u = userDao.findOne(userId);
+            userOrderDao.delete(u.getUserOrders());
+            userDao.save(u);
+            r.setMessage("order deleted");
+        }catch(Exception e2){
+            r.setMessage("fail"+e2.getMessage());
+        }
+        return r.getMessage();
+    }
 
     @RequestMapping("/add-order")
     @ResponseBody
@@ -367,6 +381,35 @@ public class RequestHandler {
         }
         return r.getMessage();
     }
+
+    @RequestMapping("/set-policy")
+    @ResponseBody
+    public String addFreeTime(@RequestParam("user_id") Long userId,
+                              @RequestParam("policy") String policy) {
+        Response r=new Response("ok");
+        try{
+            //fetch the user
+            User u = userDao.findOne(userId);
+            policy = policy.toUpperCase();
+            switch (policy){
+                case "GREEN": u.setPolicy(Policy.GREEN);
+                              break;
+                case "FAST":  u.setPolicy(Policy.FAST);
+                              break;
+                case "CHEAP": u.setPolicy(Policy.CHEAP);
+                              break;
+                default:      u.setPolicy(Policy.GREEN);
+                              break;
+            }
+            userDao.save(u);
+            r.setMessage("policy setted");
+        }catch(Exception e2){
+            r.setMessage("fail"+e2.getMessage());
+        }
+        return r.getMessage();
+    }
+
+
 
     @RequestMapping("/add-free-time")
     @ResponseBody

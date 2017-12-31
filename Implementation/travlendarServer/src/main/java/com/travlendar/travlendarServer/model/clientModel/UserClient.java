@@ -17,10 +17,11 @@ public class UserClient implements Serializable{
     private Policy policy;
     private ArrayList<PrivateTransportClient> privateTransportsClient;
     private ArrayList<PublicTransportClient> publicTransportsClient;
+    private ArrayList<UserOrderClient> userOrderClients;
 
     public UserClient(Long id, String first_name, String last_name, String email, Integer age, String sex,
                       String fiscal_code, Policy policy, ArrayList<PrivateTransportClient> privateTransportsClient,
-                      ArrayList<PublicTransportClient> publicTransportsClient) {
+                      ArrayList<PublicTransportClient> publicTransportsClient,ArrayList<UserOrderClient> userOrderClients) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -31,7 +32,16 @@ public class UserClient implements Serializable{
         this.policy = policy;
         this.privateTransportsClient = privateTransportsClient;
         this.publicTransportsClient = publicTransportsClient;
+        this.userOrderClients = userOrderClients;
 
+    }
+
+    public ArrayList<UserOrderClient> getUserOrderClients() {
+        return userOrderClients;
+    }
+
+    public void setUserOrderClients(ArrayList<UserOrderClient> userOrderClients) {
+        this.userOrderClients = userOrderClients;
     }
 
     public ArrayList<PublicTransportClient> getPublicTransportsClient() {
