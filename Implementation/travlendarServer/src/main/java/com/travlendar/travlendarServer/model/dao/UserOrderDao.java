@@ -10,7 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface UserOrderDao extends CrudRepository<UserOrder,Long> {
 
-    default UserOrder customSave (User u, UserOrder ur) throws Exception {
+    default UserOrder customSave(User u, UserOrder ur) throws Exception {
         /**
          * check if there is only one kind of transport in the relative order
          */
@@ -21,5 +21,4 @@ public interface UserOrderDao extends CrudRepository<UserOrder,Long> {
          */
         return save(ur);
     }
-
 }

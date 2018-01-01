@@ -307,6 +307,7 @@ public class RequestHandler {
             PrivateTransport p = new PrivateTransport(u, name, meanType, displacement, license, green);
             //save
             p=privateTransportDao.customSave(p);
+            u=userDao.save(u);
             addOrder(u.getId(),p.getId(),p.isPrivate());
             r.setMessage("mean added ");
         } catch (DataEntryException e) {
@@ -319,14 +320,16 @@ public class RequestHandler {
 
     @RequestMapping("delete-private-transport")
     @ResponseBody
-    public String addPrivateTransport(@RequestParam("user_id") Long userId,
+    public String deletePrivateTransport(@RequestParam("user_id") Long userId,
                                       @RequestParam("transport_id") Long transportId){
         Response r=new Response("ok");
         try {
             User u = userDao.findOne(userId);
             if (u == null) throw new DataEntryException("user not found");
             privateTransportDao.delete(transportId);
-            r.setMessage("mean added ");
+            compactOrder(u,getDelimiter(u.getUserOrders()));
+            userOrderDao.save(u.getUserOrders());
+            r.setMessage("mean deleted ");
         } catch (DataEntryException e) {
             r.setMessage(e.getMessage());
         } catch (Exception e) {
@@ -335,6 +338,19 @@ public class RequestHandler {
         return r.getMessage();
     }
 
+    public void compactOrder(User u, int delimiter){
+        for (UserOrder elem : u.getUserOrders()) {
+            if(elem.getOrder() > delimiter) elem.setOrder(elem.getOrder()-1);
+        }
+    }
+
+    public int getDelimiter(List<UserOrder> list){
+        if(list.get(0).getOrder() == 2) return 1;
+        for(int i = 0; i<list.size()-1;i++){
+            if(list.get(i).getOrder()+1 != list.get(i+1).getOrder()) return i+1;
+        }
+        return list.size()-1;
+    }
 
 
 
@@ -388,7 +404,7 @@ public class RequestHandler {
             User u = userDao.findOne(userId);
             UserOrder ur;
             if(type){
-                ur = new UserOrder(u.getUserOrders().size()+1,u, null,u.getPrivateTransportById(transportId));
+                ur = new UserOrder(u.getUserOrders().size()+1,u, null,privateTransportDao.findOne(transportId));
             }else{
                 ur = new UserOrder(u.getUserOrders().size()+1,u,publicTransportDao.findOne(transportId),null);
             }
