@@ -317,6 +317,27 @@ public class RequestHandler {
         return r.getMessage();
     }
 
+    @RequestMapping("delete-private-transport")
+    @ResponseBody
+    public String addPrivateTransport(@RequestParam("user_id") Long userId,
+                                      @RequestParam("transport_id") Long transportId){
+        Response r=new Response("ok");
+        try {
+            User u = userDao.findOne(userId);
+            if (u == null) throw new DataEntryException("user not found");
+            privateTransportDao.delete(transportId);
+            r.setMessage("mean added ");
+        } catch (DataEntryException e) {
+            r.setMessage(e.getMessage());
+        } catch (Exception e) {
+            r.setMessage("fail: " + e.getMessage());
+        }
+        return r.getMessage();
+    }
+
+
+
+
     @RequestMapping("/add-user-public-transport")
     @ResponseBody
     public String addUserPublicTransport(@RequestParam("user_id") Long userId){
