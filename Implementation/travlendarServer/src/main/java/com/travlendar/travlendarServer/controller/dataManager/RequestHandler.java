@@ -280,9 +280,6 @@ public class RequestHandler {
             User u = userDao.findOne(userId);
             ArrayList<EventClient> eventClients = new ArrayList<EventClient>();
             for (Event event : u.getEvents()) eventClients.add(event.getEventClient());
-            for(Event event : u.getEvents()){
-                eventClients.add(event.getEventClient());
-            }
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss.S").setPrettyPrinting().create();
             String jsonInString = gson.toJson(eventClients);
             return jsonInString;
