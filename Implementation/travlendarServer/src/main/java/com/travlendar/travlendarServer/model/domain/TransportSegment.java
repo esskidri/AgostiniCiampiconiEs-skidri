@@ -245,6 +245,8 @@ public class TransportSegment extends AbstractEntity implements Serializable,Tra
                 (privateTransport!=null)? privateTransport.getPrivateTransportClient():null,
                 (publicTransport!=null)?publicTransport.getPublicTransportClient():null,positionAX,positionAY,
                 positionBX,positionBY,distance,description,duration,departureTime,arrivalTime);
+        transportSegmentClient.setDepartureTime(this.departureTime);
+        transportSegmentClient.setArrivalTime(this.arrivalTime);
         return transportSegmentClient;
     }
 
