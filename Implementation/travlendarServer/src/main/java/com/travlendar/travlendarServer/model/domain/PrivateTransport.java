@@ -40,7 +40,7 @@ public class PrivateTransport extends AbstractEntity implements MeanOfTransportL
     private List<User> users;
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "green_id")
     private Green green;
 
