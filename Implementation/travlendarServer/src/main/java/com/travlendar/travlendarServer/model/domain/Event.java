@@ -54,7 +54,7 @@ public class Event implements Serializable,  EventLogic {
     @OneToMany(cascade = CascadeType.ALL, mappedBy="event2")
     private List<TransportSolution> transportSolutions2;
 
-    @Transient
+    @Column(name="at_home")
     private boolean atHome = false;
 
     public Event(){}
@@ -252,6 +252,8 @@ public class Event implements Serializable,  EventLogic {
 
         EventClient eventClient = new EventClient(this.id,this.startDate,this.endDate,this.posX,this.posY,
                                                     this.description,this.name,this.endEvent,transportSolutionClientsA,transportSolutionClientsB);
+
+
         return eventClient;
     }
 
