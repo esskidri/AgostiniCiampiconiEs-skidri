@@ -129,6 +129,12 @@ public class TransportSolution extends AbstractEntity implements Serializable, T
 
         return meansOfTransportUsed;
     }
+
+    @Override
+    public boolean isEmpty() {
+        return transportSegments.isEmpty();
+    }
+
     public TransportSolutionClient getTransportSolutionClient(){
         List<TransportSegmentClient> transportSegmentClients=new ArrayList<>();
         for(TransportSegment t:transportSegments){

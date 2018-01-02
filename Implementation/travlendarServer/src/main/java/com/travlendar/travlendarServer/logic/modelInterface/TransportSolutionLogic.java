@@ -11,4 +11,6 @@ public interface TransportSolutionLogic {
     EventLogic getEndEvent();
     Timestamp getArrivalTime();
     List<MeanOfTransportLogic> getPrivateMeansUsed();
+    boolean isEmpty();
+
 }
