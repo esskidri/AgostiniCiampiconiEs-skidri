@@ -18,6 +18,7 @@ import com.travlendar.travlendarServer.model.domain.*;
 import com.travlendar.travlendarServer.model.enumModel.Policy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -120,30 +121,17 @@ public class RequestHandler {
 
             List<EventLogic> userEvents = new ArrayList<>();
             userEvents.addAll(eventList);
-            List<EventLogic> eventLogics1 = MainLogic.getDailyEventsForReplan(userEvents, e.getStartDate(), e.getEndDate());
+            List<EventLogic> eventLogics = MainLogic.getDailyEventsForReplan(userEvents, e.getStartDate(), e.getEndDate());
 
             List<Event> events = new ArrayList<>();
-            for(EventLogic eventLogic: eventLogics1)
+            for(EventLogic eventLogic: eventLogics)
                 events.add((Event) eventLogic);
             clearTransportSolution(events);
             //computation
-            List<TransportSolutionLogic> tsl = MainLogic.calculateTransportSolutions(eventLogics1, u);
-            List<Event> eventsToBeAdded = new ArrayList<>();
-
-            for (EventLogic event : eventLogics1)
-                if (!u.getEvents().contains(event)) {
-                    eventsToBeAdded.add((Event) event);
-                }
-
-            for (Event event : eventsToBeAdded) {
-                try {
-                    eventDao.customSave(event);
-                } catch (Exception e3) {
-                    e3.printStackTrace();
-                }
-            }
+            List<TransportSolutionLogic> tsl = MainLogic.calculateTransportSolutions(eventLogics, u);
 
             //save
+            saveNewEvent(eventLogics, u);
             saveTransportSolutionLogic(tsl);
             r.setMessage("event added into DB");
         } catch (DataEntryException e1) {
@@ -163,42 +151,21 @@ public class RequestHandler {
         try {
             //fetch the user
             User u = userDao.findOne(userId);
-            ArrayList<EventLogic> listEventLogic = new ArrayList<>();
-            //Oracle engineer don't know how to do that
-            listEventLogic.addAll(u.getEvents());
+            ArrayList<EventLogic> eventLogics = new ArrayList<>();
+
+            eventLogics.addAll(u.getEvents());
+            clearTransportSolution(u.getEvents());
             //get the transport solution
-            List<TransportSolutionLogic> outputSol = MainLogic.calculateTransportSolutions(listEventLogic, u);
+            List<TransportSolutionLogic> outputSol = MainLogic.calculateTransportSolutions(eventLogics, u);
+
+            saveNewEvent(eventLogics, u);
+
             saveTransportSolutionLogic(outputSol);
             r.setMessage("success");
         } catch (Exception e2) {
             r.setMessage("fail: " + e2.getMessage());
         }
         return r.getMessage();
-    }
-
-    private void saveTransportSolutionLogic(List<TransportSolutionLogic> tsl) {
-        List<TransportSolution> transportSolutions = new ArrayList<>();
-        int i = 0;
-        //compose and save transport solutions
-        for (TransportSolutionLogic x : tsl) {
-            transportSolutions.add((TransportSolution) x);
-            TransportSolutionId tsID = new TransportSolutionId(transportSolutions.get(i).getEvent1().getId(),
-                    transportSolutions.get(i).getEvent2().getId());
-            transportSolutions.get(i).setTransportSolutionId(tsID);
-            i++;
-        }
-        transportSolutionDao.save(transportSolutions);
-        //compose and save transport segments
-        for (TransportSolution t : transportSolutions) {
-            int segmentOrder = 0;
-            for (TransportSegment transportSegment : t.getTransportSegments()) {
-                TransportSegmentId transportSegmentId = new TransportSegmentId(segmentOrder, t.getEvent1().getId(),
-                        t.getEvent2().getId());
-                transportSegment.setTransportSegmentId(transportSegmentId);
-                transportSegmentDao.save(transportSegment);
-                segmentOrder++;
-            }
-        }
     }
 
 
@@ -211,7 +178,26 @@ public class RequestHandler {
         try {
             User u = userDao.findOne(userId);
             Event e = eventDao.findOne(eventId);
+
+            List<EventLogic> userEvent = new ArrayList<>();
+
+            userEvent.addAll(u.getEvents());
+            List<EventLogic> eventLogics = MainLogic.getDailyEventsForReplan(userEvent, e.getStartDate(), e.getEndDate());
+
+            List<Event> events = new ArrayList<>();
+            for(EventLogic eventLogic: eventLogics)
+                events.add((Event) eventLogic);
+            clearTransportSolution(events);
+
             eventDao.customDelete(e, u);
+            eventLogics.remove(e);
+
+            //computation
+            List<TransportSolutionLogic> tsl = MainLogic.calculateTransportSolutions(eventLogics, u);
+            saveNewEvent(eventLogics, u);
+            saveTransportSolutionLogic(tsl);
+
+
             r.setMessage("event deleted");
         } catch (DataEntryException e1) {
             r.setMessage(e1.getMessage());
@@ -230,9 +216,13 @@ public class RequestHandler {
                               @RequestParam("pos_y") Float posY, @RequestParam("description") String description,
                               @RequestParam("name") String name, @RequestParam("end_event") Boolean endEvent) {
         Response r = new Response("ok");
+
+        //todo control
         try {
             User u = userDao.findOne(userId);
             Event e = eventDao.findOne(eventId);
+            Event temporaryE = new Event();
+            temporaryE.completeSet(e.getUser(),e.getStartDate(),e.getEndDate(),e.getPosX(), e.getPosY(),e.getDescription(),e.getName(),e.getEndDate());
 
             List<EventLogic> userEvents = new ArrayList<>();
             userEvents.addAll(u.getEvents());
@@ -242,21 +232,20 @@ public class RequestHandler {
 
 
             List<Event> events = new ArrayList<>();
-            for(EventLogic eventLogic: eventLogics1)
+            for(EventLogic eventLogic: eventLogics2)
                 events.add((Event) eventLogic);
             clearTransportSolution(events);
-            if(e.isEndEvent()) {
-                eventDao.delete((Event) eventLogics1.get(eventLogics1.indexOf(e) + 1));
-                eventLogics1.remove(eventLogics1.get(eventLogics1.indexOf(e) + 1));
-            }
-            saveTransportSolutionLogic(MainLogic.calculateTransportSolutions(eventLogics1, u));
+            saveTransportSolutionLogic(MainLogic.calculateTransportSolutions(eventLogics2, u));
+            eventDao.customUpdate(e, u);
+            saveNewEvent(eventLogics2, u);
 
             if(!eventLogics2.equals(eventLogics1)){
                 events.clear();
+                eventLogics1.remove(temporaryE);
                 for(EventLogic eventLogic: eventLogics1)
                     events.add((Event) eventLogic);
                 clearTransportSolution(events);
-                saveTransportSolutionLogic(MainLogic.calculateTransportSolutions(eventLogics2, u));
+                saveTransportSolutionLogic(MainLogic.calculateTransportSolutions(eventLogics1, u));
             }
 
 
@@ -466,6 +455,50 @@ public class RequestHandler {
 
     /*** Request Handler support methods ***/
 
+
+    private void saveNewEvent(List<EventLogic> eventLogics, User u) {
+        List<Event> eventsToBeAdded = new ArrayList<>();
+
+        for (EventLogic event : eventLogics)
+            if (!u.getEvents().contains(event)) {
+                eventsToBeAdded.add((Event) event);
+            }
+
+        for (Event event : eventsToBeAdded) {
+            try {
+                eventDao.customSave(event);
+            } catch (Exception e3) {
+                e3.printStackTrace();
+            }
+        }
+    }
+
+    private void saveTransportSolutionLogic(List<TransportSolutionLogic> tsl) {
+        List<TransportSolution> transportSolutions = new ArrayList<>();
+        int i = 0;
+        //compose and save transport solutions
+        for (TransportSolutionLogic x : tsl) {
+            transportSolutions.add((TransportSolution) x);
+            TransportSolutionId tsID = new TransportSolutionId(transportSolutions.get(i).getEvent1().getId(),
+                    transportSolutions.get(i).getEvent2().getId());
+            transportSolutions.get(i).setTransportSolutionId(tsID);
+            i++;
+        }
+        transportSolutionDao.save(transportSolutions);
+        //compose and save transport segments
+        for (TransportSolution t : transportSolutions) {
+            int segmentOrder = 0;
+            for (TransportSegment transportSegment : t.getTransportSegments()) {
+                TransportSegmentId transportSegmentId = new TransportSegmentId(segmentOrder, t.getEvent1().getId(),
+                        t.getEvent2().getId());
+                transportSegment.setTransportSegmentId(transportSegmentId);
+                transportSegmentDao.save(transportSegment);
+                segmentOrder++;
+            }
+        }
+    }
+
+
     private void clearTransportSolution(List<Event> events) throws Exception{
         List<TransportSolution> transportSolutions;
         List<TransportSegment> transportSegments;
@@ -478,8 +511,10 @@ public class RequestHandler {
             for (TransportSolution transportSolution : transportSolutions) {
                 transportSegments.addAll(transportSolution.getTransportSegments());
             }
-            transportSolutionDao.delete(transportSolutions);
-            transportSegmentDao.delete(transportSegments);
+            for(TransportSolution transportSolution: transportSolutions)
+                transportSolutionDao.delete(transportSolution.getTransportSolutionId());
+            for(TransportSegment transportSegment: transportSegments)
+                transportSegmentDao.delete(transportSegment.getTransportSegmentId());
         }
     }
 

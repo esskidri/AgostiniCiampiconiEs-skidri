@@ -33,8 +33,8 @@ public class MainLogic {
         for (EventLogic outGoing : events) {
             for (EventLogic inGoing : eventGraph.edges().get(outGoing)) {
                 if (inGoing.atHome()) {
-                    for(EventLogic eventAfter: eventGraph.edges().get(inGoing)) {
-                        if(!outGoing.overlapping(eventAfter)) {
+                    for (EventLogic eventAfter : eventGraph.edges().get(inGoing)) {
+                        if (!outGoing.overlapping(eventAfter)) {
                             meansOfTransportForSolution = user.getPolicy().getCore().getMeanOfTransports(meansOfTransport,
                                     outGoing.getCoordinates(),
                                     inGoing.getCoordinates(),
@@ -54,11 +54,10 @@ public class MainLogic {
                     //I assume that this algorithm is never asked to calculate solution from a home event when before
                     //it didn't calculate solution to reach home, this is granted by the structure and the behave of
                     // event connector
-                    if(arrivalAtHome != null) {
+                    if (arrivalAtHome != null) {
                         meansOfTransportForSolution = user.getPolicy().getCore().getMeanOfTransports(meansOfTransport, outGoing.getCoordinates(), inGoing.getCoordinates(), arrivalAtHome, inGoing.getStartDate(), TimeRequest.ARRIVAL);
                         transportSolutionLogic = (new TransportSolutionCalculator(TimeRequest.ARRIVAL)).calculateSolution(outGoing.getCoordinates(), inGoing.getCoordinates(), arrivalAtHome, inGoing.getStartDate(), meansOfTransportForSolution);
-                    }
-                    else{
+                    } else {
                         //notificare l'impossibilità di arrivare a casa
                     }
                 } else {
@@ -74,8 +73,7 @@ public class MainLogic {
                                 outGoing.getStartDate(),
                                 inGoing.getStartDate(),
                                 meansOfTransportForSolution);
-                    }
-                    else {
+                    } else {
                         meansOfTransportForSolution = user.getPolicy().getCore().getMeanOfTransports(meansOfTransport,
                                 outGoing.getCoordinates(),
                                 inGoing.getCoordinates(),
@@ -89,40 +87,41 @@ public class MainLogic {
                                 meansOfTransportForSolution);
                     }
                 }
-                if(transportSolutionLogic != null) {
+                if (transportSolutionLogic != null) {
                     transportSolutionLogic.setStartEvent(outGoing);
                     transportSolutionLogic.setEndEvent(inGoing);
                     setMeansOfTransport(transportSolutionLogic, meansOfTransport, user);
-                    transportSolutions.add(transportSolutionLogic);
+                    if (!transportSolutionLogic.isEmpty())
+                        transportSolutions.add(transportSolutionLogic);
                     transportSolutionLogic = null;
                 }
             }
         }
 
         events = eventGraph.nodes();
-        for(EventLogic eventLogic: events)
-            if(eventLogic.atHome()){
+        for (EventLogic eventLogic : events)
+            if (eventLogic.atHome()) {
                 eventLogic.setUser(user);
             }
         return transportSolutions;
     }
 
-    public static List<EventLogic> getDailyEventsForReplan(List<EventLogic> events, Timestamp startingDate, Timestamp endingDate){
+    public static List<EventLogic> getDailyEventsForReplan(List<EventLogic> events, Timestamp startingDate, Timestamp endingDate) {
         boolean foundedDay = false;
         EventLogic firstEndEvent = events.get(0);
         EventLogic secondEndEvent = null;
 
-        for(EventLogic eventLogic: events){
-            if(eventLogic.isEndEvent() && eventLogic.getEndDate().compareTo(startingDate) <= 0)
+        for (EventLogic eventLogic : events) {
+            if (eventLogic.isEndEvent() && eventLogic.getEndDate().compareTo(startingDate) <= 0)
                 firstEndEvent = eventLogic;
-            if(eventLogic.isEndEvent() && eventLogic.getStartDate().compareTo(endingDate) >= 0){
+            if (eventLogic.isEndEvent() && eventLogic.getStartDate().compareTo(endingDate) >= 0) {
                 foundedDay = true;
                 secondEndEvent = eventLogic;
                 break;
             }
         }
-        if(foundedDay)
-            return events.subList(events.indexOf(firstEndEvent), events.indexOf(secondEndEvent) +1);
+        if (foundedDay)
+            return events.subList(events.indexOf(firstEndEvent), events.indexOf(secondEndEvent) + 1);
         else
             return events.subList(events.indexOf(firstEndEvent), events.size());
     }

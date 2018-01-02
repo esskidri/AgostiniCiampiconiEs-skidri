@@ -103,6 +103,8 @@ public class TransportSolutionCalculator {
                     throw new TimeViolationException();
                 calculateSegment(startingLocation, mediumLocation, startingTime, googleResponseMappedObject.getDepartingTime(), meansOfTransport.subList(1, meansOfTransport.size()), transportSegmentRecursiveList );
             }
+            if (googleResponseMappedObject.getDepartingTime().compareTo(startingTime) < 0 || googleResponseMappedObject.getArrivalTime().compareTo(arrivalTime) > 0)
+                throw new TimeViolationException();
 
             //the calculated segment is inserted
             transportSegments.addAll(transportSegmentRecursiveList);
@@ -207,6 +209,7 @@ public class TransportSolutionCalculator {
 
     @NotNull
     private Coordinates getLocationByExternalAPI(MeanOfTransportLogic meanOfTransport, Coordinates startingLocation, Coordinates endingLocation, Timestamp arrivalTime) throws MeanNotAvailableException {
+        //this is a future expansion wich  includes an interface to use external API such as Car2go and other
         throw new MeanNotAvailableException();
     }
 
