@@ -18,11 +18,11 @@ import java.util.List;
 @Table(name = "transport_solution")
 public class TransportSolution extends AbstractEntity implements Serializable, TransportSolutionLogic {
 
-    @OneToOne
+    @OneToOne(/*cascade = CascadeType.ALL*/)
     @JoinColumn(name="event_id_1",insertable = false, updatable = false)
     private Event event1;
 
-    @OneToOne
+    @OneToOne(/*cascade = CascadeType.ALL*/)
     @JoinColumn(name="event_id_2",insertable = false, updatable = false)
     private Event event2;
 

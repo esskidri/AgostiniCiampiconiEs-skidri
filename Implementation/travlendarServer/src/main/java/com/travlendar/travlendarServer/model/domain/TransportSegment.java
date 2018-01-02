@@ -16,7 +16,7 @@ public class TransportSegment extends AbstractEntity implements Serializable,Tra
     @Column(name = "num_order",insertable = false, updatable = false)
     private Long numOrder;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(/*cascade = CascadeType.REMOVE*/)
     @JoinColumns({
             @JoinColumn(name = "transport_solution_event_id_1", referencedColumnName = "event_id_1",insertable = false, updatable = false),
             @JoinColumn(name = "transport_solution_event_id_2",  referencedColumnName = "event_id_2",insertable = false, updatable = false)
@@ -30,11 +30,11 @@ public class TransportSegment extends AbstractEntity implements Serializable,Tra
         return transportSegmentId;
     }
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(/*cascade = CascadeType.PERSIST*/)
     @JoinColumn(name="private_transport_id")
     private PrivateTransport privateTransport;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(/*cascade = CascadeType.PERSIST*/)
     @JoinColumn(name="public_transport_id")
     private PublicTransport publicTransport;
 

@@ -176,6 +176,22 @@ public class RequestHandler {
         return r.getMessage();
     }
 
+    @RequestMapping("/deleteTS")
+    @ResponseBody
+    public String deleteTS() {
+        TransportSolution solution=null;
+        int i=0;
+       for(TransportSolution t:transportSolutionDao.findAll()){
+           if(i==0) {
+               solution = t;
+           }
+       }
+       transportSolutionDao.delete(solution);
+       return "ok";
+    }
+
+
+
     private void saveTransportSolutionLogic(List<TransportSolutionLogic> tsl) {
         List<TransportSolution> transportSolutions = new ArrayList<>();
         int i = 0;
@@ -478,8 +494,8 @@ public class RequestHandler {
             for (TransportSolution transportSolution : transportSolutions) {
                 transportSegments.addAll(transportSolution.getTransportSegments());
             }
-            transportSolutionDao.delete(transportSolutions);
             transportSegmentDao.delete(transportSegments);
+            transportSolutionDao.delete(transportSolutions);
         }
     }
 
