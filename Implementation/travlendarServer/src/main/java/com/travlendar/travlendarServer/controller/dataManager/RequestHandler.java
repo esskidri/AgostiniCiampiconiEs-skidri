@@ -184,30 +184,6 @@ public class RequestHandler {
 
 
 
-    private void saveTransportSolutionLogic(List<TransportSolutionLogic> tsl) {
-        List<TransportSolution> transportSolutions = new ArrayList<>();
-        int i = 0;
-        //compose and save transport solutions
-        for (TransportSolutionLogic x : tsl) {
-            transportSolutions.add((TransportSolution) x);
-            TransportSolutionId tsID = new TransportSolutionId(transportSolutions.get(i).getEvent1().getId(),
-                    transportSolutions.get(i).getEvent2().getId());
-            transportSolutions.get(i).setTransportSolutionId(tsID);
-            i++;
-        }
-        transportSolutionDao.save(transportSolutions);
-        //compose and save transport segments
-        for (TransportSolution t : transportSolutions) {
-            int segmentOrder = 0;
-            for (TransportSegment transportSegment : t.getTransportSegments()) {
-                TransportSegmentId transportSegmentId = new TransportSegmentId(segmentOrder, t.getEvent1().getId(),
-                        t.getEvent2().getId());
-                transportSegment.setTransportSegmentId(transportSegmentId);
-                transportSegmentDao.save(transportSegment);
-                segmentOrder++;
-            }
-        }
-    }
 
 
 
