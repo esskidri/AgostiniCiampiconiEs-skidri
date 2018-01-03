@@ -22,6 +22,7 @@ public class TransportSolutionCalculator {
     private List<TransportSegmentLogic> transportSegments = new ArrayList<>();
     private List<MeanOfTransportLogic> meansOfTransport;
     private TimeRequest typeOfMoment;
+    private boolean busTaken = true;
 
     public TransportSolutionCalculator(TimeRequest moment) {
         typeOfMoment = moment;
@@ -74,6 +75,7 @@ public class TransportSolutionCalculator {
     private void calculateSegment(Coordinates startingLocation, Coordinates endingLocation, Timestamp startingTime, Timestamp arrivalTime, List<MeanOfTransportLogic> meansOfTransport, List<TransportSegmentLogic> transportSegments) throws NoMeanAvailableExpection, CannotArriveInTimeException {
         GoogleResponseMappedObject googleResponseMappedObject;
         List<TransportSegmentLogic> transportSegmentRecursiveList = new ArrayList<>();
+        boolean busTaken = false;
 
         if (meansOfTransport.size() == 0)
             throw new NoMeanAvailableExpection();
@@ -97,12 +99,16 @@ public class TransportSolutionCalculator {
                 }
                 else {
                     //Else the medium location is obtained by the position of a private sharing services (MoBike, Enjoy etc)
+                    //For this stage i did not consider to go to reach
                     mediumLocation = getLocationByExternalAPI(meansOfTransport.get(0), startingLocation, endingLocation, getTime(startingTime,arrivalTime));
                     googleResponseMappedObject = callGoogleAPI(mediumLocation, endingLocation, meansOfTransport.get(0), getTime(startingTime,arrivalTime));
                 }
                 if (googleResponseMappedObject.getDepartureTime().compareTo(startingTime) < 0 || googleResponseMappedObject.getArrivalTime().compareTo(arrivalTime) > 0)
                     throw new TimeViolationException();
+                //TODO sistema lista di mezzi
                 calculateSegment(startingLocation, mediumLocation, startingTime, googleResponseMappedObject.getDepartureTime(), meansOfTransport.subList(1, meansOfTransport.size()), transportSegmentRecursiveList );
+                this.busTaken = true;
+                busTaken = true;
             }
             if (googleResponseMappedObject.getDepartureTime().compareTo(startingTime) < 0 || googleResponseMappedObject.getArrivalTime().compareTo(arrivalTime) > 0)
                 throw new TimeViolationException();
@@ -113,27 +119,33 @@ public class TransportSolutionCalculator {
 
             if (googleResponseMappedObject.isPartialSolution()) {
                 //If google make you change your mean, we recalculate by the preferences of the user
-                //TODO FIND PROBLEM OF WALKING and BUS combination
                 List<MeanOfTransportLogic> meanOfTransportLogics = new ArrayList<>();
                 meanOfTransportLogics.addAll(this.meansOfTransport);
                 for(MeanOfTransportLogic meanOfTransportLogic: this.meansOfTransport)
                     if(meanOfTransportLogic.isPrivate() && !isMeanAvailablePrivately( meanOfTransportLogic))
                         meanOfTransportLogics.remove(meanOfTransportLogic);
+                meanOfTransportLogics.remove(meansOfTransport.get(0));
                 transportSegmentRecursiveList.clear();
                 calculateSegment(googleResponseMappedObject.getEndingLocation(), endingLocation, googleResponseMappedObject.getArrivalTime(), arrivalTime, meanOfTransportLogics, transportSegmentRecursiveList);
                 transportSegments.addAll(transportSegmentRecursiveList);
             }
         } catch (MeanNotAvailableException e) {
             //In case the mean is not available
-            if (meansOfTransport.size() != 0)
+            if (meansOfTransport.size() != 0) {
+                if (busTaken)
+                    this.busTaken = false;
                 calculateSegment(startingLocation, endingLocation, startingTime, arrivalTime, meansOfTransport.subList(1, meansOfTransport.size()), transportSegments);
+            }
             else
                 //In case there's no more mean to be used for the solution
                 throw new NoMeanAvailableExpection();
         } catch (TimeViolationException e) {
             //In case the user must leave the event before the end of the antecedent event
-            if (meansOfTransport.size() != 0)
+            if (meansOfTransport.size() != 0) {
+                if (busTaken)
+                    this.busTaken = false;
                 calculateSegment(startingLocation, endingLocation, startingTime, arrivalTime, meansOfTransport.subList(1, meansOfTransport.size()), transportSegments);
+            }
             else
                 //In case there's no more mean to be used for the solution
                 throw new CannotArriveInTimeException();
@@ -265,8 +277,10 @@ public class TransportSolutionCalculator {
     private boolean isMeanAvailablePrivately(MeanOfTransportLogic meanOfTransport) throws MeanNotAvailableException{
         if (!meanOfTransport.isPrivate())
             return false;
-        //TODO throw exception in case the mean cannot be used
+        else if(busTaken && meanOfTransport.getTypeOfTransport() != MeanType.WALKING)
+            return false;
         return true;
+
     }
 
     private Timestamp getTime(Timestamp departureTime, Timestamp arrivalTime){

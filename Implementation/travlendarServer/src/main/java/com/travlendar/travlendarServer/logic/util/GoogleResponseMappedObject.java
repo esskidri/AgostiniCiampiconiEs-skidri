@@ -236,6 +236,7 @@ public class GoogleResponseMappedObject implements Serializable {
         distance.setText(" modified"); //TODO secondario
 
         getLeg().setDuration(duration);
+        getLeg().setDistance(distance);
 
         if (i == 0)
             setDepartureTime(new Timestamp(dateTime * 1000));
