@@ -2,6 +2,7 @@ package com.travlendar.travlendarServer.logic.modelInterface;
 
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 
 public interface TransportSegmentLogic {
@@ -19,4 +20,19 @@ public interface TransportSegmentLogic {
     void setArrivalTime(Timestamp arrivalTime);
     long getDuration();
     long getDistance();
+
+    default void setAll(Coordinates origin,
+                        Coordinates destination,
+                        long distance,
+                        long duration,
+                        Timestamp departureTime,
+                        Timestamp arrivalTime, MeanOfTransportLogic meanOfTransportLogic){
+        setOrigin(origin);
+        setDestination(destination);
+        setDistance(distance);
+        setDuration(duration);
+        setDepartureTime(departureTime);
+        setArrivalTime(arrivalTime);
+        setMeanOfTransport(meanOfTransportLogic);
+    }
 }

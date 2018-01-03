@@ -6,10 +6,6 @@ import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.*;
 import org.junit.Test;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class GoogleResponseMappedObjectTest extends GoogleResponseMappedObject {
 
@@ -33,7 +29,7 @@ public class GoogleResponseMappedObjectTest extends GoogleResponseMappedObject {
 
 
         try {
-            grmo.checkCompleteness("driving", arrivalTime);
+            grmo.checkCompleteness("driving", TimeRequest.ARRIVAL, arrivalTime);
             assert(true);
         } catch (MeanNotAvailableException e) {
             assert(false);
@@ -46,7 +42,7 @@ public class GoogleResponseMappedObjectTest extends GoogleResponseMappedObject {
         assert(grmo.getStatus().equals("OK"));
 
         try {
-            grmo.checkCompleteness("transit", arrivalTime);
+            grmo.checkCompleteness("transit", TimeRequest.ARRIVAL, arrivalTime);
             assert(true);
         } catch (MeanNotAvailableException e) {
             assert(false);
@@ -64,7 +60,7 @@ public class GoogleResponseMappedObjectTest extends GoogleResponseMappedObject {
         }
 
         try {
-            grmo.checkCompleteness("driving", arrivalTime);
+            grmo.checkCompleteness("driving", TimeRequest.ARRIVAL, arrivalTime);
             assert(true);
             assert(grmo.isPartialSolution());
             assert(grmo.getSteps().size() == i/2);

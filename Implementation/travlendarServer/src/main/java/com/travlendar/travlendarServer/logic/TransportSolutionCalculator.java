@@ -1,13 +1,14 @@
 package com.travlendar.travlendarServer.logic;
 
+import com.travlendar.travlendarServer.extra.JsonOperation;
 import com.travlendar.travlendarServer.logic.exceptions.*;
 import com.travlendar.travlendarServer.logic.modelInterface.TransportSegmentLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLogic;
-import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.logic.util.GoogleResponseMappedObject;
 import com.travlendar.travlendarServer.logic.util.TimeRequest;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
 import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
+import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Step;
 import com.travlendar.travlendarServer.model.enumModel.MeanType;
 import com.travlendar.travlendarServer.model.domain.*;
 import org.jetbrains.annotations.Contract;
@@ -99,11 +100,11 @@ public class TransportSolutionCalculator {
                     mediumLocation = getLocationByExternalAPI(meansOfTransport.get(0), startingLocation, endingLocation, getTime(startingTime,arrivalTime));
                     googleResponseMappedObject = callGoogleAPI(mediumLocation, endingLocation, meansOfTransport.get(0), getTime(startingTime,arrivalTime));
                 }
-                if (googleResponseMappedObject.getDepartingTime().compareTo(startingTime) < 0 || googleResponseMappedObject.getArrivalTime().compareTo(arrivalTime) > 0)
+                if (googleResponseMappedObject.getDepartureTime().compareTo(startingTime) < 0 || googleResponseMappedObject.getArrivalTime().compareTo(arrivalTime) > 0)
                     throw new TimeViolationException();
-                calculateSegment(startingLocation, mediumLocation, startingTime, googleResponseMappedObject.getDepartingTime(), meansOfTransport.subList(1, meansOfTransport.size()), transportSegmentRecursiveList );
+                calculateSegment(startingLocation, mediumLocation, startingTime, googleResponseMappedObject.getDepartureTime(), meansOfTransport.subList(1, meansOfTransport.size()), transportSegmentRecursiveList );
             }
-            if (googleResponseMappedObject.getDepartingTime().compareTo(startingTime) < 0 || googleResponseMappedObject.getArrivalTime().compareTo(arrivalTime) > 0)
+            if (googleResponseMappedObject.getDepartureTime().compareTo(startingTime) < 0 || googleResponseMappedObject.getArrivalTime().compareTo(arrivalTime) > 0)
                 throw new TimeViolationException();
 
             //the calculated segment is inserted
@@ -143,22 +144,48 @@ public class TransportSolutionCalculator {
 
 
     private void insertTransportSegments(GoogleResponseMappedObject googleResponseMappedObject, MeanOfTransportLogic meanOfTransport, List<TransportSegmentLogic> transportSegments) {
-        TransportSegmentLogic transportSegment = new TransportSegment();
+        List<TransportSegmentLogic> transportSegmentsOfObject = new ArrayList<>();
 
-        transportSegment.setMeanOfTransport(meanOfTransport);
 
-        transportSegment.setOrigin(googleResponseMappedObject.getStartingLocation());
-        transportSegment.setDestination(googleResponseMappedObject.getEndingLocation());
-        transportSegment.setDistance(googleResponseMappedObject.getDistance());
-        transportSegment.setDuration(googleResponseMappedObject.getDuration());
-        transportSegment.setDepartureTime(googleResponseMappedObject.getDepartingTime());
-        transportSegment.setArrivalTime(googleResponseMappedObject.getArrivalTime());
+        if(!googleResponseMappedObject.getRoutes().isEmpty() &&
+                !googleResponseMappedObject.getRoutes().get(0).getLegs().isEmpty() &&
+                !googleResponseMappedObject.getLeg().getSteps().isEmpty() &&
+                googleResponseMappedObject.getSteps().get(0).getTravel_mode().equals("TRANSIT")){
+            long timePassed = 0;
+
+            for(Step step: googleResponseMappedObject.getSteps()){
+                TransportSegmentLogic transportSegment = new TransportSegment();
+                transportSegment.setAll(step.getStart_location(),
+                        step.getEnd_location(),
+                        step.getDistance().getValue(),
+                        step.getDuration().getValue(),
+                        new Timestamp(googleResponseMappedObject.getDepartureTime().getTime() + timePassed),
+                        new Timestamp(googleResponseMappedObject.getDepartureTime().getTime() + timePassed + step.getDuration().getValue()*1000), meanOfTransport);
+                if(step.getTransit_details() != null)
+                    transportSegment.setDescription(JsonOperation.toJson(step.getTransit_details()));
+                if(transportSegment.getDistance() != 0)
+                    transportSegmentsOfObject.add(transportSegment);
+                timePassed += step.getDuration().getValue()*1000;
+            }
+        }
+        else {
+            TransportSegmentLogic transportSegment = new TransportSegment();
+            transportSegment.setAll(googleResponseMappedObject.getStartingLocation(),
+                    googleResponseMappedObject.getEndingLocation(),
+                    googleResponseMappedObject.getDistance(),
+                    googleResponseMappedObject.getDuration(),
+                    googleResponseMappedObject.getDepartureTime(),
+                    googleResponseMappedObject.getArrivalTime(), meanOfTransport);
+            if(transportSegment.getDistance() != 0)
+                transportSegmentsOfObject.add(transportSegment);
+
+        }
+
 
         int i = 0;
 
 
-        if(transportSegment.getDistance() != 0)
-            transportSegments.add(transportSegment);
+       transportSegments.addAll(transportSegmentsOfObject);
     }
 
     /**
@@ -225,7 +252,7 @@ public class TransportSolutionCalculator {
         GoogleResponseMappedObject googleResponseMappedObject;
 
         googleResponseMappedObject = GoogleAPIHandler.askGoogle(startingLocation, endingLocation, meanOfTransport, typeOfMoment.toHttpsFormat(), time);
-        googleResponseMappedObject.checkCompleteness(meanOfTransport.getTypeOfTransport().toHttpsFormat(), time);
+        googleResponseMappedObject.checkCompleteness(meanOfTransport.getTypeOfTransport().toHttpsFormat(), typeOfMoment , time);
 
         return googleResponseMappedObject;
     }
