@@ -19,6 +19,7 @@ public interface EventDao extends CrudRepository<Event, Long> {
         e.setName(e.getName().replaceAll("\\s+",""));
         if(e.getStartDate().compareTo(e.getEndDate())>0) throw new DataEntryException("EndDate before StartDate");
         if(e.getName()==null || e.getName().length()<1) throw new DataEntryException("invalid name");
+        if(e.getPosX() == 0 && e.getPosY() == 0) throw new DataEntryException("Unable to recognize location, try with another address");
         coordinatesValidation(e.getPosX(),e.getPosY());
         save(e);
     }
