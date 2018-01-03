@@ -6,9 +6,11 @@ import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLog
 import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.logic.util.EventGraph;
 import com.travlendar.travlendarServer.logic.util.TimeRequest;
+import com.travlendar.travlendarServer.model.enumModel.MeanType;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MainLogic {
@@ -108,8 +110,21 @@ public class MainLogic {
 
     public static List<EventLogic> getDailyEventsForReplan(List<EventLogic> events, Timestamp startingDate, Timestamp endingDate) {
         boolean foundedDay = false;
-        EventLogic firstEndEvent = events.get(0);
+        EventLogic firstEndEvent;
         EventLogic secondEndEvent = null;
+        Timestamp currentTime = new Timestamp(Calendar.getInstance().getTime().getTime());
+
+        int i = 0;
+        for(EventLogic event: events){
+            if(currentTime.compareTo(event.getStartDate()) < 0)
+                break;
+            i++;
+        }
+
+        if(!events.isEmpty())
+            events = events.subList(i, events.size());
+
+        firstEndEvent = events.get(0);
 
         for (EventLogic eventLogic : events) {
             if (eventLogic.isEndEvent() && eventLogic.getEndDate().compareTo(startingDate) <= 0)
@@ -136,7 +151,7 @@ public class MainLogic {
             meansOfTransport = user.getMeanPreferences();
         else {
             for (MeanOfTransportLogic meanOfTransportLogic : readList)
-                if (meanOfTransportLogic.isPrivate() && !transportSolutionLogic.getPrivateMeansUsed().contains(meanOfTransportLogic))
+                if (meanOfTransportLogic.isPrivate() && meanOfTransportLogic.getTypeOfTransport() != MeanType.WALKING && !transportSolutionLogic.getPrivateMeansUsed().contains(meanOfTransportLogic))
                     meansOfTransport.remove(meanOfTransportLogic);
         }
     }

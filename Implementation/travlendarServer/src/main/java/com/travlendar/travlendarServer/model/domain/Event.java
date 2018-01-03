@@ -175,7 +175,7 @@ public class Event implements Serializable,  EventLogic {
         return endEvent;
     }
 
-    public void completeSet(User u, Timestamp startDate, Timestamp endDate, Float posX, Float posY, String description, String name, Timestamp endDate1) {
+    public void completeSet(User u, Timestamp startDate, Timestamp endDate, Float posX, Float posY, String description, String name, boolean endEvent) {
         this.user=u;
         this.startDate = startDate;
         this.endDate = endDate;

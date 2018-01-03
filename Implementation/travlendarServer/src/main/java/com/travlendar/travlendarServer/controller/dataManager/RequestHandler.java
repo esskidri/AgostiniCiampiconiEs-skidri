@@ -183,35 +183,6 @@ public class RequestHandler {
     }
 
 
-
-    private void saveTransportSolutionLogic(List<TransportSolutionLogic> tsl) {
-        List<TransportSolution> transportSolutions = new ArrayList<>();
-        int i = 0;
-        //compose and save transport solutions
-        for (TransportSolutionLogic x : tsl) {
-            transportSolutions.add((TransportSolution) x);
-            TransportSolutionId tsID = new TransportSolutionId(transportSolutions.get(i).getEvent1().getId(),
-                    transportSolutions.get(i).getEvent2().getId());
-            transportSolutions.get(i).setTransportSolutionId(tsID);
-            i++;
-        }
-        transportSolutionDao.save(transportSolutions);
-        //compose and save transport segments
-        for (TransportSolution t : transportSolutions) {
-            int segmentOrder = 0;
-            for (TransportSegment transportSegment : t.getTransportSegments()) {
-                TransportSegmentId transportSegmentId = new TransportSegmentId(segmentOrder, t.getEvent1().getId(),
-                        t.getEvent2().getId());
-                transportSegment.setTransportSegmentId(transportSegmentId);
-                transportSegmentDao.save(transportSegment);
-                segmentOrder++;
-            }
-        }
-    }
-
-
-
-
     @RequestMapping("/delete-event")
     @ResponseBody
     public String deleteEvent(@RequestParam("user_id") Long userId, @RequestParam("event_id") Long eventId) {
@@ -263,12 +234,13 @@ public class RequestHandler {
             User u = userDao.findOne(userId);
             Event e = eventDao.findOne(eventId);
             Event temporaryE = new Event();
-            temporaryE.completeSet(e.getUser(),e.getStartDate(),e.getEndDate(),e.getPosX(), e.getPosY(),e.getDescription(),e.getName(),e.getEndDate());
+            temporaryE.completeSet(e.getUser(),e.getStartDate(),e.getEndDate(),e.getPosX(), e.getPosY(),e.getDescription(),e.getName(),e.isEndEvent());
+            temporaryE.setId(e.getId());
 
             List<EventLogic> userEvents = new ArrayList<>();
             userEvents.addAll(u.getEvents());
             List<EventLogic> eventLogics1 = MainLogic.getDailyEventsForReplan(userEvents, e.getStartDate(), e.getEndDate());
-            e.completeSet(u, startDate, endDate, posX, posY, description, name, endDate);
+            e.completeSet(u, startDate, endDate, posX, posY, description, name, endEvent);
             List<EventLogic> eventLogics2 = MainLogic.getDailyEventsForReplan(userEvents, e.getStartDate(), e.getEndDate());
 
 
@@ -554,6 +526,7 @@ public class RequestHandler {
             }
             transportSegmentDao.delete(transportSegments);
             transportSolutionDao.delete(transportSolutions);
+            System.out.println("ok");
         }
     }
 
