@@ -128,14 +128,15 @@ public class GoogleAPIHandler {
      * @param origin
      * @param destination
      * @param meanOfTransport
-     * @param arrivalTime
+     * @param time
      * @return
      */
-    private static String constructHttpsUrl(String origin, String destination, String meanOfTransport, String time, String arrivalTime){
-        return PROTOCOL + GOOGLE_URL + RESPONSE_TYPE +
+    private static String constructHttpsUrl(String origin, String destination, String meanOfTransport, String type, String time){
+        String s = PROTOCOL + GOOGLE_URL + RESPONSE_TYPE +
                 "?" + ORIGIN + EQUAL + origin + SEPARATOR + DESTINATION
                 + EQUAL + destination + SEPARATOR + MEANOFTRANSPORT + EQUAL +
-                meanOfTransport + SEPARATOR + time + EQUAL + arrivalTime +
+                meanOfTransport + SEPARATOR + type + EQUAL + time +
                 SEPARATOR + KEY + EQUAL + API_KEY;
+        return s;
     }
 }

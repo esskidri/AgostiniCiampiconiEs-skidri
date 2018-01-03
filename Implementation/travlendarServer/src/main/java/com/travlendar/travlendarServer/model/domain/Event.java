@@ -44,14 +44,14 @@ public class Event implements Serializable,  EventLogic {
     @Column(name = "end_event")
     private  boolean endEvent;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(/*cascade = CascadeType.ALL*/)
     @JoinColumn(name="user_id")
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="event1")
+    @OneToMany(/*cascade = CascadeType.ALL,*/ mappedBy="event1")
     private List<TransportSolution> transportSolutions;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="event2")
+    @OneToMany(/*cascade = CascadeType.ALL,*/ mappedBy="event2")
     private List<TransportSolution> transportSolutions2;
 
     @Column(name="at_home")

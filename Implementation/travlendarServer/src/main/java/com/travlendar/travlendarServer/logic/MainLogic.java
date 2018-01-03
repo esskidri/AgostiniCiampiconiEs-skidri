@@ -92,7 +92,7 @@ public class MainLogic {
                 }
                 System.out.println("calculating outgoing:" + ((Event) outGoing).getName() + " ingoing:" + ((Event) inGoing).getName() +" with means:");
                 for(MeanOfTransportLogic meanOfTransportLogic: meansOfTransport)
-                    System.out.println(((Event)meanOfTransportLogic).getName());
+                    System.out.println(meanOfTransportLogic.toString());
                 if (transportSolutionLogic != null) {
                     transportSolutionLogic.setStartEvent(outGoing);
                     transportSolutionLogic.setEndEvent(inGoing);
@@ -120,7 +120,7 @@ public class MainLogic {
 
         int i = 0;
         for(EventLogic event: events){
-            if(currentTime.compareTo(event.getStartDate()) < 0)
+            if(currentTime.compareTo(event.getEndDate()) < 0)
                 break;
             i++;
         }

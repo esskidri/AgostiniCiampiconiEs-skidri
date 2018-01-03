@@ -126,6 +126,7 @@ public class RequestHandler {
             List<Event> events = new ArrayList<>();
             for(EventLogic eventLogic: eventLogics)
                 events.add((Event) eventLogic);
+            events.remove(e);
             clearTransportSolution(events);
             //computation
             List<TransportSolutionLogic> tsl = MainLogic.calculateTransportSolutions(eventLogics, u);
@@ -531,8 +532,9 @@ public class RequestHandler {
             }
             transportSegmentDao.delete(transportSegments);
             transportSolutionDao.delete(transportSolutions);
-            System.out.println("ok");
+            System.out.println(event.getId());
         }
+        System.out.println("ok");
     }
 
     private void orderEvents(List<Event> events){
