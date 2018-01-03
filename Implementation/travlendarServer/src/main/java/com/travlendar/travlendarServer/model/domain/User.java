@@ -248,6 +248,13 @@ public class User extends AbstractEntity implements UserLogic {
         return null;
     }
 
+    public UserOrder getUserOrdeByPrivateTransportId(long transportId){
+        for (UserOrder elem: this.getUserOrders()) {
+            if(elem.getPrivateTransport().getId() == transportId) return elem;
+        }
+        return null;
+    }
+
     public UserClient getUserClient(){
         ArrayList<PrivateTransportClient>  privateTransportsClient = new ArrayList<>();
         for (PrivateTransport pt: this.getPrivateTransportList()) {

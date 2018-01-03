@@ -27,7 +27,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
+import static java.util.Collections.*;
 
 /**
  * Request Handler is responsible to manage and process the external request,for each request mapping we return a
@@ -335,8 +339,11 @@ public class RequestHandler {
             User u = userDao.findOne(userId);
             if (u == null) throw new DataEntryException("user not found");
             privateTransportDao.delete(transportId);
-            compactOrder(u,getDelimiter(u.getUserOrders()));
-            userOrderDao.save(u.getUserOrders());
+            UserOrder userOrderToDelete=u.getUserOrdeByPrivateTransportId(transportId);
+            int orderDeleted = userOrderToDelete.getOrder();
+            userOrderDao.delete(userOrderToDelete);
+            List<UserOrder> temp = sortByNumOrder(u.getUserOrders());
+            compactOrder(u,orderDeleted);
             r.setMessage("mean deleted ");
         } catch (DataEntryException e) {
             r.setMessage(e.getMessage());
@@ -355,9 +362,20 @@ public class RequestHandler {
     public int getDelimiter(List<UserOrder> list){
         if(list.get(0).getOrder() == 2) return 1;
         for(int i = 0; i<list.size()-1;i++){
-            if(list.get(i).getOrder()+1 != list.get(i+1).getOrder()) return i+1;
+            if(list.get(i).getOrder()+1 != list.get(i+1).getOrder()) return i;
         }
         return list.size()-1;
+    }
+
+    public List<UserOrder> sortByNumOrder(List<UserOrder> list){
+        sort(list,new Comparator<UserOrder>() {
+            @Override
+            public int compare(UserOrder lhs, UserOrder rhs) {
+                // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+                return lhs.getOrder() < rhs.getOrder() ? -1 : (lhs.getOrder() > rhs.getOrder()) ? 1 : 0;
+            }
+        });
+        return list;
     }
 
 

@@ -23,4 +23,6 @@ public interface PrivateTransportDao extends CrudRepository<PrivateTransport, Lo
         return p;
     }
 
+     //void  deleteById (long id);
+
 }
