@@ -183,6 +183,11 @@ public class RequestHandler {
     }
 
 
+
+
+
+
+
     @RequestMapping("/delete-event")
     @ResponseBody
     public String deleteEvent(@RequestParam("user_id") Long userId, @RequestParam("event_id") Long eventId) {
