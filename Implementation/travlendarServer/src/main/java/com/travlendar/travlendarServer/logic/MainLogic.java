@@ -6,6 +6,7 @@ import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLog
 import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.logic.util.EventGraph;
 import com.travlendar.travlendarServer.logic.util.TimeRequest;
+import com.travlendar.travlendarServer.model.domain.Event;
 import com.travlendar.travlendarServer.model.enumModel.MeanType;
 
 import java.sql.Timestamp;
@@ -89,6 +90,9 @@ public class MainLogic {
                                 meansOfTransportForSolution);
                     }
                 }
+                System.out.println("calculating outgoing:" + ((Event) outGoing).getName() + " ingoing:" + ((Event) inGoing).getName() +" with means:");
+                for(MeanOfTransportLogic meanOfTransportLogic: meansOfTransport)
+                    System.out.println(((Event)meanOfTransportLogic).getName());
                 if (transportSolutionLogic != null) {
                     transportSolutionLogic.setStartEvent(outGoing);
                     transportSolutionLogic.setEndEvent(inGoing);
