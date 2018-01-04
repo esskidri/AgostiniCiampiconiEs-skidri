@@ -90,9 +90,6 @@ public class MainLogic {
                                 meansOfTransportForSolution);
                     }
                 }
-                System.out.println("calculating outgoing:" + ((Event) outGoing).getName() + " ingoing:" + ((Event) inGoing).getName() +" with means:");
-                for(MeanOfTransportLogic meanOfTransportLogic: meansOfTransport)
-                    System.out.println(meanOfTransportLogic.toString());
                 if (transportSolutionLogic != null) {
                     transportSolutionLogic.setStartEvent(outGoing);
                     transportSolutionLogic.setEndEvent(inGoing);

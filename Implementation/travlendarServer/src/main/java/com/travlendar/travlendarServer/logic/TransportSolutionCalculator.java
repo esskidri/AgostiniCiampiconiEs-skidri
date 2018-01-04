@@ -105,8 +105,18 @@ public class TransportSolutionCalculator {
                 }
                 if (googleResponseMappedObject.getDepartureTime().compareTo(startingTime) < 0 || googleResponseMappedObject.getArrivalTime().compareTo(arrivalTime) > 0)
                     throw new TimeViolationException();
-                //TODO sistema lista di mezzi
-                calculateSegment(startingLocation, mediumLocation, startingTime, googleResponseMappedObject.getDepartureTime(), meansOfTransport.subList(1, meansOfTransport.size()), transportSegmentRecursiveList );
+
+                List<MeanOfTransportLogic> meansOfTransportForMediumLocation = new ArrayList<>();
+                meansOfTransportForMediumLocation.addAll(meansOfTransport.subList(1, meansOfTransport.size()));
+
+                for(MeanOfTransportLogic meanOfTransportLogic: meansOfTransport.subList(1, meansOfTransport.size())){
+                    if(meanOfTransportLogic.getTypeOfTransport() == MeanType.WALKING){
+                        meansOfTransportForMediumLocation.remove(meanOfTransportLogic);
+                        meansOfTransportForMediumLocation.add(0,meanOfTransportLogic);
+                    }
+                }
+
+                calculateSegment(startingLocation, mediumLocation, startingTime, googleResponseMappedObject.getDepartureTime(), meansOfTransportForMediumLocation, transportSegmentRecursiveList );
                 this.busTaken = true;
                 busTaken = true;
             }
@@ -124,9 +134,13 @@ public class TransportSolutionCalculator {
                 for(MeanOfTransportLogic meanOfTransportLogic: this.meansOfTransport)
                     if(meanOfTransportLogic.isPrivate() && !isMeanAvailablePrivately( meanOfTransportLogic))
                         meanOfTransportLogics.remove(meanOfTransportLogic);
-                meanOfTransportLogics.remove(meansOfTransport.get(0));
                 transportSegmentRecursiveList.clear();
-                calculateSegment(googleResponseMappedObject.getEndingLocation(), endingLocation, googleResponseMappedObject.getArrivalTime(), arrivalTime, meanOfTransportLogics, transportSegmentRecursiveList);
+                calculateSegment(googleResponseMappedObject.getEndingLocation(),
+                        endingLocation,
+                        googleResponseMappedObject.getArrivalTime(),
+                        arrivalTime,
+                        meanOfTransportLogics,
+                        transportSegmentRecursiveList);
                 transportSegments.addAll(transportSegmentRecursiveList);
             }
         } catch (MeanNotAvailableException e) {

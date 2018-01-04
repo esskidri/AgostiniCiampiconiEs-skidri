@@ -160,9 +160,11 @@ public class GoogleResponseMappedObject implements Serializable {
                 }
                 i++;
             }
+            if(!meanFounded)
+                throw new MeanNotAvailableException();
             if (isPartial)
                 cutWay(i, getSteps().size());
-            setDepartureTime(new Timestamp((((this.getLeg().getArrival_time().getValue() - getDuration()) * 1000))));
+            setDepartureTime(new Timestamp((((arrivalTime.getTime()/1000 - getDuration()) * 1000))));
 
 
         } else if (status.equals("NOT_FOUND") || status.equals("ZERO_RESULTS") || status.equals("MAX_WAYPOINTS_EXCEEDED") || status.equals("MAX_ROUTE_LENGTH_EXCEEDED") || status.equals("INVALID_REQUEST") || status.equals("REQUEST_DENIED") || status.equals("UNKNOWN_ERROR"))
@@ -198,28 +200,32 @@ public class GoogleResponseMappedObject implements Serializable {
         if (i != 0)
             partialSolution = true;
         long dateTime;
-        long length;
-        long timeDuration;
+        long length = 0;
+        long timeDuration = 0;
         InfoPair duration = new InfoPair();
         InfoPair distance = new InfoPair();
 
-        timeDuration = getLeg().getDuration().getValue();
-        length = getLeg().getDistance().getValue();
+
 
         if (i == 0)
-            dateTime = arrivalTime.getTime() / 1000 - timeDuration;
-        else
             dateTime = arrivalTime.getTime() / 1000;
+        else
+            dateTime = arrivalTime.getTime() / 1000 - this.getDuration();
 
-        for (Step step : getSteps().subList(i, j)) {
-            if (i == 0)
-                dateTime += step.getDuration().getValue();
-            else
+        if(i == 0){
+            for (Step step : getSteps().subList(j, getSteps().size())){
                 dateTime -= step.getDuration().getValue();
-
-            timeDuration -= step.getDuration().getValue();
-            length -= step.getDuration().getValue();
+                timeDuration += step.getDuration().getValue();
+                length += step.getDuration().getValue();
+            }
+        }else{
+            for (Step step : getSteps().subList(0,i)){
+                dateTime += step.getDuration().getValue();
+                timeDuration += step.getDuration().getValue();
+                length += step.getDuration().getValue();
+            }
         }
+
 
         if (i == 0)
             getLeg().setSteps(getSteps().subList(j, getSteps().size()));
