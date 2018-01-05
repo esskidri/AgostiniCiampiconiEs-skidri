@@ -509,16 +509,32 @@ public class RequestHandler {
                                 @RequestParam("start_date") Timestamp startDate,
                                 @RequestParam("end_date") Timestamp endDate,
                                 @RequestParam("duration") int duration){
-        Response r=new Response("ok");
+        try {
         //fetch the user
         User u = userDao.findOne(userId);
         FreeTime freeTime = new FreeTime(startDate, endDate, duration, u);
-        try {
-            freetTimeDao.customSave(freeTime);
+        freetTimeDao.customSave(freeTime);
         }catch(Exception e){
-            r.setMessage("fail"+e.getMessage());
+            return "fail"+e.getMessage();
         }
-        return r.getMessage();
+        return "free time added";
+    }
+
+    @RequestMapping("/delete-free-time")
+    @ResponseBody
+    public String deleteFreeTime(@RequestParam("user_id") Long userId,
+                              @RequestParam("free_time_id") Long freeTimeId){
+        try {
+        //fetch the user
+        User u = userDao.findOne(userId);
+        FreeTime freeTime = freetTimeDao.findOne(freeTimeId);
+        u.getFreeTimes().remove(freeTime);
+        freetTimeDao.delete(freeTimeId);
+        userDao.save(u);
+        }catch(Exception e){
+            return "fail"+e.getMessage();
+        }
+        return "free time deleted";
     }
 
 

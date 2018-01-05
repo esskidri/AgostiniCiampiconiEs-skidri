@@ -36,7 +36,6 @@ public class UserClient implements Serializable{
         this.publicTransportsClient = publicTransportsClient;
         this.userOrderClients = userOrderClients;
         this.freeTimeClients = freeTimeClients;
-
     }
 
     public ArrayList<FreeTimeClient> getFreeTimeClients() {
