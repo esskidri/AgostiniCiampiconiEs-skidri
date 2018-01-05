@@ -66,11 +66,16 @@ public class RequestHandler {
     @ResponseBody
     public String create(@RequestParam("email") String email, @RequestParam("fn") String f_name,
                          @RequestParam("ln") String l_name, @RequestParam("age") int age,
-                         @RequestParam("sex") String sex) throws Exception {
 
-        User user = new User(f_name,l_name,email,age,sex,null,Policy.GREEN);
-        userDao.save(user);
-        return "User succesfully created";
+                         @RequestParam("sex") String sex) throws Exception {
+        try {
+            User user = new User(f_name, l_name, email, age, sex, null, Policy.GREEN);
+            userDao.save(user);
+            addPrivateTransport(user.getId(), "walk", MeanType.WALKING.toString().toUpperCase(), 0, " ");
+            return "User succesfully created";
+        }catch (Exception e){
+            return "fail: " + e.getMessage();
+        }
     }
 
     @RequestMapping("/get-free-time")
@@ -157,14 +162,11 @@ public class RequestHandler {
             //fetch the user
             User u = userDao.findOne(userId);
             ArrayList<EventLogic> eventLogics = new ArrayList<>();
-
             eventLogics.addAll(u.getEvents());
             clearTransportSolution(u.getEvents());
             //get the transport solution
             List<TransportSolutionLogic> outputSol = MainLogic.calculateTransportSolutions(eventLogics, u);
-
             saveNewEvent(eventLogics, u);
-
             saveTransportSolutionLogic(outputSol);
             r.setMessage("success");
         } catch (Exception e2) {
@@ -330,6 +332,31 @@ public class RequestHandler {
         return r.getMessage();
     }
 
+    @RequestMapping("/add-public-transport")
+    @ResponseBody
+    public String addPrivateTransport(@RequestParam("user_id") Long userId,
+                                      @RequestParam("transport_id") Long transportId){
+        Response r=new Response("ok");
+        try {
+            User u = userDao.findOne(userId);
+            if (u == null) throw new DataEntryException("user not found");
+            //fetch public transport
+            PublicTransport p= publicTransportDao.findOne(transportId);
+            //save
+            u.getPublicTransportList().add(p);
+            p.addUser(u);
+            p=publicTransportDao.save(p);
+            u=userDao.save(u);
+            addOrder(u.getId(),p.getId(),p.isPrivate());
+            r.setMessage("mean added ");
+        } catch (DataEntryException e) {
+            r.setMessage(e.getMessage());
+        } catch (Exception e) {
+            r.setMessage("fail: " + e.getMessage());
+        }
+        return r.getMessage();
+    }
+
     @RequestMapping("delete-private-transport")
     @ResponseBody
     public String deletePrivateTransport(@RequestParam("user_id") Long userId,
@@ -340,6 +367,33 @@ public class RequestHandler {
             if (u == null) throw new DataEntryException("user not found");
             privateTransportDao.delete(transportId);
             UserOrder userOrderToDelete=u.getUserOrdeByPrivateTransportId(transportId);
+            int orderDeleted = userOrderToDelete.getOrder();
+            userOrderDao.delete(userOrderToDelete);
+            List<UserOrder> temp = sortByNumOrder(u.getUserOrders());
+            compactOrder(u,orderDeleted);
+            r.setMessage("mean deleted ");
+        } catch (DataEntryException e) {
+            r.setMessage(e.getMessage());
+        } catch (Exception e) {
+            r.setMessage("fail: " + e.getMessage());
+        }
+        return r.getMessage();
+    }
+
+    @RequestMapping("delete-public-transport")
+    @ResponseBody
+    public String deletePublicTransport(@RequestParam("user_id") Long userId,
+                                         @RequestParam("transport_id") Long transportId){
+        Response r=new Response("ok");
+        try {
+            User u = userDao.findOne(userId);
+            PublicTransport publicTransport = publicTransportDao.findOne(transportId);
+            if (u == null) throw new DataEntryException("user not found");
+            UserOrder userOrderToDelete=u.getUserOrdeByPublicTransportId(transportId);
+            u.getPublicTransportList().remove(publicTransport);
+            publicTransport.getUsers().remove(u);
+            publicTransport=publicTransportDao.save(publicTransport);
+            u=userDao.save(u);
             int orderDeleted = userOrderToDelete.getOrder();
             userOrderDao.delete(userOrderToDelete);
             List<UserOrder> temp = sortByNumOrder(u.getUserOrders());
@@ -380,28 +434,6 @@ public class RequestHandler {
 
 
 
-    @RequestMapping("/add-user-public-transport")
-    @ResponseBody
-    public String addUserPublicTransport(@RequestParam("user_id") Long userId){
-        Response r=new Response("ok");
-        try {
-
-            User u = userDao.findOne(userId);
-            if(u==null)throw new DataEntryException("user not found");
-            //create
-
-            PublicTransport publicTransport= new PublicTransport(u,greenDao.findByLevel(EnumGreenLevel.MEDIUM));
-            publicTransport = publicTransportDao.save(publicTransport);
-            userDao.save(u);
-            addOrder(u.getId(),publicTransport.getId(),publicTransport.isPrivate());
-            r.setMessage("mean added ");
-        }catch (DataEntryException e) {
-            r.setMessage(e.getMessage());
-        }catch(Exception e){
-            r.setMessage("fail: "+e.getMessage());
-        }
-        return r.getMessage();
-    }
 
 
     @RequestMapping("/delete-all-order")

@@ -78,6 +78,10 @@ public class PublicTransport extends AbstractEntity implements MeanOfTransportLo
         this.users = users;
     }
 
+    public void addUser(User u){
+        this.users.add(u);
+    }
+
     public Green getGreen() {
         return green;
     }
