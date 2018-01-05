@@ -18,10 +18,12 @@ public class UserClient implements Serializable{
     private ArrayList<PrivateTransportClient> privateTransportsClient;
     private ArrayList<PublicTransportClient> publicTransportsClient;
     private ArrayList<UserOrderClient> userOrderClients;
+    private ArrayList<FreeTimeClient> freeTimeClients;
 
     public UserClient(Long id, String first_name, String last_name, String email, Integer age, String sex,
                       String fiscal_code, Policy policy, ArrayList<PrivateTransportClient> privateTransportsClient,
-                      ArrayList<PublicTransportClient> publicTransportsClient,ArrayList<UserOrderClient> userOrderClients) {
+                      ArrayList<PublicTransportClient> publicTransportsClient,ArrayList<UserOrderClient> userOrderClients,
+                      ArrayList<FreeTimeClient> freeTimeClients) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -33,7 +35,16 @@ public class UserClient implements Serializable{
         this.privateTransportsClient = privateTransportsClient;
         this.publicTransportsClient = publicTransportsClient;
         this.userOrderClients = userOrderClients;
+        this.freeTimeClients = freeTimeClients;
 
+    }
+
+    public ArrayList<FreeTimeClient> getFreeTimeClients() {
+        return freeTimeClients;
+    }
+
+    public void setFreeTimeClients(ArrayList<FreeTimeClient> freeTimeClients) {
+        this.freeTimeClients = freeTimeClients;
     }
 
     public ArrayList<UserOrderClient> getUserOrderClients() {

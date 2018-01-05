@@ -47,4 +47,6 @@ public class FreeTimeClient implements Serializable{
     public void setDuration(int duration) {
         this.duration = duration;
     }
+
+
 }

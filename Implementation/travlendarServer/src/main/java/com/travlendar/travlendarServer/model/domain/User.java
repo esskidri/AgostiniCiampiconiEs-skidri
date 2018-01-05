@@ -4,11 +4,8 @@ package com.travlendar.travlendarServer.model.domain;
 import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
-import com.travlendar.travlendarServer.model.clientModel.PublicTransportClient;
-import com.travlendar.travlendarServer.model.clientModel.UserOrderClient;
+import com.travlendar.travlendarServer.model.clientModel.*;
 import com.travlendar.travlendarServer.model.enumModel.Policy;
-import com.travlendar.travlendarServer.model.clientModel.PrivateTransportClient;
-import com.travlendar.travlendarServer.model.clientModel.UserClient;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -275,10 +272,12 @@ public class User extends AbstractEntity implements UserLogic {
         for (UserOrder userOrder: this.getUserOrders()) {
             userOrderClients.add(userOrder.getUserOrderClient());
         }
-
-
+        ArrayList<FreeTimeClient> freeTimeClients = new ArrayList<>();
+        for (FreeTime freeTime: this.getFreeTimes()) {
+            freeTimeClients.add(freeTime.getFreeTimeClient());
+        }
         UserClient userClient = new UserClient(id,first_name,last_name,email,age,sex,fiscal_code,policy,
-                privateTransportsClient,publicTransportsClient,userOrderClients);
+                privateTransportsClient,publicTransportsClient,userOrderClients,freeTimeClients);
         return userClient;
     }
 
