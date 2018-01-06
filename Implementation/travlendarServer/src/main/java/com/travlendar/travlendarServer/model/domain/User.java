@@ -1,6 +1,7 @@
 package com.travlendar.travlendarServer.model.domain;
 
 
+import com.travlendar.travlendarServer.logic.modelInterface.FreeTimeLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
 import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
 import com.travlendar.travlendarServer.logic.util.googleJsonSubClass.Coordinates;
@@ -156,6 +157,12 @@ public class User extends AbstractEntity implements UserLogic {
 
     public List<FreeTime> getFreeTimes() {
         return freeTimes;
+    }
+
+    public List<FreeTimeLogic> getFreeTimesLogic() {
+        List<FreeTimeLogic> freeTimeLogics = new ArrayList<>();
+        freeTimeLogics.addAll(freeTimes);
+        return freeTimeLogics;
     }
 
     public void setFreeTimes(List<FreeTime> freeTimes) {

@@ -9,4 +9,5 @@ public interface UserLogic {
     List<MeanOfTransportLogic> getMeanPreferences();
     Policy getPolicy();
     Coordinates getHomeCoordinates();
+    List<FreeTimeLogic> getFreeTimesLogic();
 }

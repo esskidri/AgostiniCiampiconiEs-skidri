@@ -115,6 +115,14 @@ public class TransportSolution extends AbstractEntity implements Serializable, T
     }
 
     @Override
+    public Timestamp getDepartureTime() {
+        if(!transportSegments.isEmpty())
+            return transportSegments.get(0).getDepartureTime();
+        else
+            return null;
+    }
+
+    @Override
     public Timestamp getArrivalTime(){
         if(!transportSegments.isEmpty())
             return transportSegments.get(transportSegments.size() -1).getArrivalTime();
@@ -136,6 +144,13 @@ public class TransportSolution extends AbstractEntity implements Serializable, T
     @Override
     public boolean isEmpty() {
         return transportSegments.isEmpty();
+    }
+
+    @Override
+    public List<TransportSegmentLogic> getTransportSegmentsLogic() {
+        List<TransportSegmentLogic> transportSegments = new ArrayList<>();
+        transportSegments.addAll(this.transportSegments);
+        return transportSegments;
     }
 
     public TransportSolutionClient getTransportSolutionClient(){

@@ -1,6 +1,7 @@
 package com.travlendar.travlendarServer.model.domain;
 
 
+import com.travlendar.travlendarServer.logic.modelInterface.FreeTimeLogic;
 import com.travlendar.travlendarServer.model.clientModel.FreeTimeClient;
 
 import javax.persistence.*;
@@ -8,7 +9,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "free_time")
-public class FreeTime extends AbstractEntity {
+public class FreeTime extends AbstractEntity implements FreeTimeLogic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,7 +23,16 @@ public class FreeTime extends AbstractEntity {
     private Timestamp endDate;
 
     @Column(name="duration")
-    private int duration;
+    private long duration;
+
+    @Column(name="is_satisfied")
+    private boolean isSatisfied;
+
+    @Column(name = "spending_start_date")
+    private Timestamp spendingStartDate;
+
+    @Column(name="spending_end_date")
+    private Timestamp spendingEndDate;
 
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -63,12 +73,36 @@ public class FreeTime extends AbstractEntity {
         this.endDate = endDate;
     }
 
-    public int getDuration() {
+    public long getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(long duration) {
         this.duration = duration;
+    }
+
+    public boolean isSatisfied() {
+        return isSatisfied;
+    }
+
+    public void setSatisfied(boolean satisfied) {
+        isSatisfied = satisfied;
+    }
+
+    public Timestamp getSpendingStartDate() {
+        return spendingStartDate;
+    }
+
+    public void setSpendingStartDate(Timestamp spendingStartDate) {
+        this.spendingStartDate = spendingStartDate;
+    }
+
+    public Timestamp getSpendingEndDate() {
+        return spendingEndDate;
+    }
+
+    public void setSpendingEndDate(Timestamp spendingEndDate) {
+        this.spendingEndDate = spendingEndDate;
     }
 
     public void setUser(User user) {

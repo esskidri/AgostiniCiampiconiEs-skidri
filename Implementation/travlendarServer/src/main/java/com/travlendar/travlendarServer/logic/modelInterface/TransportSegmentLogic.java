@@ -21,6 +21,7 @@ public interface TransportSegmentLogic {
     long getDuration();
     long getDistance();
 
+
     default void setAll(Coordinates origin,
                         Coordinates destination,
                         long distance,

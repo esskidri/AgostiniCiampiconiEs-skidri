@@ -7,9 +7,9 @@ public class FreeTimeClient implements Serializable{
     private Long id;
     private Timestamp startDate;
     private Timestamp endDate;
-    private int duration;
+    private long duration;
 
-    public FreeTimeClient(Long id, Timestamp startDate, Timestamp endDate, int duration) {
+    public FreeTimeClient(Long id, Timestamp startDate, Timestamp endDate, long duration) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -40,11 +40,11 @@ public class FreeTimeClient implements Serializable{
         this.endDate = endDate;
     }
 
-    public int getDuration() {
+    public long getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(long duration) {
         this.duration = duration;
     }
 

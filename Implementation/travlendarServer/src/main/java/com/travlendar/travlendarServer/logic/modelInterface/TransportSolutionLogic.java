@@ -9,8 +9,9 @@ public interface TransportSolutionLogic {
     void setEndEvent(EventLogic event);
     EventLogic getStartEvent();
     EventLogic getEndEvent();
+    Timestamp getDepartureTime();
     Timestamp getArrivalTime();
     List<MeanOfTransportLogic> getPrivateMeansUsed();
     boolean isEmpty();
-
+    List<TransportSegmentLogic> getTransportSegmentsLogic();
 }

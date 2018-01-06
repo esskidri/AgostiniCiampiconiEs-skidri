@@ -1,9 +1,6 @@
 package com.travlendar.travlendarServer.logic;
 
-import com.travlendar.travlendarServer.logic.modelInterface.EventLogic;
-import com.travlendar.travlendarServer.logic.modelInterface.MeanOfTransportLogic;
-import com.travlendar.travlendarServer.logic.modelInterface.TransportSolutionLogic;
-import com.travlendar.travlendarServer.logic.modelInterface.UserLogic;
+import com.travlendar.travlendarServer.logic.modelInterface.*;
 import com.travlendar.travlendarServer.logic.util.EventGraph;
 import com.travlendar.travlendarServer.logic.util.TimeRequest;
 import com.travlendar.travlendarServer.model.domain.Event;
@@ -106,7 +103,60 @@ public class MainLogic {
             if (eventLogic.atHome()) {
                 eventLogic.setUser(user);
             }
+
+        arrangeFreeTimes(user, events, transportSolutions);
+
         return transportSolutions;
+    }
+
+    private static void arrangeFreeTimes(UserLogic user, List<EventLogic> events, List<TransportSolutionLogic> transportSolutions) {
+        List<FreeTimeLogic> freeTimes = user.getFreeTimesLogic();
+        selectFreeTimes(freeTimes, events);
+
+        for(FreeTimeLogic freeTime: freeTimes){
+            if(freeTime.getStartDate().compareTo(events.get(0).getStartDate()) >= 0 &&
+                    freeTime.getEndDate().compareTo(events.get(events.size() -1).getEndDate()) <=0)
+                freeTime.setSatisfied(false);
+        }
+
+        for(FreeTimeLogic freeTime: freeTimes){
+            for(TransportSolutionLogic transportSolution: transportSolutions){
+                EventLogic event = transportSolution.getStartEvent();
+                if(freeTime.getEndDate().compareTo(event.getEndDate()) > 0 ) {
+                    EventLogic subsequentEvent = transportSolution.getEndEvent();
+                    long timeBetween1 = event.getEndDate().getTime() -
+                            transportSolution.getDepartureTime().getTime();
+                    long timeBetween2 = subsequentEvent.getStartDate().getTime() - transportSolution.getArrivalTime().getTime();
+                    if(freeTime.getDuration() <= timeBetween1){
+                        freeTime.setSatisfied(true);
+                        freeTime.setSpendingStartDate(event.getEndDate());
+                        freeTime.setSpendingEndDate(new Timestamp(event.getEndDate().getTime() + freeTime.getDuration()));
+                    }
+                    else if(freeTime.getDuration() <= timeBetween2){
+                        freeTime.setSatisfied(true);
+                        freeTime.setSpendingStartDate(transportSolution.getArrivalTime());
+                        freeTime.setSpendingEndDate(new Timestamp(transportSolution.getArrivalTime().getTime() + freeTime.getDuration()));
+                    }
+                    else if(freeTime.isSatisfied() &&
+                            freeTime.getSpendingEndDate().compareTo(events.get(0).getStartDate()) >= 0 &&
+                            freeTime.getSpendingStartDate().compareTo(events.get(events.size() -1).getEndDate()) <= 0)
+                        freeTime.setSatisfied(false);
+                }
+            }
+        }
+    }
+
+    /**
+     * select free times to compare with transport solutions that has been calculated
+     * @param freeTimes List from which select the free times
+     * @param events list of events to decide if free times is coherent with the analyzed time
+     */
+    private static void selectFreeTimes(List<FreeTimeLogic> freeTimes, List<EventLogic> events) {
+        List<FreeTimeLogic> readList = new ArrayList<>();
+        readList.addAll(freeTimes);
+        for(FreeTimeLogic freeTime: readList)
+            if(freeTime.getEndDate().compareTo(events.get(0).getStartDate()) < 0 && freeTime.getStartDate().compareTo(events.get(events.size() -1).getEndDate()) > 0)
+                freeTimes.remove(freeTime);
     }
 
     public static List<EventLogic> getDailyEventsForReplan(List<EventLogic> events, Timestamp startingDate, Timestamp endingDate) {
