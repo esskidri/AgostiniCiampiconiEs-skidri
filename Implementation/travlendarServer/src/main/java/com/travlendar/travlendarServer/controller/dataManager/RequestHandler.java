@@ -71,7 +71,7 @@ public class RequestHandler {
         try {
             User user = new User(f_name, l_name, email, age, sex, null, Policy.GREEN);
             userDao.save(user);
-            addPrivateTransport(user.getId(), "walk", MeanType.WALKING.toString().toUpperCase(), 0, " ");
+            //addPrivateTransport(user.getId(), "walk", MeanType.WALKING.toString().toUpperCase(), 0, " ");
             return "User succesfully created";
         }catch (Exception e){
             return "fail: " + e.getMessage();
