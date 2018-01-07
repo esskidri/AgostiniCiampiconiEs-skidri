@@ -508,7 +508,7 @@ public class RequestHandler {
     public String addFreeTime(@RequestParam("user_id") Long userId,
                                 @RequestParam("start_date") Timestamp startDate,
                                 @RequestParam("end_date") Timestamp endDate,
-                                @RequestParam("duration") int duration){
+                                @RequestParam("duration") long duration){
         try {
         //fetch the user
         User u = userDao.findOne(userId);

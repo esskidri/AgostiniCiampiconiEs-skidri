@@ -35,14 +35,14 @@ public class FreeTime extends AbstractEntity implements FreeTimeLogic {
     private Timestamp spendingEndDate;
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
 
 
     public FreeTime(){}
 
-    public FreeTime(Timestamp startDate, Timestamp endDate, int duration, User user) {
+    public FreeTime(Timestamp startDate, Timestamp endDate, long duration, User user) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.duration = duration;
