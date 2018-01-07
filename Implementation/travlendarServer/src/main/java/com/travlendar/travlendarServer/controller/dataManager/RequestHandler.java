@@ -102,7 +102,7 @@ public class RequestHandler {
         try {
             User u = userDao.findByEmail(email);
             UserClient userClient = u.getUserClient();
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss.S").setPrettyPrinting().create();
             return gson.toJson(userClient);
 
         } catch (Exception e2) {
