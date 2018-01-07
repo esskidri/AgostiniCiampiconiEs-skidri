@@ -512,7 +512,7 @@ public class RequestHandler {
         try {
         //fetch the user
         User u = userDao.findOne(userId);
-        FreeTime freeTime = new FreeTime(startDate, endDate, duration, u);
+        FreeTime freeTime = new FreeTime(startDate, endDate, duration,true,null,null, u);
         freetTimeDao.customSave(freeTime);
         }catch(Exception e){
             return "fail"+e.getMessage();

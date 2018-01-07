@@ -42,10 +42,20 @@ public class FreeTime extends AbstractEntity implements FreeTimeLogic {
 
     public FreeTime(){}
 
-    public FreeTime(Timestamp startDate, Timestamp endDate, long duration, User user) {
+    /*public FreeTime(Timestamp startDate, Timestamp endDate, long duration, User user) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.duration = duration;
+        this.user = user;
+    }*/
+
+    public FreeTime(Timestamp startDate, Timestamp endDate, long duration, boolean isSatisfied, Timestamp spendingStartDate, Timestamp spendingEndDate, User user) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.duration = duration;
+        this.isSatisfied = isSatisfied;
+        this.spendingStartDate = spendingStartDate;
+        this.spendingEndDate = spendingEndDate;
         this.user = user;
     }
 
@@ -110,7 +120,8 @@ public class FreeTime extends AbstractEntity implements FreeTimeLogic {
     }
 
     public FreeTimeClient getFreeTimeClient(){
-        FreeTimeClient freeTimeClient = new FreeTimeClient(id,startDate,endDate,duration);
+        FreeTimeClient freeTimeClient = new FreeTimeClient(startDate,endDate,duration,
+                isSatisfied,spendingStartDate,spendingEndDate,user.getId());
         return freeTimeClient;
     }
 }
