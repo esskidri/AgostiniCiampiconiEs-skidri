@@ -86,7 +86,7 @@ public class RequestHandler {
             User u = userDao.findOne(userId);
             ArrayList<FreeTimeClient> freeTimeClients = new ArrayList<>();
             for (FreeTime freeTime : u.getFreeTimes()) freeTimeClients.add(freeTime.getFreeTimeClient());
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss.S").setPrettyPrinting().create();
             return gson.toJson(freeTimeClients);
 
         } catch (Exception e2) {
