@@ -21,7 +21,8 @@ public class FreeTimeClient implements Serializable{
         this.duration = duration;
     }
 
-    public FreeTimeClient(Timestamp startDate, Timestamp endDate, long duration, boolean isSatisfied, Timestamp spendingStartDate, Timestamp spendingEndDate, long userId) {
+    public FreeTimeClient(long id,Timestamp startDate, Timestamp endDate, long duration, boolean isSatisfied, Timestamp spendingStartDate, Timestamp spendingEndDate, long userId) {
+        this.id=id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.duration = duration;

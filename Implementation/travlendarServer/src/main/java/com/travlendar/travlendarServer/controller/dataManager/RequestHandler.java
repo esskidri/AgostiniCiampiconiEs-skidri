@@ -529,8 +529,8 @@ public class RequestHandler {
         User u = userDao.findOne(userId);
         FreeTime freeTime = freetTimeDao.findOne(freeTimeId);
         u.getFreeTimes().remove(freeTime);
-        freetTimeDao.delete(freeTimeId);
-        userDao.save(u);
+        freetTimeDao.delete(freeTime);
+        u=userDao.save(u);
         }catch(Exception e){
             return "fail"+e.getMessage();
         }
