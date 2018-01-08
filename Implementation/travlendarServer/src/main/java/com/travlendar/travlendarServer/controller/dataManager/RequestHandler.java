@@ -377,7 +377,7 @@ public class RequestHandler {
         return r.getMessage();
     }
 
-    @RequestMapping("delete-private-transport")
+    @RequestMapping("/delete-private-transport")
     @ResponseBody
     public String deletePrivateTransport(@RequestParam("user_id") Long userId,
                                          @RequestParam("transport_id") Long transportId) {
@@ -400,7 +400,7 @@ public class RequestHandler {
         return r.getMessage();
     }
 
-    @RequestMapping("delete-public-transport")
+    @RequestMapping("/delete-public-transport")
     @ResponseBody
     public String deletePublicTransport(@RequestParam("user_id") Long userId,
                                         @RequestParam("transport_id") Long transportId) {
