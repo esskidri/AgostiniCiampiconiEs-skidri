@@ -125,8 +125,7 @@ public class MainLogic {
                 EventLogic event = transportSolution.getStartEvent();
                 if(freeTime.getEndDate().compareTo(event.getEndDate()) > 0 ) {
                     EventLogic subsequentEvent = transportSolution.getEndEvent();
-                    long timeBetween1 = event.getEndDate().getTime() -
-                            transportSolution.getDepartureTime().getTime();
+                    long timeBetween1 = transportSolution.getDepartureTime().getTime() - event.getEndDate().getTime();
                     long timeBetween2 = subsequentEvent.getStartDate().getTime() - transportSolution.getArrivalTime().getTime();
                     if(freeTime.getDuration() <= timeBetween1){
                         freeTime.setSatisfied(true);

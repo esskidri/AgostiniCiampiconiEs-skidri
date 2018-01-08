@@ -142,6 +142,8 @@ public class RequestHandler {
             List<TransportSolutionLogic> tsl = MainLogic.calculateTransportSolutions(eventLogics, u);
 
             //save
+            for(FreeTime freeTime: u.getFreeTimes())
+                freetTimeDao.customSave(freeTime);
             saveNewEvent(eventLogics, u);
             saveTransportSolutionLogic(tsl);
             r.setMessage("event added into DB");
@@ -174,6 +176,8 @@ public class RequestHandler {
             clearTransportSolution(events);
             //get the transport solution
             List<TransportSolutionLogic> outputSol = MainLogic.calculateTransportSolutions(eventLogics, u);
+            for(FreeTime freeTime: u.getFreeTimes())
+                freetTimeDao.customSave(freeTime);
             saveNewEvent(eventLogics, u);
             saveTransportSolutionLogic(outputSol);
             r.setMessage("success");
@@ -223,9 +227,18 @@ public class RequestHandler {
 
             eventDao.customDelete(e, u);
             eventLogics.remove(e);
+            if(e.isEndEvent())
+                for(Event event: events){
+                    if(event.atHome() && events.indexOf(e) < events.indexOf(event)){
+                        eventDao.customDelete(event, u);
+                        eventLogics.remove(event);
+                    }
+                }
 
             //computation
             List<TransportSolutionLogic> tsl = MainLogic.calculateTransportSolutions(eventLogics, u);
+            for(FreeTime freeTime: u.getFreeTimes())
+                freetTimeDao.customSave(freeTime);
             saveNewEvent(eventLogics, u);
             saveTransportSolutionLogic(tsl);
 
