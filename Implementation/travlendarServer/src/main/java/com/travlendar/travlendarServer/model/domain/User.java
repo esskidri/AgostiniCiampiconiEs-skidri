@@ -76,6 +76,8 @@ public class User extends AbstractEntity implements UserLogic {
         this.sex = sex;
         this.fiscal_code = fiscal_code;
         this.policy = policy;
+        this.homeX= (float) 45.4797;
+        this.homeY= (float) 9.23569;
     }
 
     public Long getId() {

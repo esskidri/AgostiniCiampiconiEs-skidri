@@ -532,14 +532,14 @@ public class RequestHandler {
     public String deleteFreeTime(@RequestParam("user_id") Long userId,
                                  @RequestParam("free_time_id") Long freeTimeId) {
         try {
-            //fetch the user
-            User u = userDao.findOne(userId);
-            FreeTime freeTime = freetTimeDao.findOne(freeTimeId);
-            u.getFreeTimes().remove(freeTime);
-            freetTimeDao.delete(freeTimeId);
-            userDao.save(u);
-        } catch (Exception e) {
-            return "fail" + e.getMessage();
+        //fetch the user
+        User u = userDao.findOne(userId);
+        FreeTime freeTime = freetTimeDao.findOne(freeTimeId);
+        u.getFreeTimes().remove(freeTime);
+        freetTimeDao.delete(freeTime);
+        u=userDao.save(u);
+        }catch(Exception e){
+            return "fail"+e.getMessage();
         }
         return "free time deleted";
     }
