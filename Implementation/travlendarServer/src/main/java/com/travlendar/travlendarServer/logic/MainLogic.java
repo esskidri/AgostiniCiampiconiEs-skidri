@@ -30,6 +30,7 @@ public class MainLogic {
         List<MeanOfTransportLogic> meansOfTransport = user.getMeanPreferences();
         List<MeanOfTransportLogic> meansOfTransportForSolution;
 
+
         for (EventLogic outGoing : events) {
             for (EventLogic inGoing : eventGraph.edges().get(outGoing)) {
                 if (inGoing.atHome()) {
@@ -163,17 +164,8 @@ public class MainLogic {
         boolean foundedDay = false;
         EventLogic firstEndEvent;
         EventLogic secondEndEvent = null;
-        Timestamp currentTime = new Timestamp(Calendar.getInstance().getTime().getTime());
 
-        int i = 0;
-        for(EventLogic event: events){
-            if(currentTime.compareTo(event.getEndDate()) < 0)
-                break;
-            i++;
-        }
-
-        if(!events.isEmpty())
-            events = events.subList(i, events.size());
+        selectFromCurrentTime(events);
 
         firstEndEvent = events.get(0);
 
@@ -190,6 +182,24 @@ public class MainLogic {
             return events.subList(events.indexOf(firstEndEvent), events.indexOf(secondEndEvent) + 1);
         else
             return events.subList(events.indexOf(firstEndEvent), events.size());
+    }
+
+    public static void selectFromCurrentTime(List<EventLogic> events) {
+        Timestamp currentTime = new Timestamp(Calendar.getInstance().getTime().getTime());
+
+        int i = 0;
+        for(EventLogic event: events){
+            if(currentTime.compareTo(event.getEndDate()) < 0)
+                break;
+            i++;
+        }
+
+        List<EventLogic> eventLogics = new ArrayList<>();
+        eventLogics.addAll(events);
+
+        if(!eventLogics.isEmpty())
+            events.removeAll(eventLogics.subList(0,i));
+
     }
 
     private static void setMeansOfTransport(TransportSolutionLogic transportSolutionLogic,

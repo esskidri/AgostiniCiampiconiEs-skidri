@@ -202,7 +202,6 @@ public class TransportSolutionCalculator {
                     googleResponseMappedObject.getDuration(),
                     googleResponseMappedObject.getDepartureTime(),
                     googleResponseMappedObject.getArrivalTime(), meanOfTransport);
-            if(transportSegment.getDistance() != 0)
                 transportSegmentsOfObject.add(transportSegment);
 
         }

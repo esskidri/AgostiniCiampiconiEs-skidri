@@ -119,6 +119,10 @@ public class FreeTime extends AbstractEntity implements FreeTimeLogic {
         this.user = user;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public FreeTimeClient getFreeTimeClient(){
         FreeTimeClient freeTimeClient = new FreeTimeClient(startDate,endDate,duration,
                 isSatisfied,spendingStartDate,spendingEndDate,user.getId());

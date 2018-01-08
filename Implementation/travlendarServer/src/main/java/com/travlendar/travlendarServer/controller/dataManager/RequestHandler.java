@@ -1,7 +1,6 @@
 package com.travlendar.travlendarServer.controller.dataManager;
 
 
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.travlendar.travlendarServer.controller.Exception.DataEntryException;
@@ -70,10 +69,12 @@ public class RequestHandler {
                          @RequestParam("sex") String sex) throws Exception {
         try {
             User user = new User(f_name, l_name, email, age, sex, null, Policy.GREEN);
+            user.setHomeX((float) 45.478085);
+            user.setHomeY((float) 9.225690799999938);
             userDao.save(user);
             //addPrivateTransport(user.getId(), "walk", MeanType.WALKING.toString().toUpperCase(), 0, " ");
             return "User succesfully created";
-        }catch (Exception e){
+        } catch (Exception e) {
             return "fail: " + e.getMessage();
         }
     }
@@ -133,7 +134,7 @@ public class RequestHandler {
             List<EventLogic> eventLogics = MainLogic.getDailyEventsForReplan(userEvents, e.getStartDate(), e.getEndDate());
 
             List<Event> events = new ArrayList<>();
-            for(EventLogic eventLogic: eventLogics)
+            for (EventLogic eventLogic : eventLogics)
                 events.add((Event) eventLogic);
             events.remove(e);
             clearTransportSolution(events);
@@ -161,9 +162,16 @@ public class RequestHandler {
         try {
             //fetch the user
             User u = userDao.findOne(userId);
+            List<Event> events = new ArrayList<>();
+            events = u.getEvents();
+            orderEvents(events);
             ArrayList<EventLogic> eventLogics = new ArrayList<>();
-            eventLogics.addAll(u.getEvents());
-            clearTransportSolution(u.getEvents());
+            eventLogics.addAll(events);
+            MainLogic.selectFromCurrentTime(eventLogics);
+            events.clear();
+            for (EventLogic eventLogic : eventLogics)
+                events.add((Event) eventLogic);
+            clearTransportSolution(events);
             //get the transport solution
             List<TransportSolutionLogic> outputSol = MainLogic.calculateTransportSolutions(eventLogics, u);
             saveNewEvent(eventLogics, u);
@@ -178,21 +186,16 @@ public class RequestHandler {
     @RequestMapping("/deleteTS")
     @ResponseBody
     public String deleteTS() {
-        TransportSolution solution=null;
-        int i=0;
-       for(TransportSolution t:transportSolutionDao.findAll()){
-           if(i==0) {
-               solution = t;
-           }
-       }
-       transportSolutionDao.delete(solution);
-       return "ok";
+        TransportSolution solution = null;
+        int i = 0;
+        for (TransportSolution t : transportSolutionDao.findAll()) {
+            if (i == 0) {
+                solution = t;
+            }
+        }
+        transportSolutionDao.delete(solution);
+        return "ok";
     }
-
-
-
-
-
 
 
     @RequestMapping("/delete-event")
@@ -203,13 +206,18 @@ public class RequestHandler {
             User u = userDao.findOne(userId);
             Event e = eventDao.findOne(eventId);
 
-            List<EventLogic> userEvent = new ArrayList<>();
-
-            userEvent.addAll(u.getEvents());
-            List<EventLogic> eventLogics = MainLogic.getDailyEventsForReplan(userEvent, e.getStartDate(), e.getEndDate());
-
             List<Event> events = new ArrayList<>();
-            for(EventLogic eventLogic: eventLogics)
+
+            events.addAll(u.getEvents());
+            orderEvents(events);
+            List<EventLogic> eventLogics = new ArrayList<>();
+            eventLogics.addAll(events);
+            MainLogic.selectFromCurrentTime(eventLogics);
+
+            eventLogics = MainLogic.getDailyEventsForReplan(eventLogics, e.getStartDate(), e.getEndDate());
+
+            events.clear();
+            for (EventLogic eventLogic : eventLogics)
                 events.add((Event) eventLogic);
             clearTransportSolution(events);
 
@@ -246,7 +254,7 @@ public class RequestHandler {
             User u = userDao.findOne(userId);
             Event e = eventDao.findOne(eventId);
             Event temporaryE = new Event();
-            temporaryE.completeSet(e.getUser(),e.getStartDate(),e.getEndDate(),e.getPosX(), e.getPosY(),e.getDescription(),e.getName(),e.isEndEvent());
+            temporaryE.completeSet(e.getUser(), e.getStartDate(), e.getEndDate(), e.getPosX(), e.getPosY(), e.getDescription(), e.getName(), e.isEndEvent());
             temporaryE.setId(e.getId());
 
             List<EventLogic> userEvents = new ArrayList<>();
@@ -257,22 +265,21 @@ public class RequestHandler {
 
 
             List<Event> events = new ArrayList<>();
-            for(EventLogic eventLogic: eventLogics2)
+            for (EventLogic eventLogic : eventLogics2)
                 events.add((Event) eventLogic);
             clearTransportSolution(events);
             saveTransportSolutionLogic(MainLogic.calculateTransportSolutions(eventLogics2, u));
             eventDao.customUpdate(e, u);
             saveNewEvent(eventLogics2, u);
 
-            if(!eventLogics2.equals(eventLogics1)){
+            if (!eventLogics2.equals(eventLogics1)) {
                 events.clear();
                 eventLogics1.remove(temporaryE);
-                for(EventLogic eventLogic: eventLogics1)
+                for (EventLogic eventLogic : eventLogics1)
                     events.add((Event) eventLogic);
                 clearTransportSolution(events);
                 saveTransportSolutionLogic(MainLogic.calculateTransportSolutions(eventLogics1, u));
             }
-
 
 
             eventDao.customUpdate(e, u);
@@ -305,10 +312,10 @@ public class RequestHandler {
 
     @RequestMapping("/add-private-transport")
     @ResponseBody
-    public String addPrivateTransport(@RequestParam("user_id") Long userId,@RequestParam("name") String name,
-                                      @RequestParam ("type")String type,@RequestParam("displacement")int displacement,
-                                      @RequestParam("license_plate") String license){
-        Response r=new Response("ok");
+    public String addPrivateTransport(@RequestParam("user_id") Long userId, @RequestParam("name") String name,
+                                      @RequestParam("type") String type, @RequestParam("displacement") int displacement,
+                                      @RequestParam("license_plate") String license) {
+        Response r = new Response("ok");
         try {
             //convert type
             MeanType meanType = MeanType.valueOf(type);
@@ -320,9 +327,9 @@ public class RequestHandler {
             //create
             PrivateTransport p = new PrivateTransport(u, name, meanType, displacement, license, green);
             //save
-            p=privateTransportDao.customSave(p);
-            u=userDao.save(u);
-            addOrder(u.getId(),p.getId(),p.isPrivate());
+            p = privateTransportDao.customSave(p);
+            u = userDao.save(u);
+            addOrder(u.getId(), p.getId(), p.isPrivate());
             r.setMessage("mean added ");
         } catch (DataEntryException e) {
             r.setMessage(e.getMessage());
@@ -335,19 +342,19 @@ public class RequestHandler {
     @RequestMapping("/add-public-transport")
     @ResponseBody
     public String addPrivateTransport(@RequestParam("user_id") Long userId,
-                                      @RequestParam("transport_id") Long transportId){
-        Response r=new Response("ok");
+                                      @RequestParam("transport_id") Long transportId) {
+        Response r = new Response("ok");
         try {
             User u = userDao.findOne(userId);
             if (u == null) throw new DataEntryException("user not found");
             //fetch public transport
-            PublicTransport p= publicTransportDao.findOne(transportId);
+            PublicTransport p = publicTransportDao.findOne(transportId);
             //save
             u.getPublicTransportList().add(p);
             p.addUser(u);
-            p=publicTransportDao.save(p);
-            u=userDao.save(u);
-            addOrder(u.getId(),p.getId(),p.isPrivate());
+            p = publicTransportDao.save(p);
+            u = userDao.save(u);
+            addOrder(u.getId(), p.getId(), p.isPrivate());
             r.setMessage("mean added ");
         } catch (DataEntryException e) {
             r.setMessage(e.getMessage());
@@ -360,17 +367,17 @@ public class RequestHandler {
     @RequestMapping("delete-private-transport")
     @ResponseBody
     public String deletePrivateTransport(@RequestParam("user_id") Long userId,
-                                      @RequestParam("transport_id") Long transportId){
-        Response r=new Response("ok");
+                                         @RequestParam("transport_id") Long transportId) {
+        Response r = new Response("ok");
         try {
             User u = userDao.findOne(userId);
             if (u == null) throw new DataEntryException("user not found");
             privateTransportDao.delete(transportId);
-            UserOrder userOrderToDelete=u.getUserOrdeByPrivateTransportId(transportId);
+            UserOrder userOrderToDelete = u.getUserOrdeByPrivateTransportId(transportId);
             int orderDeleted = userOrderToDelete.getOrder();
             userOrderDao.delete(userOrderToDelete);
             List<UserOrder> temp = sortByNumOrder(u.getUserOrders());
-            compactOrder(u,orderDeleted);
+            compactOrder(u, orderDeleted);
             r.setMessage("mean deleted ");
         } catch (DataEntryException e) {
             r.setMessage(e.getMessage());
@@ -383,21 +390,21 @@ public class RequestHandler {
     @RequestMapping("delete-public-transport")
     @ResponseBody
     public String deletePublicTransport(@RequestParam("user_id") Long userId,
-                                         @RequestParam("transport_id") Long transportId){
-        Response r=new Response("ok");
+                                        @RequestParam("transport_id") Long transportId) {
+        Response r = new Response("ok");
         try {
             User u = userDao.findOne(userId);
             PublicTransport publicTransport = publicTransportDao.findOne(transportId);
             if (u == null) throw new DataEntryException("user not found");
-            UserOrder userOrderToDelete=u.getUserOrdeByPublicTransportId(transportId);
+            UserOrder userOrderToDelete = u.getUserOrdeByPublicTransportId(transportId);
             u.getPublicTransportList().remove(publicTransport);
             publicTransport.getUsers().remove(u);
-            publicTransport=publicTransportDao.save(publicTransport);
-            u=userDao.save(u);
+            publicTransport = publicTransportDao.save(publicTransport);
+            u = userDao.save(u);
             int orderDeleted = userOrderToDelete.getOrder();
             userOrderDao.delete(userOrderToDelete);
             List<UserOrder> temp = sortByNumOrder(u.getUserOrders());
-            compactOrder(u,orderDeleted);
+            compactOrder(u, orderDeleted);
             r.setMessage("mean deleted ");
         } catch (DataEntryException e) {
             r.setMessage(e.getMessage());
@@ -407,22 +414,22 @@ public class RequestHandler {
         return r.getMessage();
     }
 
-    public void compactOrder(User u, int delimiter){
+    public void compactOrder(User u, int delimiter) {
         for (UserOrder elem : u.getUserOrders()) {
-            if(elem.getOrder() > delimiter) elem.setOrder(elem.getOrder()-1);
+            if (elem.getOrder() > delimiter) elem.setOrder(elem.getOrder() - 1);
         }
     }
 
-    public int getDelimiter(List<UserOrder> list){
-        if(list.get(0).getOrder() == 2) return 1;
-        for(int i = 0; i<list.size()-1;i++){
-            if(list.get(i).getOrder()+1 != list.get(i+1).getOrder()) return i;
+    public int getDelimiter(List<UserOrder> list) {
+        if (list.get(0).getOrder() == 2) return 1;
+        for (int i = 0; i < list.size() - 1; i++) {
+            if (list.get(i).getOrder() + 1 != list.get(i + 1).getOrder()) return i;
         }
-        return list.size()-1;
+        return list.size() - 1;
     }
 
-    public List<UserOrder> sortByNumOrder(List<UserOrder> list){
-        sort(list,new Comparator<UserOrder>() {
+    public List<UserOrder> sortByNumOrder(List<UserOrder> list) {
+        sort(list, new Comparator<UserOrder>() {
             @Override
             public int compare(UserOrder lhs, UserOrder rhs) {
                 // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
@@ -433,20 +440,17 @@ public class RequestHandler {
     }
 
 
-
-
-
     @RequestMapping("/delete-all-order")
     @ResponseBody
-    public String addOrder(@RequestParam("user_id") Long userId){
-        Response r=new Response("ok");
-        try{
+    public String addOrder(@RequestParam("user_id") Long userId) {
+        Response r = new Response("ok");
+        try {
             User u = userDao.findOne(userId);
             userOrderDao.delete(u.getUserOrders());
             userDao.save(u);
             r.setMessage("order deleted");
-        }catch(Exception e2){
-            r.setMessage("fail"+e2.getMessage());
+        } catch (Exception e2) {
+            r.setMessage("fail" + e2.getMessage());
         }
         return r.getMessage();
     }
@@ -454,22 +458,22 @@ public class RequestHandler {
     @RequestMapping("/add-order")
     @ResponseBody
     public String addOrder(@RequestParam("user_id") Long userId,
-                             @RequestParam("transport_id") Long transportId,
-                             @RequestParam("type_transport") boolean type){
-        Response r=new Response("ok");
-        try{
+                           @RequestParam("transport_id") Long transportId,
+                           @RequestParam("type_transport") boolean type) {
+        Response r = new Response("ok");
+        try {
             //fetch the user
             User u = userDao.findOne(userId);
             UserOrder ur;
-            if(type){
-                ur = new UserOrder(u.getUserOrders().size()+1,u, null,privateTransportDao.findOne(transportId));
-            }else{
-                ur = new UserOrder(u.getUserOrders().size()+1,u,publicTransportDao.findOne(transportId),null);
+            if (type) {
+                ur = new UserOrder(u.getUserOrders().size() + 1, u, null, privateTransportDao.findOne(transportId));
+            } else {
+                ur = new UserOrder(u.getUserOrders().size() + 1, u, publicTransportDao.findOne(transportId), null);
             }
-            userOrderDao.customSave(u,ur);
+            userOrderDao.customSave(u, ur);
             r.setMessage("mean added");
-        }catch(Exception e2){
-            r.setMessage("fail"+e2.getMessage());
+        } catch (Exception e2) {
+            r.setMessage("fail" + e2.getMessage());
         }
         return r.getMessage();
     }
@@ -478,44 +482,47 @@ public class RequestHandler {
     @ResponseBody
     public String addFreeTime(@RequestParam("user_id") Long userId,
                               @RequestParam("policy") String policy) {
-        Response r=new Response("ok");
-        try{
+        Response r = new Response("ok");
+        try {
             //fetch the user
             User u = userDao.findOne(userId);
             policy = policy.toUpperCase();
-            switch (policy){
-                case "GREEN": u.setPolicy(Policy.GREEN);
-                              break;
-                case "FAST":  u.setPolicy(Policy.FAST);
-                              break;
-                case "CHEAP": u.setPolicy(Policy.CHEAP);
-                              break;
-                default:      u.setPolicy(Policy.GREEN);
-                              break;
+            switch (policy) {
+                case "GREEN":
+                    u.setPolicy(Policy.GREEN);
+                    break;
+                case "FAST":
+                    u.setPolicy(Policy.FAST);
+                    break;
+                case "CHEAP":
+                    u.setPolicy(Policy.CHEAP);
+                    break;
+                default:
+                    u.setPolicy(Policy.GREEN);
+                    break;
             }
             userDao.save(u);
             r.setMessage("policy setted");
-        }catch(Exception e2){
-            r.setMessage("fail"+e2.getMessage());
+        } catch (Exception e2) {
+            r.setMessage("fail" + e2.getMessage());
         }
         return r.getMessage();
     }
 
 
-
     @RequestMapping("/add-free-time")
     @ResponseBody
     public String addFreeTime(@RequestParam("user_id") Long userId,
-                                @RequestParam("start_date") Timestamp startDate,
-                                @RequestParam("end_date") Timestamp endDate,
-                                @RequestParam("duration") long duration){
+                              @RequestParam("start_date") Timestamp startDate,
+                              @RequestParam("end_date") Timestamp endDate,
+                              @RequestParam("duration") long duration) {
         try {
-        //fetch the user
-        User u = userDao.findOne(userId);
-        FreeTime freeTime = new FreeTime(startDate, endDate, duration,true,null,null, u);
-        freetTimeDao.customSave(freeTime);
-        }catch(Exception e){
-            return "fail"+e.getMessage();
+            //fetch the user
+            User u = userDao.findOne(userId);
+            FreeTime freeTime = new FreeTime(startDate, endDate, duration, true, null, null, u);
+            freetTimeDao.customSave(freeTime);
+        } catch (Exception e) {
+            return "fail" + e.getMessage();
         }
         return "free time added";
     }
@@ -523,16 +530,16 @@ public class RequestHandler {
     @RequestMapping("/delete-free-time")
     @ResponseBody
     public String deleteFreeTime(@RequestParam("user_id") Long userId,
-                              @RequestParam("free_time_id") Long freeTimeId){
+                                 @RequestParam("free_time_id") Long freeTimeId) {
         try {
-        //fetch the user
-        User u = userDao.findOne(userId);
-        FreeTime freeTime = freetTimeDao.findOne(freeTimeId);
-        u.getFreeTimes().remove(freeTime);
-        freetTimeDao.delete(freeTimeId);
-        userDao.save(u);
-        }catch(Exception e){
-            return "fail"+e.getMessage();
+            //fetch the user
+            User u = userDao.findOne(userId);
+            FreeTime freeTime = freetTimeDao.findOne(freeTimeId);
+            u.getFreeTimes().remove(freeTime);
+            freetTimeDao.delete(freeTimeId);
+            userDao.save(u);
+        } catch (Exception e) {
+            return "fail" + e.getMessage();
         }
         return "free time deleted";
     }
@@ -584,14 +591,14 @@ public class RequestHandler {
     }
 
 
-    private void clearTransportSolution(List<Event> events) throws Exception{
+    private void clearTransportSolution(List<Event> events) throws Exception {
         List<TransportSolution> transportSolutions;
         List<TransportSegment> transportSegments;
 
         for (Event event : events) {
             transportSolutions = new ArrayList<>();
-            transportSegments= new ArrayList<>();
-            if(event.getTransportSolutions() != null)
+            transportSegments = new ArrayList<>();
+            if (event.getTransportSolutions() != null)
                 transportSolutions.addAll(event.getTransportSolutions());
             for (TransportSolution transportSolution : transportSolutions) {
                 transportSegments.addAll(transportSolution.getTransportSegments());
@@ -603,10 +610,10 @@ public class RequestHandler {
         System.out.println("ok");
     }
 
-    private void orderEvents(List<Event> events){
-        for(int i = 0; i < events.size() -1; i++){
-            for(int j = i +1; j < events.size(); j++){
-                if(events.get(i).compareTo(events.get(j)) > 0)
+    private void orderEvents(List<Event> events) {
+        for (int i = 0; i < events.size() - 1; i++) {
+            for (int j = i + 1; j < events.size(); j++) {
+                if (events.get(i).compareTo(events.get(j)) > 0)
                     swapEvents(events, i, j);
             }
         }
@@ -617,7 +624,7 @@ public class RequestHandler {
         Event event2 = events.get(j);
 
         events.remove(i);
-        events.remove(j -1);
+        events.remove(j - 1);
 
         events.add(i, event2);
         events.add(j, event1);
